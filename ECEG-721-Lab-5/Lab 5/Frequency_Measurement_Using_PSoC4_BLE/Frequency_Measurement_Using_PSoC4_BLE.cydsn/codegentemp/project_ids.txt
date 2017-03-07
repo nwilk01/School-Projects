@@ -1,0 +1,5 @@
+C:\Users\Admin\Desktop\GitHub\ECEG-721-Lab-5\Lab 5\Frequency_Measurement_Using_PSoC4_BLE\Frequency_Measurement_Using_PSoC4_BLE.cydsn\Frequency_Measurement_Using_PSoC4_BLE.cyprj|53dfbdb5-4897-4055-a9f0-7ef2ffab6afa
+C:\Program Files (x86)\Cypress\PSoC Creator\3.1\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|fe9f5b2b-ef1f-44b7-884d-89c5393641f5
+C:\Program Files (x86)\Cypress\PSoC Creator\3.1\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|3a1c24ce-c2f1-4ff4-b48b-a58ab4041f78
+C:\Program Files (x86)\Cypress\PSoC Creator\3.1\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|e20f1cf5-de9c-44a6-89f1-0e80469921bd
+C:\Program Files (x86)\Cypress\PSoC Creator\3.1\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|5b3ebe76-d216-4809-bb79-cd4e6712cc0e

@@ -1,0 +1,168 @@
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/CortexM0/ARM_GCC_484/Debug/main.o : C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_HAL_PVT.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_STACK_PVT.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_Stack.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGap.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGatt.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGattClient.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGattDb.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGattServer.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackHostMain.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackL2cap.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_bless_isr.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_custom.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_eventHandler.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_gatt.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLUE.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLUE_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Buffer_Out.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Buffer_Out_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Buffer_Pos.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Buffer_Pos_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Clock_1.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Clock_2.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Clock_5.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_NegInput.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_NegInput_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_Out.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_Out_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_PosInput.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_PosInput_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comparator.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/CyFlash.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/CyLib.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Frequency_Input.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Frequency_Input_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/GREEN.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/GREEN_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Input_Sig_Ctr_ISR.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Input_Signal_Counter1.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Input_Signal_Counter2.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Opamp_1.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PRS_1.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PRS_2.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PRS_Clock.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PWM_2s.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PWM_2s_ISR.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Pin_1.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Pin_1_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Pin_2.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Pin_2_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/RED.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/RED_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Ref_Clk_Ctr_ISR.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Ref_Clock_Counter1.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Ref_Clock_Counter2.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Test_Signal.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Test_Signal_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_BOOT.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_PINS.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_PVT.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_SCBCLK.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_SPI_UART.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_SPI_UART_PVT.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_tx.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_tx_aliases.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/core_cm0.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/core_cmFunc.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/core_cmInstr.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cyPm.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cydisabledsheets.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cyfitter.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cypins.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cytypes.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/project.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/BLEApplications.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Communication.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/FrequencyCounter.h C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/main.c C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/main.h 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_HAL_PVT.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_STACK_PVT.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_Stack.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGap.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGatt.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGattClient.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGattDb.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackGattServer.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackHostMain.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_StackL2cap.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_bless_isr.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_custom.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_eventHandler.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLE_gatt.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLUE.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/BLUE_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Buffer_Out.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Buffer_Out_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Buffer_Pos.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Buffer_Pos_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Clock_1.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Clock_2.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Clock_5.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_NegInput.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_NegInput_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_Out.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_Out_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_PosInput.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comp_PosInput_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Comparator.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/CyFlash.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/CyLib.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Frequency_Input.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Frequency_Input_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/GREEN.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/GREEN_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Input_Sig_Ctr_ISR.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Input_Signal_Counter1.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Input_Signal_Counter2.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Opamp_1.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PRS_1.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PRS_2.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PRS_Clock.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PWM_2s.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/PWM_2s_ISR.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Pin_1.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Pin_1_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Pin_2.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Pin_2_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/RED.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/RED_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Ref_Clk_Ctr_ISR.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Ref_Clock_Counter1.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Ref_Clock_Counter2.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Test_Signal.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/Test_Signal_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_BOOT.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_PINS.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_PVT.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_SCBCLK.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_SPI_UART.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_SPI_UART_PVT.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_tx.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/UART_tx_aliases.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/core_cm0.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/core_cmFunc.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/core_cmInstr.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cyPm.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cydevice_trm.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cydisabledsheets.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cyfitter.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cypins.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/cytypes.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Generated_Source/PSoC4/project.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/BLEApplications.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/Communication.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/FrequencyCounter.h : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/main.c : 
+
+C:/Users/Admin/Desktop/GitHub/ECEG-721-Lab-5/Lab\ 5/Frequency_Measurement_Using_PSoC4_BLE/Frequency_Measurement_Using_PSoC4_BLE.cydsn/main.h : 
+

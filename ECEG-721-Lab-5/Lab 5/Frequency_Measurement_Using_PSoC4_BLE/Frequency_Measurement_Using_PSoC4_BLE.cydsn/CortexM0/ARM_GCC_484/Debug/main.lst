@@ -1,0 +1,2022 @@
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.comm	RGBledData,4,4
+  18              		.comm	Calculate_Frequency,1,1
+  19              		.section	.rodata
+  20              		.align	2
+  21              	.LC0:
+  22 0000 57656C63 		.ascii	"Welcome to Frequency Measurement Using PSoC 4 BLE\012"
+  22      6F6D6520 
+  22      746F2046 
+  22      72657175 
+  22      656E6379 
+  23 0032 00       		.ascii	"\000"
+  24 0033 00       		.align	2
+  25              	.LC5:
+  26 0034 496E7075 		.ascii	"Input Signal Counter Value: \000"
+  26      74205369 
+  26      676E616C 
+  26      20436F75 
+  26      6E746572 
+  27 0051 000000   		.align	2
+  28              	.LC8:
+  29 0054 20202020 		.ascii	"      \000"
+  29      202000
+  30 005b 00       		.align	2
+  31              	.LC11:
+  32 005c 52656665 		.ascii	"Reference Clock Counter Value: \000"
+  32      72656E63 
+  32      6520436C 
+  32      6F636B20 
+  32      436F756E 
+  33              		.align	2
+  34              	.LC15:
+  35 007c 496E7075 		.ascii	"Input Frequency: \000"
+  35      74204672 
+  35      65717565 
+  35      6E63793A 
+  35      2000
+  36 008e 0000     		.align	2
+  37              	.LC18:
+  38 0090 52656420 		.ascii	"Red Value: \000"
+  38      56616C75 
+  38      653A2000 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 2
+
+
+  39              		.align	2
+  40              	.LC21:
+  41 009c 426C7565 		.ascii	"Blue Value: \000"
+  41      2056616C 
+  41      75653A20 
+  41      00
+  42 00a9 000000   		.align	2
+  43              	.LC23:
+  44 00ac 47524545 		.ascii	"GREEN Value: \000"
+  44      4E205661 
+  44      6C75653A 
+  44      2000
+  45 00ba 0000     		.align	2
+  46              	.LC25:
+  47 00bc 496E7465 		.ascii	"Intensity Value: \000"
+  47      6E736974 
+  47      79205661 
+  47      6C75653A 
+  47      2000
+  48 00ce 0000     		.section	.text.main,"ax",%progbits
+  49              		.align	2
+  50              		.global	main
+  51              		.code	16
+  52              		.thumb_func
+  53              		.type	main, %function
+  54              	main:
+  55              	.LFB35:
+  56              		.file 1 ".\\main.c"
+   1:.\main.c      **** /***************************************************************************//**
+   2:.\main.c      **** * @file    main.c
+   3:.\main.c      **** * @version 1.0
+   4:.\main.c      **** * @authors DCHE
+   5:.\main.c      **** *
+   6:.\main.c      **** * @par Description
+   7:.\main.c      **** *   This file contains the main source code for Frequency Measurement using
+   8:.\main.c      **** *	PSoC 4 BLE.
+   9:.\main.c      **** *
+  10:.\main.c      **** * @par Notes
+  11:.\main.c      **** *	None
+  12:.\main.c      **** *
+  13:.\main.c      **** * @par Hardware Dependency
+  14:.\main.c      **** *    1. CY8CKIT-042 BLE Pioneer Kit
+  15:.\main.c      **** *
+  16:.\main.c      **** * @par References
+  17:.\main.c      **** *    1. 001-32359: AN2283 "PSoC 1 Measuring Frequency"
+  18:.\main.c      **** *
+  19:.\main.c      **** * @par Code Tested With
+  20:.\main.c      **** *    1. PSoC Creator  3.1 SP2 (3.1.0.2177)
+  21:.\main.c      **** *    2. GCC 4.8.4
+  22:.\main.c      **** *
+  23:.\main.c      **** **//****************************************************************************
+  24:.\main.c      **** * Copyright (2015), Cypress Semiconductor Corporation.
+  25:.\main.c      **** ********************************************************************************
+  26:.\main.c      **** * All rights reserved. 
+  27:.\main.c      **** * This software, including source code, documentation and related 
+  28:.\main.c      **** * materials (“Software”), is owned by Cypress Semiconductor 
+  29:.\main.c      **** * Corporation (“Cypress”) and is protected by and subject to worldwide 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 3
+
+
+  30:.\main.c      **** * patent protection (United States and foreign), United States copyright 
+  31:.\main.c      **** * laws and international treaty provisions. Therefore, you may use this 
+  32:.\main.c      **** * Software only as provided in the license agreement accompanying the 
+  33:.\main.c      **** * software package from which you obtained this Software (“EULA”). 
+  34:.\main.c      **** *
+  35:.\main.c      **** * If no EULA applies, Cypress hereby grants you a personal, non-exclusive, 
+  36:.\main.c      **** * non-transferable license to copy, modify and compile the Software source code
+  37:.\main.c      **** * solely for your use in connection with Cypress's integrated circuit products.
+  38:.\main.c      **** * Any reproduction, modification, translation, compilation, or representation
+  39:.\main.c      **** * of this Software except as specified above is prohibited without the express
+  40:.\main.c      **** * written permission of Cypress.
+  41:.\main.c      **** 
+  42:.\main.c      **** * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND,
+  43:.\main.c      **** * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED
+  44:.\main.c      **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  45:.\main.c      **** * Cypress reserves the right to make changes to the Software without notice. 
+  46:.\main.c      **** * Cypress does not assume any liability arising out of the application or use 
+  47:.\main.c      **** * of the Software or any product or circuit described in the Software. Cypress
+  48:.\main.c      **** * does not authorize its products for use in any products where a malfunction
+  49:.\main.c      **** * or failure of the Cypress product may reasonably be expected to result in 
+  50:.\main.c      **** * significant property damage, injury or death (“High Risk Product”). By 
+  51:.\main.c      **** * including Cypress’s product in a High Risk Product, the manufacturer of such  
+  52:.\main.c      **** * system or application assumes all risk of such use and in doing so agrees to  
+  53:.\main.c      **** * indemnify Cypress against all liability. 
+  54:.\main.c      **** *******************************************************************************/
+  55:.\main.c      **** 
+  56:.\main.c      **** /*******************************************************************************
+  57:.\main.c      **** *   Included Headers and Macros
+  58:.\main.c      **** *******************************************************************************/
+  59:.\main.c      **** #include "main.h"
+  60:.\main.c      **** //#include <BLEApplications.c>
+  61:.\main.c      **** /*******************************************************************************
+  62:.\main.c      **** *   Variable and Function Declarations
+  63:.\main.c      **** *******************************************************************************/
+  64:.\main.c      **** static void InitializeSystem(void);
+  65:.\main.c      **** /*'deviceConnected' flag is used by application to know whether a Central device  
+  66:.\main.c      **** * has been connected. This is updated in BLE event callback */
+  67:.\main.c      **** extern uint8 deviceConnected;
+  68:.\main.c      **** 
+  69:.\main.c      **** /*'startNotification' flag is set when the central device writes to CCC (Client  
+  70:.\main.c      **** * Characteristic Configuration) of the Custom characteristic to 
+  71:.\main.c      **** * enable notifications */
+  72:.\main.c      **** extern uint8 startNotification;	
+  73:.\main.c      **** 
+  74:.\main.c      **** /* 'restartAdvertisement' flag is used to restart advertisement */
+  75:.\main.c      **** extern uint8 restartAdvertisement;
+  76:.\main.c      **** 
+  77:.\main.c      **** /* Array to store the computed frequency in ASCII format */
+  78:.\main.c      **** extern uint8 Input_Frequency[FREQ_DATA_LEN];
+  79:.\main.c      **** 
+  80:.\main.c      **** /* Array to store the input counter count in ASCII format */
+  81:.\main.c      **** extern uint8 InputCounter_ASCII[FREQ_DATA_LEN];
+  82:.\main.c      **** 
+  83:.\main.c      **** /* Array to store the ref clock counter count in ASCII format */
+  84:.\main.c      **** extern uint8 RefCounter_ASCII[FREQ_DATA_LEN];
+  85:.\main.c      **** 
+  86:.\main.c      **** /* Variable to indicate CPU to compute frequency of the input signal */
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 4
+
+
+  87:.\main.c      **** uint8 Calculate_Frequency;
+  88:.\main.c      **** 
+  89:.\main.c      **** /* Variable that holds the input signal count and reference clock count */
+  90:.\main.c      **** extern uint32 Input_Signal_Count, Ref_Clock_Count;
+  91:.\main.c      **** 
+  92:.\main.c      **** /* Variable to indicate that a valid capture is detected for input signal 
+  93:.\main.c      ****    counter and reference clock counter */
+  94:.\main.c      **** extern uint8 Input_Sig_Ctr_Capture, Ref_Clk_Ctr_Capture;
+  95:.\main.c      **** 
+  96:.\main.c      **** /*******************************************************************************
+  97:.\main.c      **** * Function Name: main
+  98:.\main.c      **** ********************************************************************************
+  99:.\main.c      **** *
+ 100:.\main.c      **** * Summary:
+ 101:.\main.c      **** *   This is the main entry point for this application. This function initializes all the 
+ 102:.\main.c      **** *	components used in the project. It computes the frequency whenever a capture event is 
+ 103:.\main.c      **** *
+ 104:.\main.c      **** * Parameters:  
+ 105:.\main.c      **** *   None
+ 106:.\main.c      **** *
+ 107:.\main.c      **** * Return:
+ 108:.\main.c      **** *   None
+ 109:.\main.c      **** *
+ 110:.\main.c      **** *******************************************************************************/
+ 111:.\main.c      **** int main()
+ 112:.\main.c      **** {
+  57              		.loc 1 112 0
+  58              		.cfi_startproc
+  59 0000 80B5     		push	{r7, lr}
+  60              		.cfi_def_cfa_offset 8
+  61              		.cfi_offset 7, -8
+  62              		.cfi_offset 14, -4
+  63 0002 82B0     		sub	sp, sp, #8
+  64              		.cfi_def_cfa_offset 16
+  65 0004 00AF     		add	r7, sp, #0
+  66              		.cfi_def_cfa_register 7
+ 113:.\main.c      ****     InitializeSystem();
+  67              		.loc 1 113 0
+  68 0006 FFF7FEFF 		bl	InitializeSystem
+ 114:.\main.c      **** 	#if(UART_DEBUG_ENABLE)
+ 115:.\main.c      **** 		/* Variable to store the loop number */
+ 116:.\main.c      **** 		uint8 loopNo = 0;
+  69              		.loc 1 116 0
+  70 000a FB1D     		add	r3, r7, #7
+  71 000c 0022     		mov	r2, #0
+  72 000e 1A70     		strb	r2, [r3]
+ 117:.\main.c      **** 	#endif
+ 118:.\main.c      **** 	/* Enable global interrupt mask */
+ 119:.\main.c      **** 	CyGlobalIntEnable;	
+  73              		.loc 1 119 0
+  74              	@ 119 ".\main.c" 1
+  75 0010 62B6     		CPSIE   i
+  76              	@ 0 "" 2
+ 120:.\main.c      **** 	
+ 121:.\main.c      **** 	/* Disable ILO as it is not used */
+ 122:.\main.c      **** 	CySysClkIloStop();
+  77              		.loc 1 122 0
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 5
+
+
+  78              		.code	16
+  79 0012 FFF7FEFF 		bl	CySysClkIloStop
+ 123:.\main.c      **** 	
+ 124:.\main.c      **** 	/* Initialize components related to BLE communication */
+ 125:.\main.c      **** 	InitializeBLESystem();
+  80              		.loc 1 125 0
+  81 0016 FFF7FEFF 		bl	InitializeBLESystem
+ 126:.\main.c      **** 	
+ 127:.\main.c      **** 	/* Initialize components related to frequency counting */
+ 128:.\main.c      **** 	Initialize_Freq_Meas_System();
+  82              		.loc 1 128 0
+  83 001a FFF7FEFF 		bl	Initialize_Freq_Meas_System
+ 129:.\main.c      **** 	
+ 130:.\main.c      **** 	/* Start UART component if UART debug is enabled */
+ 131:.\main.c      **** 	#if(UART_DEBUG_ENABLE)
+ 132:.\main.c      **** 		/* Start UART component and send welcome string to hyper terminal on PC */
+ 133:.\main.c      **** 		UART_Start();
+  84              		.loc 1 133 0
+  85 001e FFF7FEFF 		bl	UART_Start
+ 134:.\main.c      **** 		UART_UartPutString("Welcome to Frequency Measurement Using PSoC 4 BLE\n");
+  86              		.loc 1 134 0
+  87 0022 8E4B     		ldr	r3, .L18
+  88 0024 181C     		mov	r0, r3
+  89 0026 FFF7FEFF 		bl	UART_UartPutString
+ 135:.\main.c      **** 		UART_PutCRLF();
+  90              		.loc 1 135 0
+  91 002a FFF7FEFF 		bl	UART_PutCRLF
+ 136:.\main.c      **** 	#endif
+ 137:.\main.c      **** 	
+ 138:.\main.c      ****     while(1)
+ 139:.\main.c      ****     {
+ 140:.\main.c      ****         while (RGBledData[RED_INDEX]==0xff){
+  92              		.loc 1 140 0
+  93 002e F9E0     		b	.L2
+  94              	.L14:
+ 141:.\main.c      **** 		/* Compute frequency once in every PWM interval(2s) */
+ 142:.\main.c      **** 		if(Calculate_Frequency == TRUE)
+  95              		.loc 1 142 0
+  96 0030 8B4B     		ldr	r3, .L18+4
+  97 0032 1B78     		ldrb	r3, [r3]
+  98 0034 012B     		cmp	r3, #1
+  99 0036 00D0     		beq	.LCB32
+ 100 0038 F1E0     		b	.L3	@long jump
+ 101              	.LCB32:
+ 143:.\main.c      **** 		{
+ 144:.\main.c      **** 			/* Check if valid capture event is detected */
+ 145:.\main.c      **** 			    if((Input_Sig_Ctr_Capture == 1) && (Ref_Clk_Ctr_Capture == 1))
+ 102              		.loc 1 145 0
+ 103 003a 8A4B     		ldr	r3, .L18+8
+ 104 003c 1B78     		ldrb	r3, [r3]
+ 105 003e 012B     		cmp	r3, #1
+ 106 0040 00D0     		beq	.LCB36
+ 107 0042 B7E0     		b	.L4	@long jump
+ 108              	.LCB36:
+ 109              		.loc 1 145 0 is_stmt 0 discriminator 1
+ 110 0044 884B     		ldr	r3, .L18+12
+ 111 0046 1B78     		ldrb	r3, [r3]
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 6
+
+
+ 112 0048 012B     		cmp	r3, #1
+ 113 004a 00D0     		beq	.LCB40
+ 114 004c B2E0     		b	.L4	@long jump
+ 115              	.LCB40:
+ 146:.\main.c      **** 			    {
+ 147:.\main.c      **** 				/* Compute frequency using the latched count value, computed frequency 
+ 148:.\main.c      **** 				will be stored in ASCII format in a global array */
+ 149:.\main.c      **** 				Compute_Frequency();
+ 116              		.loc 1 149 0 is_stmt 1
+ 117 004e FFF7FEFF 		bl	Compute_Frequency
+ 150:.\main.c      **** 				
+ 151:.\main.c      **** 				#if(UART_DEBUG_ENABLE)
+ 152:.\main.c      **** 					/* Print input signal counter value in hexadecimal */
+ 153:.\main.c      **** 					UART_UartPutString("Input Signal Counter Value: ");
+ 118              		.loc 1 153 0
+ 119 0052 864B     		ldr	r3, .L18+16
+ 120 0054 181C     		mov	r0, r3
+ 121 0056 FFF7FEFF 		bl	UART_UartPutString
+ 154:.\main.c      **** 					UART_SendDebugData(Input_Signal_Count);
+ 122              		.loc 1 154 0
+ 123 005a 854B     		ldr	r3, .L18+20
+ 124 005c 1B68     		ldr	r3, [r3]
+ 125 005e 181C     		mov	r0, r3
+ 126 0060 FFF7FEFF 		bl	UART_SendDebugData
+ 155:.\main.c      **** 					UART_UartPutString("      ");
+ 127              		.loc 1 155 0
+ 128 0064 834B     		ldr	r3, .L18+24
+ 129 0066 181C     		mov	r0, r3
+ 130 0068 FFF7FEFF 		bl	UART_UartPutString
+ 156:.\main.c      **** 					
+ 157:.\main.c      **** 					/* Print input signal counter value in ASCII format */	
+ 158:.\main.c      **** 					/* Reset the array before storing the ASCII character */
+ 159:.\main.c      **** 					Reset_Array(InputCounter_ASCII, DATA_END);
+ 131              		.loc 1 159 0
+ 132 006c 824B     		ldr	r3, .L18+28
+ 133 006e 181C     		mov	r0, r3
+ 134 0070 0A21     		mov	r1, #10
+ 135 0072 FFF7FEFF 		bl	Reset_Array
+ 160:.\main.c      **** 					
+ 161:.\main.c      **** 					Convert_HextoDec(Input_Signal_Count, InputCounter_ASCII);
+ 136              		.loc 1 161 0
+ 137 0076 7E4B     		ldr	r3, .L18+20
+ 138 0078 1A68     		ldr	r2, [r3]
+ 139 007a 7F4B     		ldr	r3, .L18+28
+ 140 007c 101C     		mov	r0, r2
+ 141 007e 191C     		mov	r1, r3
+ 142 0080 FFF7FEFF 		bl	Convert_HextoDec
+ 162:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 143              		.loc 1 162 0
+ 144 0084 FB1D     		add	r3, r7, #7
+ 145 0086 0022     		mov	r2, #0
+ 146 0088 1A70     		strb	r2, [r3]
+ 147 008a 0DE0     		b	.L5
+ 148              	.L6:
+ 163:.\main.c      **** 					{
+ 164:.\main.c      **** 						UART_UartPutChar(InputCounter_ASCII[DATA_END - loopNo -1]);
+ 149              		.loc 1 164 0 discriminator 2
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 7
+
+
+ 150 008c FB1D     		add	r3, r7, #7
+ 151 008e 1B78     		ldrb	r3, [r3]
+ 152 0090 0922     		mov	r2, #9
+ 153 0092 D31A     		sub	r3, r2, r3
+ 154 0094 784A     		ldr	r2, .L18+28
+ 155 0096 D35C     		ldrb	r3, [r2, r3]
+ 156 0098 181C     		mov	r0, r3
+ 157 009a FFF7FEFF 		bl	UART_SpiUartWriteTxData
+ 162:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 158              		.loc 1 162 0 discriminator 2
+ 159 009e FB1D     		add	r3, r7, #7
+ 160 00a0 1A78     		ldrb	r2, [r3]
+ 161 00a2 FB1D     		add	r3, r7, #7
+ 162 00a4 0132     		add	r2, r2, #1
+ 163 00a6 1A70     		strb	r2, [r3]
+ 164              	.L5:
+ 162:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 165              		.loc 1 162 0 is_stmt 0 discriminator 1
+ 166 00a8 FB1D     		add	r3, r7, #7
+ 167 00aa 1B78     		ldrb	r3, [r3]
+ 168 00ac 092B     		cmp	r3, #9
+ 169 00ae EDD9     		bls	.L6
+ 165:.\main.c      **** 					}
+ 166:.\main.c      **** 					UART_PutCRLF();	
+ 170              		.loc 1 166 0 is_stmt 1
+ 171 00b0 FFF7FEFF 		bl	UART_PutCRLF
+ 167:.\main.c      **** 
+ 168:.\main.c      **** 					/* Print reference clock counter value */
+ 169:.\main.c      **** 					UART_UartPutString("Reference Clock Counter Value: ");
+ 172              		.loc 1 169 0
+ 173 00b4 714B     		ldr	r3, .L18+32
+ 174 00b6 181C     		mov	r0, r3
+ 175 00b8 FFF7FEFF 		bl	UART_UartPutString
+ 170:.\main.c      **** 					UART_SendDebugData(Ref_Clock_Count);
+ 176              		.loc 1 170 0
+ 177 00bc 704B     		ldr	r3, .L18+36
+ 178 00be 1B68     		ldr	r3, [r3]
+ 179 00c0 181C     		mov	r0, r3
+ 180 00c2 FFF7FEFF 		bl	UART_SendDebugData
+ 171:.\main.c      **** 					UART_UartPutString("      ");
+ 181              		.loc 1 171 0
+ 182 00c6 6B4B     		ldr	r3, .L18+24
+ 183 00c8 181C     		mov	r0, r3
+ 184 00ca FFF7FEFF 		bl	UART_UartPutString
+ 172:.\main.c      **** 					
+ 173:.\main.c      **** 					/* Print input signal counter value in ASCII format */	
+ 174:.\main.c      **** 					/* Reset the array before storing the ASCII character */				
+ 175:.\main.c      **** 					Reset_Array(RefCounter_ASCII, DATA_END);
+ 185              		.loc 1 175 0
+ 186 00ce 6D4B     		ldr	r3, .L18+40
+ 187 00d0 181C     		mov	r0, r3
+ 188 00d2 0A21     		mov	r1, #10
+ 189 00d4 FFF7FEFF 		bl	Reset_Array
+ 176:.\main.c      **** 					Convert_HextoDec(Ref_Clock_Count, RefCounter_ASCII);
+ 190              		.loc 1 176 0
+ 191 00d8 694B     		ldr	r3, .L18+36
+ 192 00da 1A68     		ldr	r2, [r3]
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 8
+
+
+ 193 00dc 694B     		ldr	r3, .L18+40
+ 194 00de 101C     		mov	r0, r2
+ 195 00e0 191C     		mov	r1, r3
+ 196 00e2 FFF7FEFF 		bl	Convert_HextoDec
+ 177:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 197              		.loc 1 177 0
+ 198 00e6 FB1D     		add	r3, r7, #7
+ 199 00e8 0022     		mov	r2, #0
+ 200 00ea 1A70     		strb	r2, [r3]
+ 201 00ec 0DE0     		b	.L7
+ 202              	.L8:
+ 178:.\main.c      **** 					{
+ 179:.\main.c      **** 						UART_UartPutChar(RefCounter_ASCII[DATA_END - loopNo -1]);
+ 203              		.loc 1 179 0 discriminator 2
+ 204 00ee FB1D     		add	r3, r7, #7
+ 205 00f0 1B78     		ldrb	r3, [r3]
+ 206 00f2 0922     		mov	r2, #9
+ 207 00f4 D31A     		sub	r3, r2, r3
+ 208 00f6 634A     		ldr	r2, .L18+40
+ 209 00f8 D35C     		ldrb	r3, [r2, r3]
+ 210 00fa 181C     		mov	r0, r3
+ 211 00fc FFF7FEFF 		bl	UART_SpiUartWriteTxData
+ 177:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 212              		.loc 1 177 0 discriminator 2
+ 213 0100 FB1D     		add	r3, r7, #7
+ 214 0102 1A78     		ldrb	r2, [r3]
+ 215 0104 FB1D     		add	r3, r7, #7
+ 216 0106 0132     		add	r2, r2, #1
+ 217 0108 1A70     		strb	r2, [r3]
+ 218              	.L7:
+ 177:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 219              		.loc 1 177 0 is_stmt 0 discriminator 1
+ 220 010a FB1D     		add	r3, r7, #7
+ 221 010c 1B78     		ldrb	r3, [r3]
+ 222 010e 092B     		cmp	r3, #9
+ 223 0110 EDD9     		bls	.L8
+ 180:.\main.c      **** 					}
+ 181:.\main.c      **** 					UART_PutCRLF();
+ 224              		.loc 1 181 0 is_stmt 1
+ 225 0112 FFF7FEFF 		bl	UART_PutCRLF
+ 182:.\main.c      **** 					
+ 183:.\main.c      **** 					/* Print Input Signal Frequency in decimal format */
+ 184:.\main.c      **** 					UART_UartPutString("Input Frequency: ");
+ 226              		.loc 1 184 0
+ 227 0116 5C4B     		ldr	r3, .L18+44
+ 228 0118 181C     		mov	r0, r3
+ 229 011a FFF7FEFF 		bl	UART_UartPutString
+ 185:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 230              		.loc 1 185 0
+ 231 011e FB1D     		add	r3, r7, #7
+ 232 0120 0022     		mov	r2, #0
+ 233 0122 1A70     		strb	r2, [r3]
+ 234 0124 0DE0     		b	.L9
+ 235              	.L10:
+ 186:.\main.c      **** 					{
+ 187:.\main.c      **** 						UART_UartPutChar(Input_Frequency[DATA_END - loopNo -1]);
+ 236              		.loc 1 187 0 discriminator 2
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 9
+
+
+ 237 0126 FB1D     		add	r3, r7, #7
+ 238 0128 1B78     		ldrb	r3, [r3]
+ 239 012a 0922     		mov	r2, #9
+ 240 012c D31A     		sub	r3, r2, r3
+ 241 012e 574A     		ldr	r2, .L18+48
+ 242 0130 D35C     		ldrb	r3, [r2, r3]
+ 243 0132 181C     		mov	r0, r3
+ 244 0134 FFF7FEFF 		bl	UART_SpiUartWriteTxData
+ 185:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 245              		.loc 1 185 0 discriminator 2
+ 246 0138 FB1D     		add	r3, r7, #7
+ 247 013a 1A78     		ldrb	r2, [r3]
+ 248 013c FB1D     		add	r3, r7, #7
+ 249 013e 0132     		add	r2, r2, #1
+ 250 0140 1A70     		strb	r2, [r3]
+ 251              	.L9:
+ 185:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 252              		.loc 1 185 0 is_stmt 0 discriminator 1
+ 253 0142 FB1D     		add	r3, r7, #7
+ 254 0144 1B78     		ldrb	r3, [r3]
+ 255 0146 092B     		cmp	r3, #9
+ 256 0148 EDD9     		bls	.L10
+ 188:.\main.c      **** 					}
+ 189:.\main.c      **** 					UART_PutCRLF();	
+ 257              		.loc 1 189 0 is_stmt 1
+ 258 014a FFF7FEFF 		bl	UART_PutCRLF
+ 190:.\main.c      ****                     
+ 191:.\main.c      ****                     /* Print LED value*/
+ 192:.\main.c      ****                     
+ 193:.\main.c      ****                     UART_UartPutString("Red Value: ");
+ 259              		.loc 1 193 0
+ 260 014e 504B     		ldr	r3, .L18+52
+ 261 0150 181C     		mov	r0, r3
+ 262 0152 FFF7FEFF 		bl	UART_UartPutString
+ 194:.\main.c      ****                     UART_SendDebugData(RGBledData[RED_INDEX]);
+ 263              		.loc 1 194 0
+ 264 0156 4F4B     		ldr	r3, .L18+56
+ 265 0158 1B78     		ldrb	r3, [r3]
+ 266 015a 181C     		mov	r0, r3
+ 267 015c FFF7FEFF 		bl	UART_SendDebugData
+ 195:.\main.c      ****                     UART_PutCRLF();
+ 268              		.loc 1 195 0
+ 269 0160 FFF7FEFF 		bl	UART_PutCRLF
+ 196:.\main.c      ****                     UART_UartPutString("Blue Value: ");
+ 270              		.loc 1 196 0
+ 271 0164 4C4B     		ldr	r3, .L18+60
+ 272 0166 181C     		mov	r0, r3
+ 273 0168 FFF7FEFF 		bl	UART_UartPutString
+ 197:.\main.c      ****                     UART_SendDebugData(RGBledData[BLUE_INDEX]); 
+ 274              		.loc 1 197 0
+ 275 016c 494B     		ldr	r3, .L18+56
+ 276 016e 9B78     		ldrb	r3, [r3, #2]
+ 277 0170 181C     		mov	r0, r3
+ 278 0172 FFF7FEFF 		bl	UART_SendDebugData
+ 198:.\main.c      ****                     UART_PutCRLF();
+ 279              		.loc 1 198 0
+ 280 0176 FFF7FEFF 		bl	UART_PutCRLF
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 10
+
+
+ 199:.\main.c      ****                     UART_UartPutString("GREEN Value: ");
+ 281              		.loc 1 199 0
+ 282 017a 484B     		ldr	r3, .L18+64
+ 283 017c 181C     		mov	r0, r3
+ 284 017e FFF7FEFF 		bl	UART_UartPutString
+ 200:.\main.c      ****                     UART_SendDebugData(RGBledData[GREEN_INDEX]); 
+ 285              		.loc 1 200 0
+ 286 0182 444B     		ldr	r3, .L18+56
+ 287 0184 5B78     		ldrb	r3, [r3, #1]
+ 288 0186 181C     		mov	r0, r3
+ 289 0188 FFF7FEFF 		bl	UART_SendDebugData
+ 201:.\main.c      ****                     UART_PutCRLF();
+ 290              		.loc 1 201 0
+ 291 018c FFF7FEFF 		bl	UART_PutCRLF
+ 202:.\main.c      ****                     UART_UartPutString("Intensity Value: ");
+ 292              		.loc 1 202 0
+ 293 0190 434B     		ldr	r3, .L18+68
+ 294 0192 181C     		mov	r0, r3
+ 295 0194 FFF7FEFF 		bl	UART_UartPutString
+ 203:.\main.c      ****                     UART_SendDebugData(RGBledData[INTENSITY_INDEX]); 
+ 296              		.loc 1 203 0
+ 297 0198 3E4B     		ldr	r3, .L18+56
+ 298 019a DB78     		ldrb	r3, [r3, #3]
+ 299 019c 181C     		mov	r0, r3
+ 300 019e FFF7FEFF 		bl	UART_SendDebugData
+ 204:.\main.c      ****                     UART_PutCRLF();	
+ 301              		.loc 1 204 0
+ 302 01a2 FFF7FEFF 		bl	UART_PutCRLF
+ 205:.\main.c      **** 				#endif
+ 206:.\main.c      **** 				/* Reset the capture flag after computing the frequency */
+ 207:.\main.c      **** 				Input_Sig_Ctr_Capture = 0;
+ 303              		.loc 1 207 0
+ 304 01a6 2F4B     		ldr	r3, .L18+8
+ 305 01a8 0022     		mov	r2, #0
+ 306 01aa 1A70     		strb	r2, [r3]
+ 208:.\main.c      **** 				Ref_Clk_Ctr_Capture = 0;
+ 307              		.loc 1 208 0
+ 308 01ac 2E4B     		ldr	r3, .L18+12
+ 309 01ae 0022     		mov	r2, #0
+ 310 01b0 1A70     		strb	r2, [r3]
+ 311 01b2 23E0     		b	.L11
+ 312              	.L4:
+ 209:.\main.c      ****             }
+ 210:.\main.c      **** 			 
+ 211:.\main.c      **** 			/* If valid capture event is not registered, set the value of frequency to 
+ 212:.\main.c      **** 			   zero */
+ 213:.\main.c      **** 			    else
+ 214:.\main.c      **** 			    {
+ 215:.\main.c      **** 				/* Reset the input_frequency array before storing the frequency value */
+ 216:.\main.c      **** 				Reset_Array(Input_Frequency, DATA_END);
+ 313              		.loc 1 216 0
+ 314 01b4 354B     		ldr	r3, .L18+48
+ 315 01b6 181C     		mov	r0, r3
+ 316 01b8 0A21     		mov	r1, #10
+ 317 01ba FFF7FEFF 		bl	Reset_Array
+ 217:.\main.c      **** 
+ 218:.\main.c      **** 				/* If no capture event is detected in the 1s interval, set the frequency to zero */
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 11
+
+
+ 219:.\main.c      **** 				FormatFrequencyData(ZERO_HZ);
+ 318              		.loc 1 219 0
+ 319 01be 0420     		mov	r0, #4
+ 320 01c0 FFF7FEFF 		bl	FormatFrequencyData
+ 220:.\main.c      **** 				
+ 221:.\main.c      **** 				#if(UART_DEBUG_ENABLE)
+ 222:.\main.c      **** 					/* Print Input Signal Frequency in decimal format */
+ 223:.\main.c      **** 					UART_UartPutString("Input Frequency: ");
+ 321              		.loc 1 223 0
+ 322 01c4 304B     		ldr	r3, .L18+44
+ 323 01c6 181C     		mov	r0, r3
+ 324 01c8 FFF7FEFF 		bl	UART_UartPutString
+ 224:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 325              		.loc 1 224 0
+ 326 01cc FB1D     		add	r3, r7, #7
+ 327 01ce 0022     		mov	r2, #0
+ 328 01d0 1A70     		strb	r2, [r3]
+ 329 01d2 0DE0     		b	.L12
+ 330              	.L13:
+ 225:.\main.c      **** 					{
+ 226:.\main.c      **** 						UART_UartPutChar(Input_Frequency[DATA_END - loopNo -1]);
+ 331              		.loc 1 226 0 discriminator 2
+ 332 01d4 FB1D     		add	r3, r7, #7
+ 333 01d6 1B78     		ldrb	r3, [r3]
+ 334 01d8 0922     		mov	r2, #9
+ 335 01da D31A     		sub	r3, r2, r3
+ 336 01dc 2B4A     		ldr	r2, .L18+48
+ 337 01de D35C     		ldrb	r3, [r2, r3]
+ 338 01e0 181C     		mov	r0, r3
+ 339 01e2 FFF7FEFF 		bl	UART_SpiUartWriteTxData
+ 224:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 340              		.loc 1 224 0 discriminator 2
+ 341 01e6 FB1D     		add	r3, r7, #7
+ 342 01e8 1A78     		ldrb	r2, [r3]
+ 343 01ea FB1D     		add	r3, r7, #7
+ 344 01ec 0132     		add	r2, r2, #1
+ 345 01ee 1A70     		strb	r2, [r3]
+ 346              	.L12:
+ 224:.\main.c      **** 					for(loopNo = 0; loopNo < DATA_END; loopNo++)
+ 347              		.loc 1 224 0 is_stmt 0 discriminator 1
+ 348 01f0 FB1D     		add	r3, r7, #7
+ 349 01f2 1B78     		ldrb	r3, [r3]
+ 350 01f4 092B     		cmp	r3, #9
+ 351 01f6 EDD9     		bls	.L13
+ 227:.\main.c      **** 					}
+ 228:.\main.c      **** 					UART_PutCRLF();	
+ 352              		.loc 1 228 0 is_stmt 1
+ 353 01f8 FFF7FEFF 		bl	UART_PutCRLF
+ 354              	.L11:
+ 229:.\main.c      **** 				#endif
+ 230:.\main.c      **** 			}
+ 231:.\main.c      **** 			/* Reset the 2s interval flag for computing the frequency in the next interval */
+ 232:.\main.c      **** 			Calculate_Frequency = 0;
+ 355              		.loc 1 232 0
+ 356 01fc 184B     		ldr	r3, .L18+4
+ 357 01fe 0022     		mov	r2, #0
+ 358 0200 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 12
+
+
+ 233:.\main.c      **** 			/* Send frequency value only if BLE device is connected */
+ 234:.\main.c      **** 			if(TRUE == deviceConnected) 
+ 359              		.loc 1 234 0
+ 360 0202 284B     		ldr	r3, .L18+72
+ 361 0204 1B78     		ldrb	r3, [r3]
+ 362 0206 012B     		cmp	r3, #1
+ 363 0208 09D1     		bne	.L3
+ 235:.\main.c      **** 			{
+ 236:.\main.c      **** 				/* Send frequency value when notifications are enabled */
+ 237:.\main.c      **** 				if((startNotification & CCCD_NTF_BIT_MASK))
+ 364              		.loc 1 237 0
+ 365 020a 274B     		ldr	r3, .L18+76
+ 366 020c 1B78     		ldrb	r3, [r3]
+ 367 020e 1A1C     		mov	r2, r3
+ 368 0210 0123     		mov	r3, #1
+ 369 0212 1340     		and	r3, r2
+ 370 0214 03D0     		beq	.L3
+ 238:.\main.c      **** 				{
+ 239:.\main.c      **** 
+ 240:.\main.c      **** 					/* Send the frequency value to BLE central device by notifications */
+ 241:.\main.c      **** 					SendDataOverFreqCounterNotification(Input_Frequency);
+ 371              		.loc 1 241 0
+ 372 0216 1D4B     		ldr	r3, .L18+48
+ 373 0218 181C     		mov	r0, r3
+ 374 021a FFF7FEFF 		bl	SendDataOverFreqCounterNotification
+ 375              	.L3:
+ 242:.\main.c      **** 				}
+ 243:.\main.c      **** 			}
+ 244:.\main.c      **** 		}
+ 245:.\main.c      ****         RGBledData[RED_INDEX]=0x00;
+ 376              		.loc 1 245 0
+ 377 021e 1D4B     		ldr	r3, .L18+56
+ 378 0220 0022     		mov	r2, #0
+ 379 0222 1A70     		strb	r2, [r3]
+ 380              	.L2:
+ 140:.\main.c      ****         while (RGBledData[RED_INDEX]==0xff){
+ 381              		.loc 1 140 0 discriminator 1
+ 382 0224 1B4B     		ldr	r3, .L18+56
+ 383 0226 1B78     		ldrb	r3, [r3]
+ 384 0228 FF2B     		cmp	r3, #255
+ 385 022a 00D1     		bne	.LCB273
+ 386 022c 00E7     		b	.L14	@long jump
+ 387              	.LCB273:
+ 246:.\main.c      ****         }
+ 247:.\main.c      ****         
+ 248:.\main.c      **** 		
+ 249:.\main.c      **** 		/* Function to handle LED status depending on BLE state */
+ 250:.\main.c      **** 		//HandleStatusLED();
+ 251:.\main.c      **** 		
+ 252:.\main.c      **** 		/* Handle CCCD value update only if BLE device is connected */
+ 253:.\main.c      **** 		if(TRUE == deviceConnected) 
+ 388              		.loc 1 253 0
+ 389 022e 1D4B     		ldr	r3, .L18+72
+ 390 0230 1B78     		ldrb	r3, [r3]
+ 391 0232 012B     		cmp	r3, #1
+ 392 0234 01D1     		bne	.L15
+ 254:.\main.c      **** 		{
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 13
+
+
+ 255:.\main.c      **** 	      
+ 256:.\main.c      **** 			/* When the Client Characteristic Configuration descriptor (CCCD) is written
+ 257:.\main.c      **** 			* by Central device for enabling/disabling notifications, then the same
+ 258:.\main.c      **** 			* descriptor value has to be explicitly updated in application so that
+ 259:.\main.c      **** 			* it reflects the correct value when the descriptor is read */
+ 260:.\main.c      **** 			UpdateNotificationCCCD();	
+ 393              		.loc 1 260 0
+ 394 0236 FFF7FEFF 		bl	UpdateNotificationCCCD
+ 395              	.L15:
+ 261:.\main.c      **** 		}		
+ 262:.\main.c      **** 		if(restartAdvertisement)
+ 396              		.loc 1 262 0
+ 397 023a 1C4B     		ldr	r3, .L18+80
+ 398 023c 1B78     		ldrb	r3, [r3]
+ 399 023e 002B     		cmp	r3, #0
+ 400 0240 05D0     		beq	.L16
+ 263:.\main.c      **** 		{
+ 264:.\main.c      **** 			/* Reset 'restartAdvertisement' flag*/
+ 265:.\main.c      **** 			restartAdvertisement = FALSE;
+ 401              		.loc 1 265 0
+ 402 0242 1A4B     		ldr	r3, .L18+80
+ 403 0244 0022     		mov	r2, #0
+ 404 0246 1A70     		strb	r2, [r3]
+ 266:.\main.c      **** 			
+ 267:.\main.c      **** 			/* Start Advertisement and enter Discoverable mode*/
+ 268:.\main.c      **** 			CyBle_GappStartAdvertisement(CYBLE_ADVERTISING_FAST);	
+ 405              		.loc 1 268 0
+ 406 0248 0020     		mov	r0, #0
+ 407 024a FFF7FEFF 		bl	CyBle_GappStartAdvertisement
+ 408              	.L16:
+ 269:.\main.c      **** 		}
+ 270:.\main.c      **** 		/*Process Event callback to handle BLE events. The events generated and 
+ 271:.\main.c      **** 		* used for this application are inside the 'CustomEventHandler' routine*/
+ 272:.\main.c      **** 		CyBle_ProcessEvents();
+ 409              		.loc 1 272 0
+ 410 024e FFF7FEFF 		bl	CyBle_ProcessEvents
+ 273:.\main.c      **** 		
+ 274:.\main.c      **** 		/* Put CPU to sleep */
+ 275:.\main.c      **** 		CySysPmSleep();
+ 411              		.loc 1 275 0
+ 412 0252 FFF7FEFF 		bl	CySysPmSleep
+ 276:.\main.c      ****     }
+ 413              		.loc 1 276 0
+ 414 0256 C046     		mov	r8, r8
+ 140:.\main.c      ****         while (RGBledData[RED_INDEX]==0xff){
+ 415              		.loc 1 140 0
+ 416 0258 E4E7     		b	.L2
+ 417              	.L19:
+ 418 025a C046     		.align	2
+ 419              	.L18:
+ 420 025c 00000000 		.word	.LC0
+ 421 0260 00000000 		.word	Calculate_Frequency
+ 422 0264 00000000 		.word	Input_Sig_Ctr_Capture
+ 423 0268 00000000 		.word	Ref_Clk_Ctr_Capture
+ 424 026c 34000000 		.word	.LC5
+ 425 0270 00000000 		.word	Input_Signal_Count
+ 426 0274 54000000 		.word	.LC8
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 14
+
+
+ 427 0278 00000000 		.word	InputCounter_ASCII
+ 428 027c 5C000000 		.word	.LC11
+ 429 0280 00000000 		.word	Ref_Clock_Count
+ 430 0284 00000000 		.word	RefCounter_ASCII
+ 431 0288 7C000000 		.word	.LC15
+ 432 028c 00000000 		.word	Input_Frequency
+ 433 0290 90000000 		.word	.LC18
+ 434 0294 00000000 		.word	RGBledData
+ 435 0298 9C000000 		.word	.LC21
+ 436 029c AC000000 		.word	.LC23
+ 437 02a0 BC000000 		.word	.LC25
+ 438 02a4 00000000 		.word	deviceConnected
+ 439 02a8 00000000 		.word	startNotification
+ 440 02ac 00000000 		.word	restartAdvertisement
+ 441              		.cfi_endproc
+ 442              	.LFE35:
+ 443              		.size	main, .-main
+ 444              		.section	.text.InitializeSystem,"ax",%progbits
+ 445              		.align	2
+ 446              		.code	16
+ 447              		.thumb_func
+ 448              		.type	InitializeSystem, %function
+ 449              	InitializeSystem:
+ 450              	.LFB36:
+ 277:.\main.c      ****     return 0;
+ 278:.\main.c      **** }
+ 279:.\main.c      **** 
+ 280:.\main.c      **** /*******************************************************************************
+ 281:.\main.c      **** * Function Name: InitializeSystem
+ 282:.\main.c      **** ********************************************************************************
+ 283:.\main.c      **** * Summary:
+ 284:.\main.c      **** * Start the components and initialize system.
+ 285:.\main.c      **** *
+ 286:.\main.c      **** * Parameters:
+ 287:.\main.c      **** *  void
+ 288:.\main.c      **** *
+ 289:.\main.c      **** * Return:
+ 290:.\main.c      **** *  void
+ 291:.\main.c      **** *
+ 292:.\main.c      **** *******************************************************************************/
+ 293:.\main.c      **** void InitializeSystem(void)
+ 294:.\main.c      **** {
+ 451              		.loc 1 294 0
+ 452              		.cfi_startproc
+ 453 0000 80B5     		push	{r7, lr}
+ 454              		.cfi_def_cfa_offset 8
+ 455              		.cfi_offset 7, -8
+ 456              		.cfi_offset 14, -4
+ 457 0002 00AF     		add	r7, sp, #0
+ 458              		.cfi_def_cfa_register 7
+ 295:.\main.c      **** 	/* Start both the PrISM components for LED control*/
+ 296:.\main.c      ****     PRS_1_Start();
+ 459              		.loc 1 296 0
+ 460 0004 FFF7FEFF 		bl	PRS_1_Start
+ 297:.\main.c      ****     PRS_2_Start();
+ 461              		.loc 1 297 0
+ 462 0008 FFF7FEFF 		bl	PRS_2_Start
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 15
+
+
+ 298:.\main.c      **** 	
+ 299:.\main.c      **** 	/* The RGB LED on BLE Pioneer kit are active low. Drive HIGH on 
+ 300:.\main.c      **** 	 * pin for OFF and drive LOW on pin for ON*/
+ 301:.\main.c      **** 	PRS_1_WritePulse0(RGB_LED_OFF);
+ 463              		.loc 1 301 0
+ 464 000c FF20     		mov	r0, #255
+ 465 000e FFF7FEFF 		bl	PRS_1_WritePulse0
+ 302:.\main.c      **** 	PRS_1_WritePulse1(RGB_LED_OFF);
+ 466              		.loc 1 302 0
+ 467 0012 FF20     		mov	r0, #255
+ 468 0014 FFF7FEFF 		bl	PRS_1_WritePulse1
+ 303:.\main.c      **** 	PRS_2_WritePulse0(RGB_LED_OFF);
+ 469              		.loc 1 303 0
+ 470 0018 FF20     		mov	r0, #255
+ 471 001a FFF7FEFF 		bl	PRS_2_WritePulse0
+ 304:.\main.c      **** 	
+ 305:.\main.c      **** 	/* Set Drive mode of output pins from HiZ to Strong */
+ 306:.\main.c      **** 	RED_SetDriveMode(RED_DM_STRONG);
+ 472              		.loc 1 306 0
+ 473 001e 0620     		mov	r0, #6
+ 474 0020 FFF7FEFF 		bl	RED_SetDriveMode
+ 307:.\main.c      **** 	GREEN_SetDriveMode(GREEN_DM_STRONG);
+ 475              		.loc 1 307 0
+ 476 0024 0620     		mov	r0, #6
+ 477 0026 FFF7FEFF 		bl	GREEN_SetDriveMode
+ 308:.\main.c      **** 	BLUE_SetDriveMode(BLUE_DM_STRONG);
+ 478              		.loc 1 308 0
+ 479 002a 0620     		mov	r0, #6
+ 480 002c FFF7FEFF 		bl	BLUE_SetDriveMode
+ 309:.\main.c      **** }
+ 481              		.loc 1 309 0
+ 482 0030 BD46     		mov	sp, r7
+ 483              		@ sp needed
+ 484 0032 80BD     		pop	{r7, pc}
+ 485              		.cfi_endproc
+ 486              	.LFE36:
+ 487              		.size	InitializeSystem, .-InitializeSystem
+ 488              		.text
+ 489              	.Letext0:
+ 490              		.file 2 ".\\Generated_Source\\PSoC4/cytypes.h"
+ 491              		.file 3 ".\\BLEApplications.h"
+ 492              		.file 4 ".\\Generated_Source\\PSoC4/BLE_Stack.h"
+ 493              		.section	.debug_info,"",%progbits
+ 494              	.Ldebug_info0:
+ 495 0000 F4020000 		.4byte	0x2f4
+ 496 0004 0400     		.2byte	0x4
+ 497 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 498 000a 04       		.byte	0x4
+ 499 000b 01       		.uleb128 0x1
+ 500 000c 91080000 		.4byte	.LASF81
+ 501 0010 01       		.byte	0x1
+ 502 0011 D5060000 		.4byte	.LASF82
+ 503 0015 30020000 		.4byte	.LASF83
+ 504 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 505 001d 00000000 		.4byte	0
+ 506 0021 00000000 		.4byte	.Ldebug_line0
+ 507 0025 02       		.uleb128 0x2
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 16
+
+
+ 508 0026 01       		.byte	0x1
+ 509 0027 06       		.byte	0x6
+ 510 0028 B8040000 		.4byte	.LASF0
+ 511 002c 02       		.uleb128 0x2
+ 512 002d 01       		.byte	0x1
+ 513 002e 08       		.byte	0x8
+ 514 002f 5D040000 		.4byte	.LASF1
+ 515 0033 02       		.uleb128 0x2
+ 516 0034 02       		.byte	0x2
+ 517 0035 05       		.byte	0x5
+ 518 0036 89000000 		.4byte	.LASF2
+ 519 003a 02       		.uleb128 0x2
+ 520 003b 02       		.byte	0x2
+ 521 003c 07       		.byte	0x7
+ 522 003d B0050000 		.4byte	.LASF3
+ 523 0041 02       		.uleb128 0x2
+ 524 0042 04       		.byte	0x4
+ 525 0043 05       		.byte	0x5
+ 526 0044 1E030000 		.4byte	.LASF4
+ 527 0048 02       		.uleb128 0x2
+ 528 0049 04       		.byte	0x4
+ 529 004a 07       		.byte	0x7
+ 530 004b 49050000 		.4byte	.LASF5
+ 531 004f 02       		.uleb128 0x2
+ 532 0050 08       		.byte	0x8
+ 533 0051 05       		.byte	0x5
+ 534 0052 E8020000 		.4byte	.LASF6
+ 535 0056 02       		.uleb128 0x2
+ 536 0057 08       		.byte	0x8
+ 537 0058 07       		.byte	0x7
+ 538 0059 F6020000 		.4byte	.LASF7
+ 539 005d 03       		.uleb128 0x3
+ 540 005e 04       		.byte	0x4
+ 541 005f 05       		.byte	0x5
+ 542 0060 696E7400 		.ascii	"int\000"
+ 543 0064 02       		.uleb128 0x2
+ 544 0065 04       		.byte	0x4
+ 545 0066 07       		.byte	0x7
+ 546 0067 21050000 		.4byte	.LASF8
+ 547 006b 04       		.uleb128 0x4
+ 548 006c 31040000 		.4byte	.LASF9
+ 549 0070 02       		.byte	0x2
+ 550 0071 A1       		.byte	0xa1
+ 551 0072 2C000000 		.4byte	0x2c
+ 552 0076 04       		.uleb128 0x4
+ 553 0077 53060000 		.4byte	.LASF10
+ 554 007b 02       		.byte	0x2
+ 555 007c A3       		.byte	0xa3
+ 556 007d 48000000 		.4byte	0x48
+ 557 0081 02       		.uleb128 0x2
+ 558 0082 04       		.byte	0x4
+ 559 0083 04       		.byte	0x4
+ 560 0084 24000000 		.4byte	.LASF11
+ 561 0088 02       		.uleb128 0x2
+ 562 0089 08       		.byte	0x8
+ 563 008a 04       		.byte	0x4
+ 564 008b 9B060000 		.4byte	.LASF12
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 17
+
+
+ 565 008f 02       		.uleb128 0x2
+ 566 0090 01       		.byte	0x1
+ 567 0091 08       		.byte	0x8
+ 568 0092 DF050000 		.4byte	.LASF13
+ 569 0096 02       		.uleb128 0x2
+ 570 0097 04       		.byte	0x4
+ 571 0098 07       		.byte	0x7
+ 572 0099 CB000000 		.4byte	.LASF14
+ 573 009d 05       		.uleb128 0x5
+ 574 009e 01       		.byte	0x1
+ 575 009f 04       		.byte	0x4
+ 576 00a0 58       		.byte	0x58
+ 577 00a1 0D020000 		.4byte	0x20d
+ 578 00a5 06       		.uleb128 0x6
+ 579 00a6 CA010000 		.4byte	.LASF15
+ 580 00aa 00       		.sleb128 0
+ 581 00ab 06       		.uleb128 0x6
+ 582 00ac 23010000 		.4byte	.LASF16
+ 583 00b0 01       		.sleb128 1
+ 584 00b1 06       		.uleb128 0x6
+ 585 00b2 C3070000 		.4byte	.LASF17
+ 586 00b6 02       		.sleb128 2
+ 587 00b7 06       		.uleb128 0x6
+ 588 00b8 DE060000 		.4byte	.LASF18
+ 589 00bc 03       		.sleb128 3
+ 590 00bd 06       		.uleb128 0x6
+ 591 00be D4000000 		.4byte	.LASF19
+ 592 00c2 04       		.sleb128 4
+ 593 00c3 06       		.uleb128 0x6
+ 594 00c4 B0030000 		.4byte	.LASF20
+ 595 00c8 05       		.sleb128 5
+ 596 00c9 06       		.uleb128 0x6
+ 597 00ca 3C070000 		.4byte	.LASF21
+ 598 00ce 20       		.sleb128 32
+ 599 00cf 06       		.uleb128 0x6
+ 600 00d0 5B050000 		.4byte	.LASF22
+ 601 00d4 21       		.sleb128 33
+ 602 00d5 06       		.uleb128 0x6
+ 603 00d6 00000000 		.4byte	.LASF23
+ 604 00da 22       		.sleb128 34
+ 605 00db 06       		.uleb128 0x6
+ 606 00dc DF030000 		.4byte	.LASF24
+ 607 00e0 23       		.sleb128 35
+ 608 00e1 06       		.uleb128 0x6
+ 609 00e2 05050000 		.4byte	.LASF25
+ 610 00e6 24       		.sleb128 36
+ 611 00e7 06       		.uleb128 0x6
+ 612 00e8 93000000 		.4byte	.LASF26
+ 613 00ec 25       		.sleb128 37
+ 614 00ed 06       		.uleb128 0x6
+ 615 00ee 67030000 		.4byte	.LASF27
+ 616 00f2 26       		.sleb128 38
+ 617 00f3 06       		.uleb128 0x6
+ 618 00f4 48030000 		.4byte	.LASF28
+ 619 00f8 27       		.sleb128 39
+ 620 00f9 06       		.uleb128 0x6
+ 621 00fa 37080000 		.4byte	.LASF29
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 18
+
+
+ 622 00fe 28       		.sleb128 40
+ 623 00ff 06       		.uleb128 0x6
+ 624 0100 93050000 		.4byte	.LASF30
+ 625 0104 29       		.sleb128 41
+ 626 0105 06       		.uleb128 0x6
+ 627 0106 3F000000 		.4byte	.LASF31
+ 628 010a 2A       		.sleb128 42
+ 629 010b 06       		.uleb128 0x6
+ 630 010c F9070000 		.4byte	.LASF32
+ 631 0110 2B       		.sleb128 43
+ 632 0111 06       		.uleb128 0x6
+ 633 0112 66010000 		.4byte	.LASF33
+ 634 0116 2C       		.sleb128 44
+ 635 0117 06       		.uleb128 0x6
+ 636 0118 68000000 		.4byte	.LASF34
+ 637 011c C000     		.sleb128 64
+ 638 011e 06       		.uleb128 0x6
+ 639 011f 2E050000 		.4byte	.LASF35
+ 640 0123 C100     		.sleb128 65
+ 641 0125 06       		.uleb128 0x6
+ 642 0126 AD000000 		.4byte	.LASF36
+ 643 012a C200     		.sleb128 66
+ 644 012c 06       		.uleb128 0x6
+ 645 012d 36010000 		.4byte	.LASF37
+ 646 0131 C300     		.sleb128 67
+ 647 0133 06       		.uleb128 0x6
+ 648 0134 A5070000 		.4byte	.LASF38
+ 649 0138 C400     		.sleb128 68
+ 650 013a 06       		.uleb128 0x6
+ 651 013b 60070000 		.4byte	.LASF39
+ 652 013f C500     		.sleb128 69
+ 653 0141 06       		.uleb128 0x6
+ 654 0142 02010000 		.4byte	.LASF40
+ 655 0146 C600     		.sleb128 70
+ 656 0148 06       		.uleb128 0x6
+ 657 0149 9A040000 		.4byte	.LASF41
+ 658 014d C700     		.sleb128 71
+ 659 014f 06       		.uleb128 0x6
+ 660 0150 DE040000 		.4byte	.LASF42
+ 661 0154 C800     		.sleb128 72
+ 662 0156 06       		.uleb128 0x6
+ 663 0157 B5020000 		.4byte	.LASF43
+ 664 015b C900     		.sleb128 73
+ 665 015d 06       		.uleb128 0x6
+ 666 015e 16060000 		.4byte	.LASF44
+ 667 0162 CA00     		.sleb128 74
+ 668 0164 06       		.uleb128 0x6
+ 669 0165 8A010000 		.4byte	.LASF45
+ 670 0169 CB00     		.sleb128 75
+ 671 016b 06       		.uleb128 0x6
+ 672 016c C4040000 		.4byte	.LASF46
+ 673 0170 CC00     		.sleb128 76
+ 674 0172 06       		.uleb128 0x6
+ 675 0173 CE020000 		.4byte	.LASF47
+ 676 0177 CD00     		.sleb128 77
+ 677 0179 06       		.uleb128 0x6
+ 678 017a 87070000 		.4byte	.LASF48
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 19
+
+
+ 679 017e CE00     		.sleb128 78
+ 680 0180 06       		.uleb128 0x6
+ 681 0181 6B040000 		.4byte	.LASF49
+ 682 0185 CF00     		.sleb128 79
+ 683 0187 06       		.uleb128 0x6
+ 684 0188 18080000 		.4byte	.LASF50
+ 685 018c D000     		.sleb128 80
+ 686 018e 06       		.uleb128 0x6
+ 687 018f 34060000 		.4byte	.LASF51
+ 688 0193 D100     		.sleb128 81
+ 689 0195 06       		.uleb128 0x6
+ 690 0196 8F030000 		.4byte	.LASF52
+ 691 019a D200     		.sleb128 82
+ 692 019c 06       		.uleb128 0x6
+ 693 019d 27030000 		.4byte	.LASF53
+ 694 01a1 D300     		.sleb128 83
+ 695 01a3 06       		.uleb128 0x6
+ 696 01a4 A9010000 		.4byte	.LASF54
+ 697 01a8 D400     		.sleb128 84
+ 698 01aa 06       		.uleb128 0x6
+ 699 01ab 6D080000 		.4byte	.LASF55
+ 700 01af D500     		.sleb128 85
+ 701 01b1 06       		.uleb128 0x6
+ 702 01b2 37040000 		.4byte	.LASF56
+ 703 01b6 F000     		.sleb128 112
+ 704 01b8 06       		.uleb128 0x6
+ 705 01b9 16070000 		.4byte	.LASF57
+ 706 01bd F100     		.sleb128 113
+ 707 01bf 06       		.uleb128 0x6
+ 708 01c0 E4050000 		.4byte	.LASF58
+ 709 01c4 F200     		.sleb128 114
+ 710 01c6 06       		.uleb128 0x6
+ 711 01c7 E1010000 		.4byte	.LASF59
+ 712 01cb F300     		.sleb128 115
+ 713 01cd 06       		.uleb128 0x6
+ 714 01ce 05040000 		.4byte	.LASF60
+ 715 01d2 F400     		.sleb128 116
+ 716 01d4 06       		.uleb128 0x6
+ 717 01d5 72050000 		.4byte	.LASF61
+ 718 01d9 F500     		.sleb128 117
+ 719 01db 06       		.uleb128 0x6
+ 720 01dc FF010000 		.4byte	.LASF62
+ 721 01e0 F600     		.sleb128 118
+ 722 01e2 06       		.uleb128 0x6
+ 723 01e3 F7060000 		.4byte	.LASF63
+ 724 01e7 F700     		.sleb128 119
+ 725 01e9 06       		.uleb128 0x6
+ 726 01ea 78060000 		.4byte	.LASF64
+ 727 01ee F800     		.sleb128 120
+ 728 01f0 06       		.uleb128 0x6
+ 729 01f1 A2060000 		.4byte	.LASF65
+ 730 01f5 F900     		.sleb128 121
+ 731 01f7 06       		.uleb128 0x6
+ 732 01f8 D5070000 		.4byte	.LASF66
+ 733 01fc FA00     		.sleb128 122
+ 734 01fe 06       		.uleb128 0x6
+ 735 01ff 5A060000 		.4byte	.LASF67
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 20
+
+
+ 736 0203 FA01     		.sleb128 250
+ 737 0205 06       		.uleb128 0x6
+ 738 0206 23040000 		.4byte	.LASF68
+ 739 020a FF01     		.sleb128 255
+ 740 020c 00       		.byte	0
+ 741 020d 07       		.uleb128 0x7
+ 742 020e 6B000000 		.4byte	0x6b
+ 743 0212 1D020000 		.4byte	0x21d
+ 744 0216 08       		.uleb128 0x8
+ 745 0217 96000000 		.4byte	0x96
+ 746 021b 09       		.byte	0x9
+ 747 021c 00       		.byte	0
+ 748 021d 09       		.uleb128 0x9
+ 749 021e E9000000 		.4byte	.LASF84
+ 750 0222 01       		.byte	0x1
+ 751 0223 6F       		.byte	0x6f
+ 752 0224 5D000000 		.4byte	0x5d
+ 753 0228 00000000 		.4byte	.LFB35
+ 754 022c B0020000 		.4byte	.LFE35-.LFB35
+ 755 0230 01       		.uleb128 0x1
+ 756 0231 9C       		.byte	0x9c
+ 757 0232 45020000 		.4byte	0x245
+ 758 0236 0A       		.uleb128 0xa
+ 759 0237 82000000 		.4byte	.LASF85
+ 760 023b 01       		.byte	0x1
+ 761 023c 74       		.byte	0x74
+ 762 023d 6B000000 		.4byte	0x6b
+ 763 0241 02       		.uleb128 0x2
+ 764 0242 91       		.byte	0x91
+ 765 0243 77       		.sleb128 -9
+ 766 0244 00       		.byte	0
+ 767 0245 0B       		.uleb128 0xb
+ 768 0246 C3050000 		.4byte	.LASF86
+ 769 024a 01       		.byte	0x1
+ 770 024b 2501     		.2byte	0x125
+ 771 024d 00000000 		.4byte	.LFB36
+ 772 0251 34000000 		.4byte	.LFE36-.LFB36
+ 773 0255 01       		.uleb128 0x1
+ 774 0256 9C       		.byte	0x9c
+ 775 0257 07       		.uleb128 0x7
+ 776 0258 6B000000 		.4byte	0x6b
+ 777 025c 67020000 		.4byte	0x267
+ 778 0260 08       		.uleb128 0x8
+ 779 0261 96000000 		.4byte	0x96
+ 780 0265 03       		.byte	0x3
+ 781 0266 00       		.byte	0
+ 782 0267 0C       		.uleb128 0xc
+ 783 0268 D4050000 		.4byte	.LASF69
+ 784 026c 03       		.byte	0x3
+ 785 026d 7B       		.byte	0x7b
+ 786 026e 57020000 		.4byte	0x257
+ 787 0272 05       		.uleb128 0x5
+ 788 0273 03       		.byte	0x3
+ 789 0274 00000000 		.4byte	RGBledData
+ 790 0278 0D       		.uleb128 0xd
+ 791 0279 8A040000 		.4byte	.LASF70
+ 792 027d 01       		.byte	0x1
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 21
+
+
+ 793 027e 43       		.byte	0x43
+ 794 027f 6B000000 		.4byte	0x6b
+ 795 0283 0D       		.uleb128 0xd
+ 796 0284 54010000 		.4byte	.LASF71
+ 797 0288 01       		.byte	0x1
+ 798 0289 48       		.byte	0x48
+ 799 028a 6B000000 		.4byte	0x6b
+ 800 028e 0D       		.uleb128 0xd
+ 801 028f 2A000000 		.4byte	.LASF72
+ 802 0293 01       		.byte	0x1
+ 803 0294 4B       		.byte	0x4b
+ 804 0295 6B000000 		.4byte	0x6b
+ 805 0299 0D       		.uleb128 0xd
+ 806 029a C5060000 		.4byte	.LASF73
+ 807 029e 01       		.byte	0x1
+ 808 029f 4E       		.byte	0x4e
+ 809 02a0 0D020000 		.4byte	0x20d
+ 810 02a4 0D       		.uleb128 0xd
+ 811 02a5 0D090000 		.4byte	.LASF74
+ 812 02a9 01       		.byte	0x1
+ 813 02aa 51       		.byte	0x51
+ 814 02ab 0D020000 		.4byte	0x20d
+ 815 02af 0D       		.uleb128 0xd
+ 816 02b0 0D030000 		.4byte	.LASF75
+ 817 02b4 01       		.byte	0x1
+ 818 02b5 54       		.byte	0x54
+ 819 02b6 0D020000 		.4byte	0x20d
+ 820 02ba 0C       		.uleb128 0xc
+ 821 02bb 59080000 		.4byte	.LASF76
+ 822 02bf 01       		.byte	0x1
+ 823 02c0 57       		.byte	0x57
+ 824 02c1 6B000000 		.4byte	0x6b
+ 825 02c5 05       		.uleb128 0x5
+ 826 02c6 03       		.byte	0x3
+ 827 02c7 00000000 		.4byte	Calculate_Frequency
+ 828 02cb 0D       		.uleb128 0xd
+ 829 02cc CC030000 		.4byte	.LASF77
+ 830 02d0 01       		.byte	0x1
+ 831 02d1 5A       		.byte	0x5a
+ 832 02d2 76000000 		.4byte	0x76
+ 833 02d6 0D       		.uleb128 0xd
+ 834 02d7 20020000 		.4byte	.LASF78
+ 835 02db 01       		.byte	0x1
+ 836 02dc 5A       		.byte	0x5a
+ 837 02dd 76000000 		.4byte	0x76
+ 838 02e1 0D       		.uleb128 0xd
+ 839 02e2 00060000 		.4byte	.LASF79
+ 840 02e6 01       		.byte	0x1
+ 841 02e7 5E       		.byte	0x5e
+ 842 02e8 6B000000 		.4byte	0x6b
+ 843 02ec 0D       		.uleb128 0xd
+ 844 02ed EE000000 		.4byte	.LASF80
+ 845 02f1 01       		.byte	0x1
+ 846 02f2 5E       		.byte	0x5e
+ 847 02f3 6B000000 		.4byte	0x6b
+ 848 02f7 00       		.byte	0
+ 849              		.section	.debug_abbrev,"",%progbits
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 22
+
+
+ 850              	.Ldebug_abbrev0:
+ 851 0000 01       		.uleb128 0x1
+ 852 0001 11       		.uleb128 0x11
+ 853 0002 01       		.byte	0x1
+ 854 0003 25       		.uleb128 0x25
+ 855 0004 0E       		.uleb128 0xe
+ 856 0005 13       		.uleb128 0x13
+ 857 0006 0B       		.uleb128 0xb
+ 858 0007 03       		.uleb128 0x3
+ 859 0008 0E       		.uleb128 0xe
+ 860 0009 1B       		.uleb128 0x1b
+ 861 000a 0E       		.uleb128 0xe
+ 862 000b 55       		.uleb128 0x55
+ 863 000c 17       		.uleb128 0x17
+ 864 000d 11       		.uleb128 0x11
+ 865 000e 01       		.uleb128 0x1
+ 866 000f 10       		.uleb128 0x10
+ 867 0010 17       		.uleb128 0x17
+ 868 0011 00       		.byte	0
+ 869 0012 00       		.byte	0
+ 870 0013 02       		.uleb128 0x2
+ 871 0014 24       		.uleb128 0x24
+ 872 0015 00       		.byte	0
+ 873 0016 0B       		.uleb128 0xb
+ 874 0017 0B       		.uleb128 0xb
+ 875 0018 3E       		.uleb128 0x3e
+ 876 0019 0B       		.uleb128 0xb
+ 877 001a 03       		.uleb128 0x3
+ 878 001b 0E       		.uleb128 0xe
+ 879 001c 00       		.byte	0
+ 880 001d 00       		.byte	0
+ 881 001e 03       		.uleb128 0x3
+ 882 001f 24       		.uleb128 0x24
+ 883 0020 00       		.byte	0
+ 884 0021 0B       		.uleb128 0xb
+ 885 0022 0B       		.uleb128 0xb
+ 886 0023 3E       		.uleb128 0x3e
+ 887 0024 0B       		.uleb128 0xb
+ 888 0025 03       		.uleb128 0x3
+ 889 0026 08       		.uleb128 0x8
+ 890 0027 00       		.byte	0
+ 891 0028 00       		.byte	0
+ 892 0029 04       		.uleb128 0x4
+ 893 002a 16       		.uleb128 0x16
+ 894 002b 00       		.byte	0
+ 895 002c 03       		.uleb128 0x3
+ 896 002d 0E       		.uleb128 0xe
+ 897 002e 3A       		.uleb128 0x3a
+ 898 002f 0B       		.uleb128 0xb
+ 899 0030 3B       		.uleb128 0x3b
+ 900 0031 0B       		.uleb128 0xb
+ 901 0032 49       		.uleb128 0x49
+ 902 0033 13       		.uleb128 0x13
+ 903 0034 00       		.byte	0
+ 904 0035 00       		.byte	0
+ 905 0036 05       		.uleb128 0x5
+ 906 0037 04       		.uleb128 0x4
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 23
+
+
+ 907 0038 01       		.byte	0x1
+ 908 0039 0B       		.uleb128 0xb
+ 909 003a 0B       		.uleb128 0xb
+ 910 003b 3A       		.uleb128 0x3a
+ 911 003c 0B       		.uleb128 0xb
+ 912 003d 3B       		.uleb128 0x3b
+ 913 003e 0B       		.uleb128 0xb
+ 914 003f 01       		.uleb128 0x1
+ 915 0040 13       		.uleb128 0x13
+ 916 0041 00       		.byte	0
+ 917 0042 00       		.byte	0
+ 918 0043 06       		.uleb128 0x6
+ 919 0044 28       		.uleb128 0x28
+ 920 0045 00       		.byte	0
+ 921 0046 03       		.uleb128 0x3
+ 922 0047 0E       		.uleb128 0xe
+ 923 0048 1C       		.uleb128 0x1c
+ 924 0049 0D       		.uleb128 0xd
+ 925 004a 00       		.byte	0
+ 926 004b 00       		.byte	0
+ 927 004c 07       		.uleb128 0x7
+ 928 004d 01       		.uleb128 0x1
+ 929 004e 01       		.byte	0x1
+ 930 004f 49       		.uleb128 0x49
+ 931 0050 13       		.uleb128 0x13
+ 932 0051 01       		.uleb128 0x1
+ 933 0052 13       		.uleb128 0x13
+ 934 0053 00       		.byte	0
+ 935 0054 00       		.byte	0
+ 936 0055 08       		.uleb128 0x8
+ 937 0056 21       		.uleb128 0x21
+ 938 0057 00       		.byte	0
+ 939 0058 49       		.uleb128 0x49
+ 940 0059 13       		.uleb128 0x13
+ 941 005a 2F       		.uleb128 0x2f
+ 942 005b 0B       		.uleb128 0xb
+ 943 005c 00       		.byte	0
+ 944 005d 00       		.byte	0
+ 945 005e 09       		.uleb128 0x9
+ 946 005f 2E       		.uleb128 0x2e
+ 947 0060 01       		.byte	0x1
+ 948 0061 3F       		.uleb128 0x3f
+ 949 0062 19       		.uleb128 0x19
+ 950 0063 03       		.uleb128 0x3
+ 951 0064 0E       		.uleb128 0xe
+ 952 0065 3A       		.uleb128 0x3a
+ 953 0066 0B       		.uleb128 0xb
+ 954 0067 3B       		.uleb128 0x3b
+ 955 0068 0B       		.uleb128 0xb
+ 956 0069 49       		.uleb128 0x49
+ 957 006a 13       		.uleb128 0x13
+ 958 006b 11       		.uleb128 0x11
+ 959 006c 01       		.uleb128 0x1
+ 960 006d 12       		.uleb128 0x12
+ 961 006e 06       		.uleb128 0x6
+ 962 006f 40       		.uleb128 0x40
+ 963 0070 18       		.uleb128 0x18
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 24
+
+
+ 964 0071 9642     		.uleb128 0x2116
+ 965 0073 19       		.uleb128 0x19
+ 966 0074 01       		.uleb128 0x1
+ 967 0075 13       		.uleb128 0x13
+ 968 0076 00       		.byte	0
+ 969 0077 00       		.byte	0
+ 970 0078 0A       		.uleb128 0xa
+ 971 0079 34       		.uleb128 0x34
+ 972 007a 00       		.byte	0
+ 973 007b 03       		.uleb128 0x3
+ 974 007c 0E       		.uleb128 0xe
+ 975 007d 3A       		.uleb128 0x3a
+ 976 007e 0B       		.uleb128 0xb
+ 977 007f 3B       		.uleb128 0x3b
+ 978 0080 0B       		.uleb128 0xb
+ 979 0081 49       		.uleb128 0x49
+ 980 0082 13       		.uleb128 0x13
+ 981 0083 02       		.uleb128 0x2
+ 982 0084 18       		.uleb128 0x18
+ 983 0085 00       		.byte	0
+ 984 0086 00       		.byte	0
+ 985 0087 0B       		.uleb128 0xb
+ 986 0088 2E       		.uleb128 0x2e
+ 987 0089 00       		.byte	0
+ 988 008a 03       		.uleb128 0x3
+ 989 008b 0E       		.uleb128 0xe
+ 990 008c 3A       		.uleb128 0x3a
+ 991 008d 0B       		.uleb128 0xb
+ 992 008e 3B       		.uleb128 0x3b
+ 993 008f 05       		.uleb128 0x5
+ 994 0090 27       		.uleb128 0x27
+ 995 0091 19       		.uleb128 0x19
+ 996 0092 11       		.uleb128 0x11
+ 997 0093 01       		.uleb128 0x1
+ 998 0094 12       		.uleb128 0x12
+ 999 0095 06       		.uleb128 0x6
+ 1000 0096 40       		.uleb128 0x40
+ 1001 0097 18       		.uleb128 0x18
+ 1002 0098 9642     		.uleb128 0x2116
+ 1003 009a 19       		.uleb128 0x19
+ 1004 009b 00       		.byte	0
+ 1005 009c 00       		.byte	0
+ 1006 009d 0C       		.uleb128 0xc
+ 1007 009e 34       		.uleb128 0x34
+ 1008 009f 00       		.byte	0
+ 1009 00a0 03       		.uleb128 0x3
+ 1010 00a1 0E       		.uleb128 0xe
+ 1011 00a2 3A       		.uleb128 0x3a
+ 1012 00a3 0B       		.uleb128 0xb
+ 1013 00a4 3B       		.uleb128 0x3b
+ 1014 00a5 0B       		.uleb128 0xb
+ 1015 00a6 49       		.uleb128 0x49
+ 1016 00a7 13       		.uleb128 0x13
+ 1017 00a8 3F       		.uleb128 0x3f
+ 1018 00a9 19       		.uleb128 0x19
+ 1019 00aa 02       		.uleb128 0x2
+ 1020 00ab 18       		.uleb128 0x18
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 25
+
+
+ 1021 00ac 00       		.byte	0
+ 1022 00ad 00       		.byte	0
+ 1023 00ae 0D       		.uleb128 0xd
+ 1024 00af 34       		.uleb128 0x34
+ 1025 00b0 00       		.byte	0
+ 1026 00b1 03       		.uleb128 0x3
+ 1027 00b2 0E       		.uleb128 0xe
+ 1028 00b3 3A       		.uleb128 0x3a
+ 1029 00b4 0B       		.uleb128 0xb
+ 1030 00b5 3B       		.uleb128 0x3b
+ 1031 00b6 0B       		.uleb128 0xb
+ 1032 00b7 49       		.uleb128 0x49
+ 1033 00b8 13       		.uleb128 0x13
+ 1034 00b9 3F       		.uleb128 0x3f
+ 1035 00ba 19       		.uleb128 0x19
+ 1036 00bb 3C       		.uleb128 0x3c
+ 1037 00bc 19       		.uleb128 0x19
+ 1038 00bd 00       		.byte	0
+ 1039 00be 00       		.byte	0
+ 1040 00bf 00       		.byte	0
+ 1041              		.section	.debug_aranges,"",%progbits
+ 1042 0000 24000000 		.4byte	0x24
+ 1043 0004 0200     		.2byte	0x2
+ 1044 0006 00000000 		.4byte	.Ldebug_info0
+ 1045 000a 04       		.byte	0x4
+ 1046 000b 00       		.byte	0
+ 1047 000c 0000     		.2byte	0
+ 1048 000e 0000     		.2byte	0
+ 1049 0010 00000000 		.4byte	.LFB35
+ 1050 0014 B0020000 		.4byte	.LFE35-.LFB35
+ 1051 0018 00000000 		.4byte	.LFB36
+ 1052 001c 34000000 		.4byte	.LFE36-.LFB36
+ 1053 0020 00000000 		.4byte	0
+ 1054 0024 00000000 		.4byte	0
+ 1055              		.section	.debug_ranges,"",%progbits
+ 1056              	.Ldebug_ranges0:
+ 1057 0000 00000000 		.4byte	.LFB35
+ 1058 0004 B0020000 		.4byte	.LFE35
+ 1059 0008 00000000 		.4byte	.LFB36
+ 1060 000c 34000000 		.4byte	.LFE36
+ 1061 0010 00000000 		.4byte	0
+ 1062 0014 00000000 		.4byte	0
+ 1063              		.section	.debug_line,"",%progbits
+ 1064              	.Ldebug_line0:
+ 1065 0000 32010000 		.section	.debug_str,"MS",%progbits,1
+ 1065      02006B00 
+ 1065      00000201 
+ 1065      FB0E0D00 
+ 1065      01010101 
+ 1066              	.LASF23:
+ 1067 0000 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_ENTRY_REQUEST\000"
+ 1067      455F4556 
+ 1067      545F4741 
+ 1067      505F5041 
+ 1067      53534B45 
+ 1068              	.LASF11:
+ 1069 0024 666C6F61 		.ascii	"float\000"
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 26
+
+
+ 1069      7400
+ 1070              	.LASF72:
+ 1071 002a 72657374 		.ascii	"restartAdvertisement\000"
+ 1071      61727441 
+ 1071      64766572 
+ 1071      74697365 
+ 1071      6D656E74 
+ 1072              	.LASF31:
+ 1073 003f 4359424C 		.ascii	"CYBLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE\000"
+ 1073      455F4556 
+ 1073      545F4741 
+ 1073      505F434F 
+ 1073      4E4E4543 
+ 1074              	.LASF34:
+ 1075 0068 4359424C 		.ascii	"CYBLE_EVT_GATTC_ERROR_RSP\000"
+ 1075      455F4556 
+ 1075      545F4741 
+ 1075      5454435F 
+ 1075      4552524F 
+ 1076              	.LASF85:
+ 1077 0082 6C6F6F70 		.ascii	"loopNo\000"
+ 1077      4E6F00
+ 1078              	.LASF2:
+ 1079 0089 73686F72 		.ascii	"short int\000"
+ 1079      7420696E 
+ 1079      7400
+ 1080              	.LASF26:
+ 1081 0093 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_FAILED\000"
+ 1081      455F4556 
+ 1081      545F4741 
+ 1081      505F4155 
+ 1081      54485F46 
+ 1082              	.LASF36:
+ 1083 00ad 4359424C 		.ascii	"CYBLE_EVT_GATT_DISCONNECT_IND\000"
+ 1083      455F4556 
+ 1083      545F4741 
+ 1083      54545F44 
+ 1083      4953434F 
+ 1084              	.LASF14:
+ 1085 00cb 73697A65 		.ascii	"sizetype\000"
+ 1085      74797065 
+ 1085      00
+ 1086              	.LASF19:
+ 1087 00d4 4359424C 		.ascii	"CYBLE_EVT_HCI_STATUS\000"
+ 1087      455F4556 
+ 1087      545F4843 
+ 1087      495F5354 
+ 1087      41545553 
+ 1088              	.LASF84:
+ 1089 00e9 6D61696E 		.ascii	"main\000"
+ 1089      00
+ 1090              	.LASF80:
+ 1091 00ee 5265665F 		.ascii	"Ref_Clk_Ctr_Capture\000"
+ 1091      436C6B5F 
+ 1091      4374725F 
+ 1091      43617074 
+ 1091      75726500 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 27
+
+
+ 1092              	.LASF40:
+ 1093 0102 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_TYPE_RSP\000"
+ 1093      455F4556 
+ 1093      545F4741 
+ 1093      5454435F 
+ 1093      52454144 
+ 1094              	.LASF16:
+ 1095 0123 4359424C 		.ascii	"CYBLE_EVT_STACK_ON\000"
+ 1095      455F4556 
+ 1095      545F5354 
+ 1095      41434B5F 
+ 1095      4F4E00
+ 1096              	.LASF37:
+ 1097 0136 4359424C 		.ascii	"CYBLE_EVT_GATTS_XCNHG_MTU_REQ\000"
+ 1097      455F4556 
+ 1097      545F4741 
+ 1097      5454535F 
+ 1097      58434E48 
+ 1098              	.LASF71:
+ 1099 0154 73746172 		.ascii	"startNotification\000"
+ 1099      744E6F74 
+ 1099      69666963 
+ 1099      6174696F 
+ 1099      6E00
+ 1100              	.LASF33:
+ 1101 0166 4359424C 		.ascii	"CYBLE_EVT_GAP_KEYINFO_EXCHNGE_CMPLT\000"
+ 1101      455F4556 
+ 1101      545F4741 
+ 1101      505F4B45 
+ 1101      59494E46 
+ 1102              	.LASF45:
+ 1103 018a 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_MULTI_RSP\000"
+ 1103      455F4556 
+ 1103      545F4741 
+ 1103      5454435F 
+ 1103      52454144 
+ 1104              	.LASF54:
+ 1105 01a9 4359424C 		.ascii	"CYBLE_EVT_GATTS_HANDLE_VALUE_CNF\000"
+ 1105      455F4556 
+ 1105      545F4741 
+ 1105      5454535F 
+ 1105      48414E44 
+ 1106              	.LASF15:
+ 1107 01ca 4359424C 		.ascii	"CYBLE_EVT_HOST_INVALID\000"
+ 1107      455F4556 
+ 1107      545F484F 
+ 1107      53545F49 
+ 1107      4E56414C 
+ 1108              	.LASF59:
+ 1109 01e1 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_IND\000"
+ 1109      455F4556 
+ 1109      545F4C32 
+ 1109      4341505F 
+ 1109      43424643 
+ 1110              	.LASF62:
+ 1111 01ff 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_CNF\000"
+ 1111      455F4556 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 28
+
+
+ 1111      545F4C32 
+ 1111      4341505F 
+ 1111      43424643 
+ 1112              	.LASF78:
+ 1113 0220 5265665F 		.ascii	"Ref_Clock_Count\000"
+ 1113      436C6F63 
+ 1113      6B5F436F 
+ 1113      756E7400 
+ 1114              	.LASF83:
+ 1115 0230 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\GitHub\\ECEG-721-Lab-5\\"
+ 1115      73657273 
+ 1115      5C41646D 
+ 1115      696E5C44 
+ 1115      65736B74 
+ 1116 025d 4C616220 		.ascii	"Lab 5\\Frequency_Measurement_Using_PSoC4_BLE\\Frequ"
+ 1116      355C4672 
+ 1116      65717565 
+ 1116      6E63795F 
+ 1116      4D656173 
+ 1117 028e 656E6379 		.ascii	"ency_Measurement_Using_PSoC4_BLE.cydsn\000"
+ 1117      5F4D6561 
+ 1117      73757265 
+ 1117      6D656E74 
+ 1117      5F557369 
+ 1118              	.LASF43:
+ 1119 02b5 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_RSP\000"
+ 1119      455F4556 
+ 1119      545F4741 
+ 1119      5454435F 
+ 1119      52454144 
+ 1120              	.LASF47:
+ 1121 02ce 4359424C 		.ascii	"CYBLE_EVT_GATTC_WRITE_RSP\000"
+ 1121      455F4556 
+ 1121      545F4741 
+ 1121      5454435F 
+ 1121      57524954 
+ 1122              	.LASF6:
+ 1123 02e8 6C6F6E67 		.ascii	"long long int\000"
+ 1123      206C6F6E 
+ 1123      6720696E 
+ 1123      7400
+ 1124              	.LASF7:
+ 1125 02f6 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1125      206C6F6E 
+ 1125      6720756E 
+ 1125      7369676E 
+ 1125      65642069 
+ 1126              	.LASF75:
+ 1127 030d 52656643 		.ascii	"RefCounter_ASCII\000"
+ 1127      6F756E74 
+ 1127      65725F41 
+ 1127      53434949 
+ 1127      00
+ 1128              	.LASF4:
+ 1129 031e 6C6F6E67 		.ascii	"long int\000"
+ 1129      20696E74 
+ 1129      00
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 29
+
+
+ 1130              	.LASF53:
+ 1131 0327 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_IND\000"
+ 1131      455F4556 
+ 1131      545F4741 
+ 1131      5454435F 
+ 1131      48414E44 
+ 1132              	.LASF28:
+ 1133 0348 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_CONNECTED\000"
+ 1133      455F4556 
+ 1133      545F4741 
+ 1133      505F4445 
+ 1133      56494345 
+ 1134              	.LASF27:
+ 1135 0367 4359424C 		.ascii	"CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP\000"
+ 1135      455F4556 
+ 1135      545F4741 
+ 1135      50505F41 
+ 1135      44564552 
+ 1136              	.LASF52:
+ 1137 038f 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_NTF\000"
+ 1137      455F4556 
+ 1137      545F4741 
+ 1137      5454435F 
+ 1137      48414E44 
+ 1138              	.LASF20:
+ 1139 03b0 4359424C 		.ascii	"CYBLE_EVT_STACK_BUSY_STATUS\000"
+ 1139      455F4556 
+ 1139      545F5354 
+ 1139      41434B5F 
+ 1139      42555359 
+ 1140              	.LASF77:
+ 1141 03cc 496E7075 		.ascii	"Input_Signal_Count\000"
+ 1141      745F5369 
+ 1141      676E616C 
+ 1141      5F436F75 
+ 1141      6E7400
+ 1142              	.LASF24:
+ 1143 03df 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_DISPLAY_REQUEST\000"
+ 1143      455F4556 
+ 1143      545F4741 
+ 1143      505F5041 
+ 1143      53534B45 
+ 1144              	.LASF60:
+ 1145 0405 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_CNF\000"
+ 1145      455F4556 
+ 1145      545F4C32 
+ 1145      4341505F 
+ 1145      43424643 
+ 1146              	.LASF68:
+ 1147 0423 4359424C 		.ascii	"CYBLE_EVT_MAX\000"
+ 1147      455F4556 
+ 1147      545F4D41 
+ 1147      5800
+ 1148              	.LASF9:
+ 1149 0431 75696E74 		.ascii	"uint8\000"
+ 1149      3800
+ 1150              	.LASF56:
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 30
+
+
+ 1151 0437 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_REQ\000"
+ 1151      455F4556 
+ 1151      545F4C32 
+ 1151      4341505F 
+ 1151      434F4E4E 
+ 1152              	.LASF1:
+ 1153 045d 756E7369 		.ascii	"unsigned char\000"
+ 1153      676E6564 
+ 1153      20636861 
+ 1153      7200
+ 1154              	.LASF49:
+ 1155 046b 4359424C 		.ascii	"CYBLE_EVT_GATTS_PREP_WRITE_REQ\000"
+ 1155      455F4556 
+ 1155      545F4741 
+ 1155      5454535F 
+ 1155      50524550 
+ 1156              	.LASF70:
+ 1157 048a 64657669 		.ascii	"deviceConnected\000"
+ 1157      6365436F 
+ 1157      6E6E6563 
+ 1157      74656400 
+ 1158              	.LASF41:
+ 1159 049a 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_INFO_RSP\000"
+ 1159      455F4556 
+ 1159      545F4741 
+ 1159      5454435F 
+ 1159      46494E44 
+ 1160              	.LASF0:
+ 1161 04b8 7369676E 		.ascii	"signed char\000"
+ 1161      65642063 
+ 1161      68617200 
+ 1162              	.LASF46:
+ 1163 04c4 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_REQ\000"
+ 1163      455F4556 
+ 1163      545F4741 
+ 1163      5454535F 
+ 1163      57524954 
+ 1164              	.LASF42:
+ 1165 04de 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_BY_TYPE_VALUE_RSP\000"
+ 1165      455F4556 
+ 1165      545F4741 
+ 1165      5454435F 
+ 1165      46494E44 
+ 1166              	.LASF25:
+ 1167 0505 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_COMPLETE\000"
+ 1167      455F4556 
+ 1167      545F4741 
+ 1167      505F4155 
+ 1167      54485F43 
+ 1168              	.LASF8:
+ 1169 0521 756E7369 		.ascii	"unsigned int\000"
+ 1169      676E6564 
+ 1169      20696E74 
+ 1169      00
+ 1170              	.LASF35:
+ 1171 052e 4359424C 		.ascii	"CYBLE_EVT_GATT_CONNECT_IND\000"
+ 1171      455F4556 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 31
+
+
+ 1171      545F4741 
+ 1171      54545F43 
+ 1171      4F4E4E45 
+ 1172              	.LASF5:
+ 1173 0549 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1173      20756E73 
+ 1173      69676E65 
+ 1173      6420696E 
+ 1173      7400
+ 1174              	.LASF22:
+ 1175 055b 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_REQ\000"
+ 1175      455F4556 
+ 1175      545F4741 
+ 1175      505F4155 
+ 1175      54485F52 
+ 1176              	.LASF61:
+ 1177 0572 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_IND\000"
+ 1177      455F4556 
+ 1177      545F4C32 
+ 1177      4341505F 
+ 1177      43424643 
+ 1178              	.LASF30:
+ 1179 0593 4359424C 		.ascii	"CYBLE_EVT_GAP_ENCRYPT_CHANGE\000"
+ 1179      455F4556 
+ 1179      545F4741 
+ 1179      505F454E 
+ 1179      43525950 
+ 1180              	.LASF3:
+ 1181 05b0 73686F72 		.ascii	"short unsigned int\000"
+ 1181      7420756E 
+ 1181      7369676E 
+ 1181      65642069 
+ 1181      6E7400
+ 1182              	.LASF86:
+ 1183 05c3 496E6974 		.ascii	"InitializeSystem\000"
+ 1183      69616C69 
+ 1183      7A655379 
+ 1183      7374656D 
+ 1183      00
+ 1184              	.LASF69:
+ 1185 05d4 5247426C 		.ascii	"RGBledData\000"
+ 1185      65644461 
+ 1185      746100
+ 1186              	.LASF13:
+ 1187 05df 63686172 		.ascii	"char\000"
+ 1187      00
+ 1188              	.LASF58:
+ 1189 05e4 4359424C 		.ascii	"CYBLE_EVT_L2CAP_COMMAND_REJ\000"
+ 1189      455F4556 
+ 1189      545F4C32 
+ 1189      4341505F 
+ 1189      434F4D4D 
+ 1190              	.LASF79:
+ 1191 0600 496E7075 		.ascii	"Input_Sig_Ctr_Capture\000"
+ 1191      745F5369 
+ 1191      675F4374 
+ 1191      725F4361 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 32
+
+
+ 1191      70747572 
+ 1192              	.LASF44:
+ 1193 0616 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BLOB_RSP\000"
+ 1193      455F4556 
+ 1193      545F4741 
+ 1193      5454435F 
+ 1193      52454144 
+ 1194              	.LASF51:
+ 1195 0634 4359424C 		.ascii	"CYBLE_EVT_GATTC_EXEC_WRITE_RSP\000"
+ 1195      455F4556 
+ 1195      545F4741 
+ 1195      5454435F 
+ 1195      45584543 
+ 1196              	.LASF10:
+ 1197 0653 75696E74 		.ascii	"uint32\000"
+ 1197      333200
+ 1198              	.LASF67:
+ 1199 065a 4359424C 		.ascii	"CYBLE_EVT_PENDING_FLASH_WRITE\000"
+ 1199      455F4556 
+ 1199      545F5045 
+ 1199      4E44494E 
+ 1199      475F464C 
+ 1200              	.LASF64:
+ 1201 0678 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_RX_CREDIT_IND\000"
+ 1201      455F4556 
+ 1201      545F4C32 
+ 1201      4341505F 
+ 1201      43424643 
+ 1202              	.LASF12:
+ 1203 069b 646F7562 		.ascii	"double\000"
+ 1203      6C6500
+ 1204              	.LASF65:
+ 1205 06a2 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_TX_CREDIT_IND\000"
+ 1205      455F4556 
+ 1205      545F4C32 
+ 1205      4341505F 
+ 1205      43424643 
+ 1206              	.LASF73:
+ 1207 06c5 496E7075 		.ascii	"Input_Frequency\000"
+ 1207      745F4672 
+ 1207      65717565 
+ 1207      6E637900 
+ 1208              	.LASF82:
+ 1209 06d5 2E5C6D61 		.ascii	".\\main.c\000"
+ 1209      696E2E63 
+ 1209      00
+ 1210              	.LASF18:
+ 1211 06de 4359424C 		.ascii	"CYBLE_EVT_HARDWARE_ERROR\000"
+ 1211      455F4556 
+ 1211      545F4841 
+ 1211      52445741 
+ 1211      52455F45 
+ 1212              	.LASF63:
+ 1213 06f7 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_READ\000"
+ 1213      455F4556 
+ 1213      545F4C32 
+ 1213      4341505F 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 33
+
+
+ 1213      43424643 
+ 1214              	.LASF57:
+ 1215 0716 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_RSP\000"
+ 1215      455F4556 
+ 1215      545F4C32 
+ 1215      4341505F 
+ 1215      434F4E4E 
+ 1216              	.LASF21:
+ 1217 073c 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_PROGRESS_RESULT\000"
+ 1217      455F4556 
+ 1217      545F4741 
+ 1217      50435F53 
+ 1217      43414E5F 
+ 1218              	.LASF39:
+ 1219 0760 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_GROUP_TYPE_RSP\000"
+ 1219      455F4556 
+ 1219      545F4741 
+ 1219      5454435F 
+ 1219      52454144 
+ 1220              	.LASF48:
+ 1221 0787 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_CMD_REQ\000"
+ 1221      455F4556 
+ 1221      545F4741 
+ 1221      5454535F 
+ 1221      57524954 
+ 1222              	.LASF38:
+ 1223 07a5 4359424C 		.ascii	"CYBLE_EVT_GATTC_XCHNG_MTU_RSP\000"
+ 1223      455F4556 
+ 1223      545F4741 
+ 1223      5454435F 
+ 1223      5843484E 
+ 1224              	.LASF17:
+ 1225 07c3 4359424C 		.ascii	"CYBLE_EVT_TIMEOUT\000"
+ 1225      455F4556 
+ 1225      545F5449 
+ 1225      4D454F55 
+ 1225      5400
+ 1226              	.LASF66:
+ 1227 07d5 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_WRITE_IND\000"
+ 1227      455F4556 
+ 1227      545F4C32 
+ 1227      4341505F 
+ 1227      43424643 
+ 1228              	.LASF32:
+ 1229 07f9 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_START_STOP\000"
+ 1229      455F4556 
+ 1229      545F4741 
+ 1229      50435F53 
+ 1229      43414E5F 
+ 1230              	.LASF50:
+ 1231 0818 4359424C 		.ascii	"CYBLE_EVT_GATTS_EXEC_WRITE_REQ\000"
+ 1231      455F4556 
+ 1231      545F4741 
+ 1231      5454535F 
+ 1231      45584543 
+ 1232              	.LASF29:
+ 1233 0837 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_DISCONNECTED\000"
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccymS7Kd.s 			page 34
+
+
+ 1233      455F4556 
+ 1233      545F4741 
+ 1233      505F4445 
+ 1233      56494345 
+ 1234              	.LASF76:
+ 1235 0859 43616C63 		.ascii	"Calculate_Frequency\000"
+ 1235      756C6174 
+ 1235      655F4672 
+ 1235      65717565 
+ 1235      6E637900 
+ 1236              	.LASF55:
+ 1237 086d 4359424C 		.ascii	"CYBLE_EVT_GATTS_DATA_SIGNED_CMD_REQ\000"
+ 1237      455F4556 
+ 1237      545F4741 
+ 1237      5454535F 
+ 1237      44415441 
+ 1238              	.LASF81:
+ 1239 0891 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 1239      4320342E 
+ 1239      382E3420 
+ 1239      32303134 
+ 1239      30353236 
+ 1240 08c4 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m0 -mthumb -g -O"
+ 1240      20726576 
+ 1240      6973696F 
+ 1240      6E203231 
+ 1240      31333538 
+ 1241 08f7 30202D66 		.ascii	"0 -ffunction-sections\000"
+ 1241      66756E63 
+ 1241      74696F6E 
+ 1241      2D736563 
+ 1241      74696F6E 
+ 1242              	.LASF74:
+ 1243 090d 496E7075 		.ascii	"InputCounter_ASCII\000"
+ 1243      74436F75 
+ 1243      6E746572 
+ 1243      5F415343 
+ 1243      494900
+ 1244              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br

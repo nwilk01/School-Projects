@@ -1,0 +1,1478 @@
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"Communication.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.comm	RGBledData,4,4
+  18              		.section	.text.UART_SendDebugData,"ax",%progbits
+  19              		.align	2
+  20              		.global	UART_SendDebugData
+  21              		.code	16
+  22              		.thumb_func
+  23              		.type	UART_SendDebugData, %function
+  24              	UART_SendDebugData:
+  25              	.LFB35:
+  26              		.file 1 ".\\Communication.c"
+   1:.\Communication.c **** /***************************************************************************//**
+   2:.\Communication.c **** * @file    Communication.c
+   3:.\Communication.c **** * @version 1.0
+   4:.\Communication.c **** * @author  Chethan (dche@cypress.com)
+   5:.\Communication.c **** *
+   6:.\Communication.c **** * @par Description
+   7:.\Communication.c **** *   This file contains the source code to the APIs for transmitting project's 
+   8:.\Communication.c **** *   debug data via UART.
+   9:.\Communication.c **** *
+  10:.\Communication.c **** * @par Notes
+  11:.\Communication.c **** *	None
+  12:.\Communication.c **** *
+  13:.\Communication.c **** * @par Hardware Dependency
+  14:.\Communication.c **** *    1. CY8CKIT-042 BLE Pioneer Kit
+  15:.\Communication.c **** *
+  16:.\Communication.c **** * @par References
+  17:.\Communication.c **** *    1. 001-32359: AN2283 "PSoC 1 Measuring Frequency"
+  18:.\Communication.c **** *
+  19:.\Communication.c **** * @par Code Tested With
+  20:.\Communication.c **** *    1. PSoC Creator  3.1 SP2 (3.1.0.2177)
+  21:.\Communication.c **** *    2. GCC 4.8.4
+  22:.\Communication.c **** *
+  23:.\Communication.c **** **//****************************************************************************
+  24:.\Communication.c **** * Copyright (2015), Cypress Semiconductor Corporation.
+  25:.\Communication.c **** ********************************************************************************
+  26:.\Communication.c **** * All rights reserved. 
+  27:.\Communication.c **** * This software, including source code, documentation and related 
+  28:.\Communication.c **** * materials (“Software”), is owned by Cypress Semiconductor 
+  29:.\Communication.c **** * Corporation (“Cypress”) and is protected by and subject to worldwide 
+  30:.\Communication.c **** * patent protection (United States and foreign), United States copyright 
+  31:.\Communication.c **** * laws and international treaty provisions. Therefore, you may use this 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 2
+
+
+  32:.\Communication.c **** * Software only as provided in the license agreement accompanying the 
+  33:.\Communication.c **** * software package from which you obtained this Software (“EULA”). 
+  34:.\Communication.c **** *
+  35:.\Communication.c **** * If no EULA applies, Cypress hereby grants you a personal, non-exclusive, 
+  36:.\Communication.c **** * non-transferable license to copy, modify and compile the Software source code
+  37:.\Communication.c **** * solely for your use in connection with Cypress's integrated circuit products.
+  38:.\Communication.c **** * Any reproduction, modification, translation, compilation, or representation
+  39:.\Communication.c **** * of this Software except as specified above is prohibited without the express
+  40:.\Communication.c **** * written permission of Cypress.
+  41:.\Communication.c **** 
+  42:.\Communication.c **** * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND,
+  43:.\Communication.c **** * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED
+  44:.\Communication.c **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  45:.\Communication.c **** * Cypress reserves the right to make changes to the Software without notice. 
+  46:.\Communication.c **** * Cypress does not assume any liability arising out of the application or use 
+  47:.\Communication.c **** * of the Software or any product or circuit described in the Software. Cypress
+  48:.\Communication.c **** * does not authorize its products for use in any products where a malfunction
+  49:.\Communication.c **** * or failure of the Cypress product may reasonably be expected to result in 
+  50:.\Communication.c **** * significant property damage, injury or death (“High Risk Product”). By 
+  51:.\Communication.c **** * including Cypress’s product in a High Risk Product, the manufacturer of such  
+  52:.\Communication.c **** * system or application assumes all risk of such use and in doing so agrees to  
+  53:.\Communication.c **** * indemnify Cypress against all liability. 
+  54:.\Communication.c **** *******************************************************************************/
+  55:.\Communication.c **** 
+  56:.\Communication.c **** /*******************************************************************************
+  57:.\Communication.c **** *   Included Headers
+  58:.\Communication.c **** *******************************************************************************/
+  59:.\Communication.c **** #include "main.h"
+  60:.\Communication.c **** 
+  61:.\Communication.c **** #if(UART_DEBUG_ENABLE)
+  62:.\Communication.c **** /*******************************************************************************
+  63:.\Communication.c **** * Function Name: UART_SendDebugData
+  64:.\Communication.c **** ********************************************************************************
+  65:.\Communication.c **** *
+  66:.\Communication.c **** * Summary:
+  67:.\Communication.c **** *  Function sends 32-bit count value to PC via UART communication
+  68:.\Communication.c **** *
+  69:.\Communication.c **** * Parameters:
+  70:.\Communication.c **** *  CountValue: 32-bit count value to be sent to PC
+  71:.\Communication.c **** *
+  72:.\Communication.c **** * Return:
+  73:.\Communication.c **** *  None
+  74:.\Communication.c **** *
+  75:.\Communication.c **** *******************************************************************************/
+  76:.\Communication.c **** void UART_SendDebugData(uint32 CountValue)
+  77:.\Communication.c **** {
+  27              		.loc 1 77 0
+  28              		.cfi_startproc
+  29 0000 80B5     		push	{r7, lr}
+  30              		.cfi_def_cfa_offset 8
+  31              		.cfi_offset 7, -8
+  32              		.cfi_offset 14, -4
+  33 0002 82B0     		sub	sp, sp, #8
+  34              		.cfi_def_cfa_offset 16
+  35 0004 00AF     		add	r7, sp, #0
+  36              		.cfi_def_cfa_register 7
+  37 0006 7860     		str	r0, [r7, #4]
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 3
+
+
+  78:.\Communication.c **** 	/* Send upper 16-bits of count */
+  79:.\Communication.c **** 	UART_PutHexInt(HI16(CountValue));
+  38              		.loc 1 79 0
+  39 0008 7B68     		ldr	r3, [r7, #4]
+  40 000a 1B0C     		lsr	r3, r3, #16
+  41 000c 9BB2     		uxth	r3, r3
+  42 000e 181C     		mov	r0, r3
+  43 0010 FFF7FEFF 		bl	UART_PutHexInt
+  80:.\Communication.c **** 	
+  81:.\Communication.c **** 	/* Send lower 16-bits of count */
+  82:.\Communication.c **** 	UART_PutHexInt(LO16(CountValue));
+  44              		.loc 1 82 0
+  45 0014 7B68     		ldr	r3, [r7, #4]
+  46 0016 9BB2     		uxth	r3, r3
+  47 0018 181C     		mov	r0, r3
+  48 001a FFF7FEFF 		bl	UART_PutHexInt
+  83:.\Communication.c **** }
+  49              		.loc 1 83 0
+  50 001e BD46     		mov	sp, r7
+  51 0020 02B0     		add	sp, sp, #8
+  52              		@ sp needed
+  53 0022 80BD     		pop	{r7, pc}
+  54              		.cfi_endproc
+  55              	.LFE35:
+  56              		.size	UART_SendDebugData, .-UART_SendDebugData
+  57              		.section	.text.UART_PutHexByte,"ax",%progbits
+  58              		.align	2
+  59              		.global	UART_PutHexByte
+  60              		.code	16
+  61              		.thumb_func
+  62              		.type	UART_PutHexByte, %function
+  63              	UART_PutHexByte:
+  64              	.LFB36:
+  84:.\Communication.c **** 	
+  85:.\Communication.c **** /*******************************************************************************
+  86:.\Communication.c **** * Function Name: UART_PutHexByte
+  87:.\Communication.c **** ********************************************************************************
+  88:.\Communication.c **** *
+  89:.\Communication.c **** * Summary:
+  90:.\Communication.c **** *  Sends a byte of data in Hex representation (two characters, uppercase for A-F) 
+  91:.\Communication.c **** *  via the Tx pin.
+  92:.\Communication.c **** *
+  93:.\Communication.c **** * Parameters:
+  94:.\Communication.c **** *  TxHexByte: The byte to be converted to ASCII characters and sent via the Tx pin.
+  95:.\Communication.c **** *
+  96:.\Communication.c **** * Return:
+  97:.\Communication.c **** *  None
+  98:.\Communication.c **** *
+  99:.\Communication.c **** *******************************************************************************/
+ 100:.\Communication.c **** void UART_PutHexByte(uint8 txHexByte) 
+ 101:.\Communication.c **** {
+  65              		.loc 1 101 0
+  66              		.cfi_startproc
+  67 0000 80B5     		push	{r7, lr}
+  68              		.cfi_def_cfa_offset 8
+  69              		.cfi_offset 7, -8
+  70              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 4
+
+
+  71 0002 82B0     		sub	sp, sp, #8
+  72              		.cfi_def_cfa_offset 16
+  73 0004 00AF     		add	r7, sp, #0
+  74              		.cfi_def_cfa_register 7
+  75 0006 021C     		mov	r2, r0
+  76 0008 FB1D     		add	r3, r7, #7
+  77 000a 1A70     		strb	r2, [r3]
+ 102:.\Communication.c ****     static char8 const CYCODE SW_Tx_UART_hex[] = "0123456789ABCDEF";
+ 103:.\Communication.c ****     UART_UartPutChar((uint8) SW_Tx_UART_hex[txHexByte >> SW_Tx_UART_BYTE_UPPER_NIBBLE_SHIFT]);
+  78              		.loc 1 103 0
+  79 000c FB1D     		add	r3, r7, #7
+  80 000e 1B78     		ldrb	r3, [r3]
+  81 0010 1B09     		lsr	r3, r3, #4
+  82 0012 DBB2     		uxtb	r3, r3
+  83 0014 084A     		ldr	r2, .L3
+  84 0016 D35C     		ldrb	r3, [r2, r3]
+  85 0018 181C     		mov	r0, r3
+  86 001a FFF7FEFF 		bl	UART_SpiUartWriteTxData
+ 104:.\Communication.c ****     UART_UartPutChar((uint8) SW_Tx_UART_hex[txHexByte & SW_Tx_UART_BYTE_LOWER_NIBBLE_MASK]);
+  87              		.loc 1 104 0
+  88 001e FB1D     		add	r3, r7, #7
+  89 0020 1A78     		ldrb	r2, [r3]
+  90 0022 0F23     		mov	r3, #15
+  91 0024 1340     		and	r3, r2
+  92 0026 044A     		ldr	r2, .L3
+  93 0028 D35C     		ldrb	r3, [r2, r3]
+  94 002a 181C     		mov	r0, r3
+  95 002c FFF7FEFF 		bl	UART_SpiUartWriteTxData
+ 105:.\Communication.c **** }
+  96              		.loc 1 105 0
+  97 0030 BD46     		mov	sp, r7
+  98 0032 02B0     		add	sp, sp, #8
+  99              		@ sp needed
+ 100 0034 80BD     		pop	{r7, pc}
+ 101              	.L4:
+ 102 0036 C046     		.align	2
+ 103              	.L3:
+ 104 0038 00000000 		.word	SW_Tx_UART_hex.7159
+ 105              		.cfi_endproc
+ 106              	.LFE36:
+ 107              		.size	UART_PutHexByte, .-UART_PutHexByte
+ 108              		.section	.text.UART_PutHexInt,"ax",%progbits
+ 109              		.align	2
+ 110              		.global	UART_PutHexInt
+ 111              		.code	16
+ 112              		.thumb_func
+ 113              		.type	UART_PutHexInt, %function
+ 114              	UART_PutHexInt:
+ 115              	.LFB37:
+ 106:.\Communication.c **** 	
+ 107:.\Communication.c **** /*******************************************************************************
+ 108:.\Communication.c **** * Function Name: UART_PutHexInt
+ 109:.\Communication.c **** ********************************************************************************
+ 110:.\Communication.c **** *
+ 111:.\Communication.c **** * Summary:
+ 112:.\Communication.c **** *  Sends a 16-bit unsigned integer in Hex representation (four characters,
+ 113:.\Communication.c **** *  uppercase for A-F) via the Tx pin.
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 5
+
+
+ 114:.\Communication.c **** *
+ 115:.\Communication.c **** * Parameters:
+ 116:.\Communication.c **** *  TxHexInt: The uint16 to be converted to ASCII characters and sent via
+ 117:.\Communication.c **** *            the Tx pin.
+ 118:.\Communication.c **** *
+ 119:.\Communication.c **** * Return:
+ 120:.\Communication.c **** *  None
+ 121:.\Communication.c **** *
+ 122:.\Communication.c **** *******************************************************************************/
+ 123:.\Communication.c **** void UART_PutHexInt(uint16 txHexInt) 
+ 124:.\Communication.c **** {
+ 116              		.loc 1 124 0
+ 117              		.cfi_startproc
+ 118 0000 80B5     		push	{r7, lr}
+ 119              		.cfi_def_cfa_offset 8
+ 120              		.cfi_offset 7, -8
+ 121              		.cfi_offset 14, -4
+ 122 0002 82B0     		sub	sp, sp, #8
+ 123              		.cfi_def_cfa_offset 16
+ 124 0004 00AF     		add	r7, sp, #0
+ 125              		.cfi_def_cfa_register 7
+ 126 0006 021C     		mov	r2, r0
+ 127 0008 BB1D     		add	r3, r7, #6
+ 128 000a 1A80     		strh	r2, [r3]
+ 125:.\Communication.c ****     UART_PutHexByte((uint8)(txHexInt >> SW_Tx_UART_U16_UPPER_BYTE_SHIFT));
+ 129              		.loc 1 125 0
+ 130 000c BB1D     		add	r3, r7, #6
+ 131 000e 1B88     		ldrh	r3, [r3]
+ 132 0010 1B0A     		lsr	r3, r3, #8
+ 133 0012 9BB2     		uxth	r3, r3
+ 134 0014 DBB2     		uxtb	r3, r3
+ 135 0016 181C     		mov	r0, r3
+ 136 0018 FFF7FEFF 		bl	UART_PutHexByte
+ 126:.\Communication.c ****     UART_PutHexByte((uint8)(txHexInt & SW_Tx_UART_U16_LOWER_BYTE_MASK));
+ 137              		.loc 1 126 0
+ 138 001c BB1D     		add	r3, r7, #6
+ 139 001e 1B88     		ldrh	r3, [r3]
+ 140 0020 DBB2     		uxtb	r3, r3
+ 141 0022 181C     		mov	r0, r3
+ 142 0024 FFF7FEFF 		bl	UART_PutHexByte
+ 127:.\Communication.c **** }
+ 143              		.loc 1 127 0
+ 144 0028 BD46     		mov	sp, r7
+ 145 002a 02B0     		add	sp, sp, #8
+ 146              		@ sp needed
+ 147 002c 80BD     		pop	{r7, pc}
+ 148              		.cfi_endproc
+ 149              	.LFE37:
+ 150              		.size	UART_PutHexInt, .-UART_PutHexInt
+ 151 002e C046     		.section	.text.UART_PutCRLF,"ax",%progbits
+ 152              		.align	2
+ 153              		.global	UART_PutCRLF
+ 154              		.code	16
+ 155              		.thumb_func
+ 156              		.type	UART_PutCRLF, %function
+ 157              	UART_PutCRLF:
+ 158              	.LFB38:
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 6
+
+
+ 128:.\Communication.c **** 	
+ 129:.\Communication.c **** /*******************************************************************************
+ 130:.\Communication.c **** * Function Name: UART_PutCRLF
+ 131:.\Communication.c **** ********************************************************************************
+ 132:.\Communication.c **** *
+ 133:.\Communication.c **** * Summary:
+ 134:.\Communication.c **** *  Sends a carriage return (0x0D) and a line feed (0x0A) via the Tx pin.
+ 135:.\Communication.c **** *
+ 136:.\Communication.c **** * Parameters:
+ 137:.\Communication.c **** *  None
+ 138:.\Communication.c **** *
+ 139:.\Communication.c **** * Return:
+ 140:.\Communication.c **** *  None
+ 141:.\Communication.c **** *
+ 142:.\Communication.c **** *******************************************************************************/
+ 143:.\Communication.c **** void UART_PutCRLF(void) 
+ 144:.\Communication.c **** { 
+ 159              		.loc 1 144 0
+ 160              		.cfi_startproc
+ 161 0000 80B5     		push	{r7, lr}
+ 162              		.cfi_def_cfa_offset 8
+ 163              		.cfi_offset 7, -8
+ 164              		.cfi_offset 14, -4
+ 165 0002 00AF     		add	r7, sp, #0
+ 166              		.cfi_def_cfa_register 7
+ 145:.\Communication.c ****    UART_UartPutChar(0x0Du);
+ 167              		.loc 1 145 0
+ 168 0004 0D20     		mov	r0, #13
+ 169 0006 FFF7FEFF 		bl	UART_SpiUartWriteTxData
+ 146:.\Communication.c ****    UART_UartPutChar(0x0Au);
+ 170              		.loc 1 146 0
+ 171 000a 0A20     		mov	r0, #10
+ 172 000c FFF7FEFF 		bl	UART_SpiUartWriteTxData
+ 147:.\Communication.c **** }
+ 173              		.loc 1 147 0
+ 174 0010 BD46     		mov	sp, r7
+ 175              		@ sp needed
+ 176 0012 80BD     		pop	{r7, pc}
+ 177              		.cfi_endproc
+ 178              	.LFE38:
+ 179              		.size	UART_PutCRLF, .-UART_PutCRLF
+ 180              		.section	.rodata
+ 181              		.align	2
+ 182              		.type	SW_Tx_UART_hex.7159, %object
+ 183              		.size	SW_Tx_UART_hex.7159, 17
+ 184              	SW_Tx_UART_hex.7159:
+ 185 0000 30313233 		.ascii	"0123456789ABCDEF\000"
+ 185      34353637 
+ 185      38394142 
+ 185      43444546 
+ 185      00
+ 186 0011 000000   		.text
+ 187              	.Letext0:
+ 188              		.file 2 ".\\Generated_Source\\PSoC4/cytypes.h"
+ 189              		.file 3 ".\\Generated_Source\\PSoC4/BLE_Stack.h"
+ 190              		.file 4 ".\\BLEApplications.h"
+ 191              		.section	.debug_info,"",%progbits
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 7
+
+
+ 192              	.Ldebug_info0:
+ 193 0000 E4020000 		.4byte	0x2e4
+ 194 0004 0400     		.2byte	0x4
+ 195 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 196 000a 04       		.byte	0x4
+ 197 000b 01       		.uleb128 0x1
+ 198 000c 26080000 		.4byte	.LASF77
+ 199 0010 01       		.byte	0x1
+ 200 0011 7A010000 		.4byte	.LASF78
+ 201 0015 00000000 		.4byte	.LASF79
+ 202 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 203 001d 00000000 		.4byte	0
+ 204 0021 00000000 		.4byte	.Ldebug_line0
+ 205 0025 02       		.uleb128 0x2
+ 206 0026 01       		.byte	0x1
+ 207 0027 06       		.byte	0x6
+ 208 0028 7B040000 		.4byte	.LASF0
+ 209 002c 02       		.uleb128 0x2
+ 210 002d 01       		.byte	0x1
+ 211 002e 08       		.byte	0x8
+ 212 002f 09040000 		.4byte	.LASF1
+ 213 0033 02       		.uleb128 0x2
+ 214 0034 02       		.byte	0x2
+ 215 0035 05       		.byte	0x5
+ 216 0036 BB000000 		.4byte	.LASF2
+ 217 003a 02       		.uleb128 0x2
+ 218 003b 02       		.byte	0x2
+ 219 003c 07       		.byte	0x7
+ 220 003d 86050000 		.4byte	.LASF3
+ 221 0041 02       		.uleb128 0x2
+ 222 0042 04       		.byte	0x4
+ 223 0043 05       		.byte	0x5
+ 224 0044 CA020000 		.4byte	.LASF4
+ 225 0048 02       		.uleb128 0x2
+ 226 0049 04       		.byte	0x4
+ 227 004a 07       		.byte	0x7
+ 228 004b EE040000 		.4byte	.LASF5
+ 229 004f 02       		.uleb128 0x2
+ 230 0050 08       		.byte	0x8
+ 231 0051 05       		.byte	0x5
+ 232 0052 96020000 		.4byte	.LASF6
+ 233 0056 02       		.uleb128 0x2
+ 234 0057 08       		.byte	0x8
+ 235 0058 07       		.byte	0x7
+ 236 0059 A4020000 		.4byte	.LASF7
+ 237 005d 03       		.uleb128 0x3
+ 238 005e 04       		.byte	0x4
+ 239 005f 05       		.byte	0x5
+ 240 0060 696E7400 		.ascii	"int\000"
+ 241 0064 02       		.uleb128 0x2
+ 242 0065 04       		.byte	0x4
+ 243 0066 07       		.byte	0x7
+ 244 0067 C6040000 		.4byte	.LASF8
+ 245 006b 04       		.uleb128 0x4
+ 246 006c DD030000 		.4byte	.LASF9
+ 247 0070 02       		.byte	0x2
+ 248 0071 A1       		.byte	0xa1
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 8
+
+
+ 249 0072 2C000000 		.4byte	0x2c
+ 250 0076 04       		.uleb128 0x4
+ 251 0077 9C010000 		.4byte	.LASF10
+ 252 007b 02       		.byte	0x2
+ 253 007c A2       		.byte	0xa2
+ 254 007d 3A000000 		.4byte	0x3a
+ 255 0081 04       		.uleb128 0x4
+ 256 0082 20060000 		.4byte	.LASF11
+ 257 0086 02       		.byte	0x2
+ 258 0087 A3       		.byte	0xa3
+ 259 0088 48000000 		.4byte	0x48
+ 260 008c 02       		.uleb128 0x2
+ 261 008d 04       		.byte	0x4
+ 262 008e 04       		.byte	0x4
+ 263 008f 5D020000 		.4byte	.LASF12
+ 264 0093 02       		.uleb128 0x2
+ 265 0094 08       		.byte	0x8
+ 266 0095 04       		.byte	0x4
+ 267 0096 75060000 		.4byte	.LASF13
+ 268 009a 04       		.uleb128 0x4
+ 269 009b 06010000 		.4byte	.LASF14
+ 270 009f 02       		.byte	0x2
+ 271 00a0 B2       		.byte	0xb2
+ 272 00a1 A5000000 		.4byte	0xa5
+ 273 00a5 02       		.uleb128 0x2
+ 274 00a6 01       		.byte	0x1
+ 275 00a7 08       		.byte	0x8
+ 276 00a8 A4050000 		.4byte	.LASF15
+ 277 00ac 02       		.uleb128 0x2
+ 278 00ad 04       		.byte	0x4
+ 279 00ae 07       		.byte	0x7
+ 280 00af FD000000 		.4byte	.LASF16
+ 281 00b3 05       		.uleb128 0x5
+ 282 00b4 01       		.byte	0x1
+ 283 00b5 03       		.byte	0x3
+ 284 00b6 58       		.byte	0x58
+ 285 00b7 23020000 		.4byte	0x223
+ 286 00bb 06       		.uleb128 0x6
+ 287 00bc 07020000 		.4byte	.LASF17
+ 288 00c0 00       		.sleb128 0
+ 289 00c1 06       		.uleb128 0x6
+ 290 00c2 67010000 		.4byte	.LASF18
+ 291 00c6 01       		.sleb128 1
+ 292 00c7 06       		.uleb128 0x6
+ 293 00c8 6C070000 		.4byte	.LASF19
+ 294 00cc 02       		.sleb128 2
+ 295 00cd 06       		.uleb128 0x6
+ 296 00ce 9F060000 		.4byte	.LASF20
+ 297 00d2 03       		.sleb128 3
+ 298 00d3 06       		.uleb128 0x6
+ 299 00d4 31010000 		.4byte	.LASF21
+ 300 00d8 04       		.sleb128 4
+ 301 00d9 06       		.uleb128 0x6
+ 302 00da 5C030000 		.4byte	.LASF22
+ 303 00de 05       		.sleb128 5
+ 304 00df 06       		.uleb128 0x6
+ 305 00e0 FD060000 		.4byte	.LASF23
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 9
+
+
+ 306 00e4 20       		.sleb128 32
+ 307 00e5 06       		.uleb128 0x6
+ 308 00e6 00050000 		.4byte	.LASF24
+ 309 00ea 21       		.sleb128 33
+ 310 00eb 06       		.uleb128 0x6
+ 311 00ec 6E000000 		.4byte	.LASF25
+ 312 00f0 22       		.sleb128 34
+ 313 00f1 06       		.uleb128 0x6
+ 314 00f2 8B030000 		.4byte	.LASF26
+ 315 00f6 23       		.sleb128 35
+ 316 00f7 06       		.uleb128 0x6
+ 317 00f8 AA040000 		.4byte	.LASF27
+ 318 00fc 24       		.sleb128 36
+ 319 00fd 06       		.uleb128 0x6
+ 320 00fe C5000000 		.4byte	.LASF28
+ 321 0102 25       		.sleb128 37
+ 322 0103 06       		.uleb128 0x6
+ 323 0104 13030000 		.4byte	.LASF29
+ 324 0108 26       		.sleb128 38
+ 325 0109 06       		.uleb128 0x6
+ 326 010a F4020000 		.4byte	.LASF30
+ 327 010e 27       		.sleb128 39
+ 328 010f 06       		.uleb128 0x6
+ 329 0110 E0070000 		.4byte	.LASF31
+ 330 0114 28       		.sleb128 40
+ 331 0115 06       		.uleb128 0x6
+ 332 0116 5F050000 		.4byte	.LASF32
+ 333 011a 29       		.sleb128 41
+ 334 011b 06       		.uleb128 0x6
+ 335 011c 92000000 		.4byte	.LASF33
+ 336 0120 2A       		.sleb128 42
+ 337 0121 06       		.uleb128 0x6
+ 338 0122 A2070000 		.4byte	.LASF34
+ 339 0126 2B       		.sleb128 43
+ 340 0127 06       		.uleb128 0x6
+ 341 0128 A3010000 		.4byte	.LASF35
+ 342 012c 2C       		.sleb128 44
+ 343 012d 06       		.uleb128 0x6
+ 344 012e 0C010000 		.4byte	.LASF36
+ 345 0132 C000     		.sleb128 64
+ 346 0134 06       		.uleb128 0x6
+ 347 0135 D3040000 		.4byte	.LASF37
+ 348 0139 C100     		.sleb128 65
+ 349 013b 06       		.uleb128 0x6
+ 350 013c DF000000 		.4byte	.LASF38
+ 351 0140 C200     		.sleb128 66
+ 352 0142 06       		.uleb128 0x6
+ 353 0143 C5050000 		.4byte	.LASF39
+ 354 0147 C300     		.sleb128 67
+ 355 0149 06       		.uleb128 0x6
+ 356 014a 4E070000 		.4byte	.LASF40
+ 357 014e C400     		.sleb128 68
+ 358 0150 06       		.uleb128 0x6
+ 359 0151 17050000 		.4byte	.LASF41
+ 360 0155 C500     		.sleb128 69
+ 361 0157 06       		.uleb128 0x6
+ 362 0158 46010000 		.4byte	.LASF42
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 10
+
+
+ 363 015c C600     		.sleb128 70
+ 364 015e 06       		.uleb128 0x6
+ 365 015f 5D040000 		.4byte	.LASF43
+ 366 0163 C700     		.sleb128 71
+ 367 0165 06       		.uleb128 0x6
+ 368 0166 36040000 		.4byte	.LASF44
+ 369 016a C800     		.sleb128 72
+ 370 016c 06       		.uleb128 0x6
+ 371 016d 63020000 		.4byte	.LASF45
+ 372 0171 C900     		.sleb128 73
+ 373 0173 06       		.uleb128 0x6
+ 374 0174 E3050000 		.4byte	.LASF46
+ 375 0178 CA00     		.sleb128 74
+ 376 017a 06       		.uleb128 0x6
+ 377 017b C7010000 		.4byte	.LASF47
+ 378 017f CB00     		.sleb128 75
+ 379 0181 06       		.uleb128 0x6
+ 380 0182 87040000 		.4byte	.LASF48
+ 381 0186 CC00     		.sleb128 76
+ 382 0188 06       		.uleb128 0x6
+ 383 0189 7C020000 		.4byte	.LASF49
+ 384 018d CD00     		.sleb128 77
+ 385 018f 06       		.uleb128 0x6
+ 386 0190 30070000 		.4byte	.LASF50
+ 387 0194 CE00     		.sleb128 78
+ 388 0196 06       		.uleb128 0x6
+ 389 0197 17040000 		.4byte	.LASF51
+ 390 019b CF00     		.sleb128 79
+ 391 019d 06       		.uleb128 0x6
+ 392 019e C1070000 		.4byte	.LASF52
+ 393 01a2 D000     		.sleb128 80
+ 394 01a4 06       		.uleb128 0x6
+ 395 01a5 01060000 		.4byte	.LASF53
+ 396 01a9 D100     		.sleb128 81
+ 397 01ab 06       		.uleb128 0x6
+ 398 01ac 3B030000 		.4byte	.LASF54
+ 399 01b0 D200     		.sleb128 82
+ 400 01b2 06       		.uleb128 0x6
+ 401 01b3 D3020000 		.4byte	.LASF55
+ 402 01b7 D300     		.sleb128 83
+ 403 01b9 06       		.uleb128 0x6
+ 404 01ba E6010000 		.4byte	.LASF56
+ 405 01be D400     		.sleb128 84
+ 406 01c0 06       		.uleb128 0x6
+ 407 01c1 02080000 		.4byte	.LASF57
+ 408 01c5 D500     		.sleb128 85
+ 409 01c7 06       		.uleb128 0x6
+ 410 01c8 E3030000 		.4byte	.LASF58
+ 411 01cc F000     		.sleb128 112
+ 412 01ce 06       		.uleb128 0x6
+ 413 01cf D7060000 		.4byte	.LASF59
+ 414 01d3 F100     		.sleb128 113
+ 415 01d5 06       		.uleb128 0x6
+ 416 01d6 A9050000 		.4byte	.LASF60
+ 417 01da F200     		.sleb128 114
+ 418 01dc 06       		.uleb128 0x6
+ 419 01dd 1E020000 		.4byte	.LASF61
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 11
+
+
+ 420 01e1 F300     		.sleb128 115
+ 421 01e3 06       		.uleb128 0x6
+ 422 01e4 B1030000 		.4byte	.LASF62
+ 423 01e8 F400     		.sleb128 116
+ 424 01ea 06       		.uleb128 0x6
+ 425 01eb 3E050000 		.4byte	.LASF63
+ 426 01ef F500     		.sleb128 117
+ 427 01f1 06       		.uleb128 0x6
+ 428 01f2 3C020000 		.4byte	.LASF64
+ 429 01f6 F600     		.sleb128 118
+ 430 01f8 06       		.uleb128 0x6
+ 431 01f9 B8060000 		.4byte	.LASF65
+ 432 01fd F700     		.sleb128 119
+ 433 01ff 06       		.uleb128 0x6
+ 434 0200 52060000 		.4byte	.LASF66
+ 435 0204 F800     		.sleb128 120
+ 436 0206 06       		.uleb128 0x6
+ 437 0207 7C060000 		.4byte	.LASF67
+ 438 020b F900     		.sleb128 121
+ 439 020d 06       		.uleb128 0x6
+ 440 020e 7E070000 		.4byte	.LASF68
+ 441 0212 FA00     		.sleb128 122
+ 442 0214 06       		.uleb128 0x6
+ 443 0215 27060000 		.4byte	.LASF69
+ 444 0219 FA01     		.sleb128 250
+ 445 021b 06       		.uleb128 0x6
+ 446 021c CF030000 		.4byte	.LASF70
+ 447 0220 FF01     		.sleb128 255
+ 448 0222 00       		.byte	0
+ 449 0223 07       		.uleb128 0x7
+ 450 0224 78030000 		.4byte	.LASF71
+ 451 0228 01       		.byte	0x1
+ 452 0229 4C       		.byte	0x4c
+ 453 022a 00000000 		.4byte	.LFB35
+ 454 022e 24000000 		.4byte	.LFE35-.LFB35
+ 455 0232 01       		.uleb128 0x1
+ 456 0233 9C       		.byte	0x9c
+ 457 0234 47020000 		.4byte	0x247
+ 458 0238 08       		.uleb128 0x8
+ 459 0239 26010000 		.4byte	.LASF73
+ 460 023d 01       		.byte	0x1
+ 461 023e 4C       		.byte	0x4c
+ 462 023f 81000000 		.4byte	0x81
+ 463 0243 02       		.uleb128 0x2
+ 464 0244 91       		.byte	0x91
+ 465 0245 74       		.sleb128 -12
+ 466 0246 00       		.byte	0
+ 467 0247 07       		.uleb128 0x7
+ 468 0248 8C010000 		.4byte	.LASF72
+ 469 024c 01       		.byte	0x1
+ 470 024d 64       		.byte	0x64
+ 471 024e 00000000 		.4byte	.LFB36
+ 472 0252 3C000000 		.4byte	.LFE36-.LFB36
+ 473 0256 01       		.uleb128 0x1
+ 474 0257 9C       		.byte	0x9c
+ 475 0258 7C020000 		.4byte	0x27c
+ 476 025c 08       		.uleb128 0x8
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 12
+
+
+ 477 025d 7C050000 		.4byte	.LASF74
+ 478 0261 01       		.byte	0x1
+ 479 0262 64       		.byte	0x64
+ 480 0263 6B000000 		.4byte	0x6b
+ 481 0267 02       		.uleb128 0x2
+ 482 0268 91       		.byte	0x91
+ 483 0269 77       		.sleb128 -9
+ 484 026a 09       		.uleb128 0x9
+ 485 026b 21070000 		.4byte	.LASF80
+ 486 026f 01       		.byte	0x1
+ 487 0270 66       		.byte	0x66
+ 488 0271 8C020000 		.4byte	0x28c
+ 489 0275 05       		.uleb128 0x5
+ 490 0276 03       		.byte	0x3
+ 491 0277 00000000 		.4byte	SW_Tx_UART_hex.7159
+ 492 027b 00       		.byte	0
+ 493 027c 0A       		.uleb128 0xa
+ 494 027d 9A000000 		.4byte	0x9a
+ 495 0281 8C020000 		.4byte	0x28c
+ 496 0285 0B       		.uleb128 0xb
+ 497 0286 AC000000 		.4byte	0xac
+ 498 028a 10       		.byte	0x10
+ 499 028b 00       		.byte	0
+ 500 028c 0C       		.uleb128 0xc
+ 501 028d 7C020000 		.4byte	0x27c
+ 502 0291 07       		.uleb128 0x7
+ 503 0292 BB020000 		.4byte	.LASF75
+ 504 0296 01       		.byte	0x1
+ 505 0297 7B       		.byte	0x7b
+ 506 0298 00000000 		.4byte	.LFB37
+ 507 029c 2E000000 		.4byte	.LFE37-.LFB37
+ 508 02a0 01       		.uleb128 0x1
+ 509 02a1 9C       		.byte	0x9c
+ 510 02a2 B5020000 		.4byte	0x2b5
+ 511 02a6 08       		.uleb128 0x8
+ 512 02a7 A1040000 		.4byte	.LASF76
+ 513 02ab 01       		.byte	0x1
+ 514 02ac 7B       		.byte	0x7b
+ 515 02ad 76000000 		.4byte	0x76
+ 516 02b1 02       		.uleb128 0x2
+ 517 02b2 91       		.byte	0x91
+ 518 02b3 76       		.sleb128 -10
+ 519 02b4 00       		.byte	0
+ 520 02b5 0D       		.uleb128 0xd
+ 521 02b6 45060000 		.4byte	.LASF81
+ 522 02ba 01       		.byte	0x1
+ 523 02bb 8F       		.byte	0x8f
+ 524 02bc 00000000 		.4byte	.LFB38
+ 525 02c0 14000000 		.4byte	.LFE38-.LFB38
+ 526 02c4 01       		.uleb128 0x1
+ 527 02c5 9C       		.byte	0x9c
+ 528 02c6 0A       		.uleb128 0xa
+ 529 02c7 6B000000 		.4byte	0x6b
+ 530 02cb D6020000 		.4byte	0x2d6
+ 531 02cf 0B       		.uleb128 0xb
+ 532 02d0 AC000000 		.4byte	0xac
+ 533 02d4 03       		.byte	0x3
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 13
+
+
+ 534 02d5 00       		.byte	0
+ 535 02d6 0E       		.uleb128 0xe
+ 536 02d7 99050000 		.4byte	.LASF82
+ 537 02db 04       		.byte	0x4
+ 538 02dc 7B       		.byte	0x7b
+ 539 02dd C6020000 		.4byte	0x2c6
+ 540 02e1 05       		.uleb128 0x5
+ 541 02e2 03       		.byte	0x3
+ 542 02e3 00000000 		.4byte	RGBledData
+ 543 02e7 00       		.byte	0
+ 544              		.section	.debug_abbrev,"",%progbits
+ 545              	.Ldebug_abbrev0:
+ 546 0000 01       		.uleb128 0x1
+ 547 0001 11       		.uleb128 0x11
+ 548 0002 01       		.byte	0x1
+ 549 0003 25       		.uleb128 0x25
+ 550 0004 0E       		.uleb128 0xe
+ 551 0005 13       		.uleb128 0x13
+ 552 0006 0B       		.uleb128 0xb
+ 553 0007 03       		.uleb128 0x3
+ 554 0008 0E       		.uleb128 0xe
+ 555 0009 1B       		.uleb128 0x1b
+ 556 000a 0E       		.uleb128 0xe
+ 557 000b 55       		.uleb128 0x55
+ 558 000c 17       		.uleb128 0x17
+ 559 000d 11       		.uleb128 0x11
+ 560 000e 01       		.uleb128 0x1
+ 561 000f 10       		.uleb128 0x10
+ 562 0010 17       		.uleb128 0x17
+ 563 0011 00       		.byte	0
+ 564 0012 00       		.byte	0
+ 565 0013 02       		.uleb128 0x2
+ 566 0014 24       		.uleb128 0x24
+ 567 0015 00       		.byte	0
+ 568 0016 0B       		.uleb128 0xb
+ 569 0017 0B       		.uleb128 0xb
+ 570 0018 3E       		.uleb128 0x3e
+ 571 0019 0B       		.uleb128 0xb
+ 572 001a 03       		.uleb128 0x3
+ 573 001b 0E       		.uleb128 0xe
+ 574 001c 00       		.byte	0
+ 575 001d 00       		.byte	0
+ 576 001e 03       		.uleb128 0x3
+ 577 001f 24       		.uleb128 0x24
+ 578 0020 00       		.byte	0
+ 579 0021 0B       		.uleb128 0xb
+ 580 0022 0B       		.uleb128 0xb
+ 581 0023 3E       		.uleb128 0x3e
+ 582 0024 0B       		.uleb128 0xb
+ 583 0025 03       		.uleb128 0x3
+ 584 0026 08       		.uleb128 0x8
+ 585 0027 00       		.byte	0
+ 586 0028 00       		.byte	0
+ 587 0029 04       		.uleb128 0x4
+ 588 002a 16       		.uleb128 0x16
+ 589 002b 00       		.byte	0
+ 590 002c 03       		.uleb128 0x3
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 14
+
+
+ 591 002d 0E       		.uleb128 0xe
+ 592 002e 3A       		.uleb128 0x3a
+ 593 002f 0B       		.uleb128 0xb
+ 594 0030 3B       		.uleb128 0x3b
+ 595 0031 0B       		.uleb128 0xb
+ 596 0032 49       		.uleb128 0x49
+ 597 0033 13       		.uleb128 0x13
+ 598 0034 00       		.byte	0
+ 599 0035 00       		.byte	0
+ 600 0036 05       		.uleb128 0x5
+ 601 0037 04       		.uleb128 0x4
+ 602 0038 01       		.byte	0x1
+ 603 0039 0B       		.uleb128 0xb
+ 604 003a 0B       		.uleb128 0xb
+ 605 003b 3A       		.uleb128 0x3a
+ 606 003c 0B       		.uleb128 0xb
+ 607 003d 3B       		.uleb128 0x3b
+ 608 003e 0B       		.uleb128 0xb
+ 609 003f 01       		.uleb128 0x1
+ 610 0040 13       		.uleb128 0x13
+ 611 0041 00       		.byte	0
+ 612 0042 00       		.byte	0
+ 613 0043 06       		.uleb128 0x6
+ 614 0044 28       		.uleb128 0x28
+ 615 0045 00       		.byte	0
+ 616 0046 03       		.uleb128 0x3
+ 617 0047 0E       		.uleb128 0xe
+ 618 0048 1C       		.uleb128 0x1c
+ 619 0049 0D       		.uleb128 0xd
+ 620 004a 00       		.byte	0
+ 621 004b 00       		.byte	0
+ 622 004c 07       		.uleb128 0x7
+ 623 004d 2E       		.uleb128 0x2e
+ 624 004e 01       		.byte	0x1
+ 625 004f 3F       		.uleb128 0x3f
+ 626 0050 19       		.uleb128 0x19
+ 627 0051 03       		.uleb128 0x3
+ 628 0052 0E       		.uleb128 0xe
+ 629 0053 3A       		.uleb128 0x3a
+ 630 0054 0B       		.uleb128 0xb
+ 631 0055 3B       		.uleb128 0x3b
+ 632 0056 0B       		.uleb128 0xb
+ 633 0057 27       		.uleb128 0x27
+ 634 0058 19       		.uleb128 0x19
+ 635 0059 11       		.uleb128 0x11
+ 636 005a 01       		.uleb128 0x1
+ 637 005b 12       		.uleb128 0x12
+ 638 005c 06       		.uleb128 0x6
+ 639 005d 40       		.uleb128 0x40
+ 640 005e 18       		.uleb128 0x18
+ 641 005f 9642     		.uleb128 0x2116
+ 642 0061 19       		.uleb128 0x19
+ 643 0062 01       		.uleb128 0x1
+ 644 0063 13       		.uleb128 0x13
+ 645 0064 00       		.byte	0
+ 646 0065 00       		.byte	0
+ 647 0066 08       		.uleb128 0x8
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 15
+
+
+ 648 0067 05       		.uleb128 0x5
+ 649 0068 00       		.byte	0
+ 650 0069 03       		.uleb128 0x3
+ 651 006a 0E       		.uleb128 0xe
+ 652 006b 3A       		.uleb128 0x3a
+ 653 006c 0B       		.uleb128 0xb
+ 654 006d 3B       		.uleb128 0x3b
+ 655 006e 0B       		.uleb128 0xb
+ 656 006f 49       		.uleb128 0x49
+ 657 0070 13       		.uleb128 0x13
+ 658 0071 02       		.uleb128 0x2
+ 659 0072 18       		.uleb128 0x18
+ 660 0073 00       		.byte	0
+ 661 0074 00       		.byte	0
+ 662 0075 09       		.uleb128 0x9
+ 663 0076 34       		.uleb128 0x34
+ 664 0077 00       		.byte	0
+ 665 0078 03       		.uleb128 0x3
+ 666 0079 0E       		.uleb128 0xe
+ 667 007a 3A       		.uleb128 0x3a
+ 668 007b 0B       		.uleb128 0xb
+ 669 007c 3B       		.uleb128 0x3b
+ 670 007d 0B       		.uleb128 0xb
+ 671 007e 49       		.uleb128 0x49
+ 672 007f 13       		.uleb128 0x13
+ 673 0080 02       		.uleb128 0x2
+ 674 0081 18       		.uleb128 0x18
+ 675 0082 00       		.byte	0
+ 676 0083 00       		.byte	0
+ 677 0084 0A       		.uleb128 0xa
+ 678 0085 01       		.uleb128 0x1
+ 679 0086 01       		.byte	0x1
+ 680 0087 49       		.uleb128 0x49
+ 681 0088 13       		.uleb128 0x13
+ 682 0089 01       		.uleb128 0x1
+ 683 008a 13       		.uleb128 0x13
+ 684 008b 00       		.byte	0
+ 685 008c 00       		.byte	0
+ 686 008d 0B       		.uleb128 0xb
+ 687 008e 21       		.uleb128 0x21
+ 688 008f 00       		.byte	0
+ 689 0090 49       		.uleb128 0x49
+ 690 0091 13       		.uleb128 0x13
+ 691 0092 2F       		.uleb128 0x2f
+ 692 0093 0B       		.uleb128 0xb
+ 693 0094 00       		.byte	0
+ 694 0095 00       		.byte	0
+ 695 0096 0C       		.uleb128 0xc
+ 696 0097 26       		.uleb128 0x26
+ 697 0098 00       		.byte	0
+ 698 0099 49       		.uleb128 0x49
+ 699 009a 13       		.uleb128 0x13
+ 700 009b 00       		.byte	0
+ 701 009c 00       		.byte	0
+ 702 009d 0D       		.uleb128 0xd
+ 703 009e 2E       		.uleb128 0x2e
+ 704 009f 00       		.byte	0
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 16
+
+
+ 705 00a0 3F       		.uleb128 0x3f
+ 706 00a1 19       		.uleb128 0x19
+ 707 00a2 03       		.uleb128 0x3
+ 708 00a3 0E       		.uleb128 0xe
+ 709 00a4 3A       		.uleb128 0x3a
+ 710 00a5 0B       		.uleb128 0xb
+ 711 00a6 3B       		.uleb128 0x3b
+ 712 00a7 0B       		.uleb128 0xb
+ 713 00a8 27       		.uleb128 0x27
+ 714 00a9 19       		.uleb128 0x19
+ 715 00aa 11       		.uleb128 0x11
+ 716 00ab 01       		.uleb128 0x1
+ 717 00ac 12       		.uleb128 0x12
+ 718 00ad 06       		.uleb128 0x6
+ 719 00ae 40       		.uleb128 0x40
+ 720 00af 18       		.uleb128 0x18
+ 721 00b0 9642     		.uleb128 0x2116
+ 722 00b2 19       		.uleb128 0x19
+ 723 00b3 00       		.byte	0
+ 724 00b4 00       		.byte	0
+ 725 00b5 0E       		.uleb128 0xe
+ 726 00b6 34       		.uleb128 0x34
+ 727 00b7 00       		.byte	0
+ 728 00b8 03       		.uleb128 0x3
+ 729 00b9 0E       		.uleb128 0xe
+ 730 00ba 3A       		.uleb128 0x3a
+ 731 00bb 0B       		.uleb128 0xb
+ 732 00bc 3B       		.uleb128 0x3b
+ 733 00bd 0B       		.uleb128 0xb
+ 734 00be 49       		.uleb128 0x49
+ 735 00bf 13       		.uleb128 0x13
+ 736 00c0 3F       		.uleb128 0x3f
+ 737 00c1 19       		.uleb128 0x19
+ 738 00c2 02       		.uleb128 0x2
+ 739 00c3 18       		.uleb128 0x18
+ 740 00c4 00       		.byte	0
+ 741 00c5 00       		.byte	0
+ 742 00c6 00       		.byte	0
+ 743              		.section	.debug_aranges,"",%progbits
+ 744 0000 34000000 		.4byte	0x34
+ 745 0004 0200     		.2byte	0x2
+ 746 0006 00000000 		.4byte	.Ldebug_info0
+ 747 000a 04       		.byte	0x4
+ 748 000b 00       		.byte	0
+ 749 000c 0000     		.2byte	0
+ 750 000e 0000     		.2byte	0
+ 751 0010 00000000 		.4byte	.LFB35
+ 752 0014 24000000 		.4byte	.LFE35-.LFB35
+ 753 0018 00000000 		.4byte	.LFB36
+ 754 001c 3C000000 		.4byte	.LFE36-.LFB36
+ 755 0020 00000000 		.4byte	.LFB37
+ 756 0024 2E000000 		.4byte	.LFE37-.LFB37
+ 757 0028 00000000 		.4byte	.LFB38
+ 758 002c 14000000 		.4byte	.LFE38-.LFB38
+ 759 0030 00000000 		.4byte	0
+ 760 0034 00000000 		.4byte	0
+ 761              		.section	.debug_ranges,"",%progbits
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 17
+
+
+ 762              	.Ldebug_ranges0:
+ 763 0000 00000000 		.4byte	.LFB35
+ 764 0004 24000000 		.4byte	.LFE35
+ 765 0008 00000000 		.4byte	.LFB36
+ 766 000c 3C000000 		.4byte	.LFE36
+ 767 0010 00000000 		.4byte	.LFB37
+ 768 0014 2E000000 		.4byte	.LFE37
+ 769 0018 00000000 		.4byte	.LFB38
+ 770 001c 14000000 		.4byte	.LFE38
+ 771 0020 00000000 		.4byte	0
+ 772 0024 00000000 		.4byte	0
+ 773              		.section	.debug_line,"",%progbits
+ 774              	.Ldebug_line0:
+ 775 0000 C6000000 		.section	.debug_str,"MS",%progbits,1
+ 775      02007400 
+ 775      00000201 
+ 775      FB0E0D00 
+ 775      01010101 
+ 776              	.LASF79:
+ 777 0000 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\test\\Frequency_Measurem"
+ 777      73657273 
+ 777      5C41646D 
+ 777      696E5C44 
+ 777      65736B74 
+ 778 002e 656E745F 		.ascii	"ent_Using_PSoC4_BLE\\Frequency_Measurement_Using_PS"
+ 778      5573696E 
+ 778      675F5053 
+ 778      6F43345F 
+ 778      424C455C 
+ 779 0060 6F43345F 		.ascii	"oC4_BLE.cydsn\000"
+ 779      424C452E 
+ 779      63796473 
+ 779      6E00
+ 780              	.LASF25:
+ 781 006e 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_ENTRY_REQUEST\000"
+ 781      455F4556 
+ 781      545F4741 
+ 781      505F5041 
+ 781      53534B45 
+ 782              	.LASF33:
+ 783 0092 4359424C 		.ascii	"CYBLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE\000"
+ 783      455F4556 
+ 783      545F4741 
+ 783      505F434F 
+ 783      4E4E4543 
+ 784              	.LASF2:
+ 785 00bb 73686F72 		.ascii	"short int\000"
+ 785      7420696E 
+ 785      7400
+ 786              	.LASF28:
+ 787 00c5 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_FAILED\000"
+ 787      455F4556 
+ 787      545F4741 
+ 787      505F4155 
+ 787      54485F46 
+ 788              	.LASF38:
+ 789 00df 4359424C 		.ascii	"CYBLE_EVT_GATT_DISCONNECT_IND\000"
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 18
+
+
+ 789      455F4556 
+ 789      545F4741 
+ 789      54545F44 
+ 789      4953434F 
+ 790              	.LASF16:
+ 791 00fd 73697A65 		.ascii	"sizetype\000"
+ 791      74797065 
+ 791      00
+ 792              	.LASF14:
+ 793 0106 63686172 		.ascii	"char8\000"
+ 793      3800
+ 794              	.LASF36:
+ 795 010c 4359424C 		.ascii	"CYBLE_EVT_GATTC_ERROR_RSP\000"
+ 795      455F4556 
+ 795      545F4741 
+ 795      5454435F 
+ 795      4552524F 
+ 796              	.LASF73:
+ 797 0126 436F756E 		.ascii	"CountValue\000"
+ 797      7456616C 
+ 797      756500
+ 798              	.LASF21:
+ 799 0131 4359424C 		.ascii	"CYBLE_EVT_HCI_STATUS\000"
+ 799      455F4556 
+ 799      545F4843 
+ 799      495F5354 
+ 799      41545553 
+ 800              	.LASF42:
+ 801 0146 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_TYPE_RSP\000"
+ 801      455F4556 
+ 801      545F4741 
+ 801      5454435F 
+ 801      52454144 
+ 802              	.LASF18:
+ 803 0167 4359424C 		.ascii	"CYBLE_EVT_STACK_ON\000"
+ 803      455F4556 
+ 803      545F5354 
+ 803      41434B5F 
+ 803      4F4E00
+ 804              	.LASF78:
+ 805 017a 2E5C436F 		.ascii	".\\Communication.c\000"
+ 805      6D6D756E 
+ 805      69636174 
+ 805      696F6E2E 
+ 805      6300
+ 806              	.LASF72:
+ 807 018c 55415254 		.ascii	"UART_PutHexByte\000"
+ 807      5F507574 
+ 807      48657842 
+ 807      79746500 
+ 808              	.LASF10:
+ 809 019c 75696E74 		.ascii	"uint16\000"
+ 809      313600
+ 810              	.LASF35:
+ 811 01a3 4359424C 		.ascii	"CYBLE_EVT_GAP_KEYINFO_EXCHNGE_CMPLT\000"
+ 811      455F4556 
+ 811      545F4741 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 19
+
+
+ 811      505F4B45 
+ 811      59494E46 
+ 812              	.LASF47:
+ 813 01c7 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_MULTI_RSP\000"
+ 813      455F4556 
+ 813      545F4741 
+ 813      5454435F 
+ 813      52454144 
+ 814              	.LASF56:
+ 815 01e6 4359424C 		.ascii	"CYBLE_EVT_GATTS_HANDLE_VALUE_CNF\000"
+ 815      455F4556 
+ 815      545F4741 
+ 815      5454535F 
+ 815      48414E44 
+ 816              	.LASF17:
+ 817 0207 4359424C 		.ascii	"CYBLE_EVT_HOST_INVALID\000"
+ 817      455F4556 
+ 817      545F484F 
+ 817      53545F49 
+ 817      4E56414C 
+ 818              	.LASF61:
+ 819 021e 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_IND\000"
+ 819      455F4556 
+ 819      545F4C32 
+ 819      4341505F 
+ 819      43424643 
+ 820              	.LASF64:
+ 821 023c 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_CNF\000"
+ 821      455F4556 
+ 821      545F4C32 
+ 821      4341505F 
+ 821      43424643 
+ 822              	.LASF12:
+ 823 025d 666C6F61 		.ascii	"float\000"
+ 823      7400
+ 824              	.LASF45:
+ 825 0263 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_RSP\000"
+ 825      455F4556 
+ 825      545F4741 
+ 825      5454435F 
+ 825      52454144 
+ 826              	.LASF49:
+ 827 027c 4359424C 		.ascii	"CYBLE_EVT_GATTC_WRITE_RSP\000"
+ 827      455F4556 
+ 827      545F4741 
+ 827      5454435F 
+ 827      57524954 
+ 828              	.LASF6:
+ 829 0296 6C6F6E67 		.ascii	"long long int\000"
+ 829      206C6F6E 
+ 829      6720696E 
+ 829      7400
+ 830              	.LASF7:
+ 831 02a4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 831      206C6F6E 
+ 831      6720756E 
+ 831      7369676E 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 20
+
+
+ 831      65642069 
+ 832              	.LASF75:
+ 833 02bb 55415254 		.ascii	"UART_PutHexInt\000"
+ 833      5F507574 
+ 833      48657849 
+ 833      6E7400
+ 834              	.LASF4:
+ 835 02ca 6C6F6E67 		.ascii	"long int\000"
+ 835      20696E74 
+ 835      00
+ 836              	.LASF55:
+ 837 02d3 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_IND\000"
+ 837      455F4556 
+ 837      545F4741 
+ 837      5454435F 
+ 837      48414E44 
+ 838              	.LASF30:
+ 839 02f4 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_CONNECTED\000"
+ 839      455F4556 
+ 839      545F4741 
+ 839      505F4445 
+ 839      56494345 
+ 840              	.LASF29:
+ 841 0313 4359424C 		.ascii	"CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP\000"
+ 841      455F4556 
+ 841      545F4741 
+ 841      50505F41 
+ 841      44564552 
+ 842              	.LASF54:
+ 843 033b 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_NTF\000"
+ 843      455F4556 
+ 843      545F4741 
+ 843      5454435F 
+ 843      48414E44 
+ 844              	.LASF22:
+ 845 035c 4359424C 		.ascii	"CYBLE_EVT_STACK_BUSY_STATUS\000"
+ 845      455F4556 
+ 845      545F5354 
+ 845      41434B5F 
+ 845      42555359 
+ 846              	.LASF71:
+ 847 0378 55415254 		.ascii	"UART_SendDebugData\000"
+ 847      5F53656E 
+ 847      64446562 
+ 847      75674461 
+ 847      746100
+ 848              	.LASF26:
+ 849 038b 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_DISPLAY_REQUEST\000"
+ 849      455F4556 
+ 849      545F4741 
+ 849      505F5041 
+ 849      53534B45 
+ 850              	.LASF62:
+ 851 03b1 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_CNF\000"
+ 851      455F4556 
+ 851      545F4C32 
+ 851      4341505F 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 21
+
+
+ 851      43424643 
+ 852              	.LASF70:
+ 853 03cf 4359424C 		.ascii	"CYBLE_EVT_MAX\000"
+ 853      455F4556 
+ 853      545F4D41 
+ 853      5800
+ 854              	.LASF9:
+ 855 03dd 75696E74 		.ascii	"uint8\000"
+ 855      3800
+ 856              	.LASF58:
+ 857 03e3 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_REQ\000"
+ 857      455F4556 
+ 857      545F4C32 
+ 857      4341505F 
+ 857      434F4E4E 
+ 858              	.LASF1:
+ 859 0409 756E7369 		.ascii	"unsigned char\000"
+ 859      676E6564 
+ 859      20636861 
+ 859      7200
+ 860              	.LASF51:
+ 861 0417 4359424C 		.ascii	"CYBLE_EVT_GATTS_PREP_WRITE_REQ\000"
+ 861      455F4556 
+ 861      545F4741 
+ 861      5454535F 
+ 861      50524550 
+ 862              	.LASF44:
+ 863 0436 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_BY_TYPE_VALUE_RSP\000"
+ 863      455F4556 
+ 863      545F4741 
+ 863      5454435F 
+ 863      46494E44 
+ 864              	.LASF43:
+ 865 045d 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_INFO_RSP\000"
+ 865      455F4556 
+ 865      545F4741 
+ 865      5454435F 
+ 865      46494E44 
+ 866              	.LASF0:
+ 867 047b 7369676E 		.ascii	"signed char\000"
+ 867      65642063 
+ 867      68617200 
+ 868              	.LASF48:
+ 869 0487 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_REQ\000"
+ 869      455F4556 
+ 869      545F4741 
+ 869      5454535F 
+ 869      57524954 
+ 870              	.LASF76:
+ 871 04a1 74784865 		.ascii	"txHexInt\000"
+ 871      78496E74 
+ 871      00
+ 872              	.LASF27:
+ 873 04aa 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_COMPLETE\000"
+ 873      455F4556 
+ 873      545F4741 
+ 873      505F4155 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 22
+
+
+ 873      54485F43 
+ 874              	.LASF8:
+ 875 04c6 756E7369 		.ascii	"unsigned int\000"
+ 875      676E6564 
+ 875      20696E74 
+ 875      00
+ 876              	.LASF37:
+ 877 04d3 4359424C 		.ascii	"CYBLE_EVT_GATT_CONNECT_IND\000"
+ 877      455F4556 
+ 877      545F4741 
+ 877      54545F43 
+ 877      4F4E4E45 
+ 878              	.LASF5:
+ 879 04ee 6C6F6E67 		.ascii	"long unsigned int\000"
+ 879      20756E73 
+ 879      69676E65 
+ 879      6420696E 
+ 879      7400
+ 880              	.LASF24:
+ 881 0500 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_REQ\000"
+ 881      455F4556 
+ 881      545F4741 
+ 881      505F4155 
+ 881      54485F52 
+ 882              	.LASF41:
+ 883 0517 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_GROUP_TYPE_RSP\000"
+ 883      455F4556 
+ 883      545F4741 
+ 883      5454435F 
+ 883      52454144 
+ 884              	.LASF63:
+ 885 053e 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_IND\000"
+ 885      455F4556 
+ 885      545F4C32 
+ 885      4341505F 
+ 885      43424643 
+ 886              	.LASF32:
+ 887 055f 4359424C 		.ascii	"CYBLE_EVT_GAP_ENCRYPT_CHANGE\000"
+ 887      455F4556 
+ 887      545F4741 
+ 887      505F454E 
+ 887      43525950 
+ 888              	.LASF74:
+ 889 057c 74784865 		.ascii	"txHexByte\000"
+ 889      78427974 
+ 889      6500
+ 890              	.LASF3:
+ 891 0586 73686F72 		.ascii	"short unsigned int\000"
+ 891      7420756E 
+ 891      7369676E 
+ 891      65642069 
+ 891      6E7400
+ 892              	.LASF82:
+ 893 0599 5247426C 		.ascii	"RGBledData\000"
+ 893      65644461 
+ 893      746100
+ 894              	.LASF15:
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 23
+
+
+ 895 05a4 63686172 		.ascii	"char\000"
+ 895      00
+ 896              	.LASF60:
+ 897 05a9 4359424C 		.ascii	"CYBLE_EVT_L2CAP_COMMAND_REJ\000"
+ 897      455F4556 
+ 897      545F4C32 
+ 897      4341505F 
+ 897      434F4D4D 
+ 898              	.LASF39:
+ 899 05c5 4359424C 		.ascii	"CYBLE_EVT_GATTS_XCNHG_MTU_REQ\000"
+ 899      455F4556 
+ 899      545F4741 
+ 899      5454535F 
+ 899      58434E48 
+ 900              	.LASF46:
+ 901 05e3 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BLOB_RSP\000"
+ 901      455F4556 
+ 901      545F4741 
+ 901      5454435F 
+ 901      52454144 
+ 902              	.LASF53:
+ 903 0601 4359424C 		.ascii	"CYBLE_EVT_GATTC_EXEC_WRITE_RSP\000"
+ 903      455F4556 
+ 903      545F4741 
+ 903      5454435F 
+ 903      45584543 
+ 904              	.LASF11:
+ 905 0620 75696E74 		.ascii	"uint32\000"
+ 905      333200
+ 906              	.LASF69:
+ 907 0627 4359424C 		.ascii	"CYBLE_EVT_PENDING_FLASH_WRITE\000"
+ 907      455F4556 
+ 907      545F5045 
+ 907      4E44494E 
+ 907      475F464C 
+ 908              	.LASF81:
+ 909 0645 55415254 		.ascii	"UART_PutCRLF\000"
+ 909      5F507574 
+ 909      43524C46 
+ 909      00
+ 910              	.LASF66:
+ 911 0652 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_RX_CREDIT_IND\000"
+ 911      455F4556 
+ 911      545F4C32 
+ 911      4341505F 
+ 911      43424643 
+ 912              	.LASF13:
+ 913 0675 646F7562 		.ascii	"double\000"
+ 913      6C6500
+ 914              	.LASF67:
+ 915 067c 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_TX_CREDIT_IND\000"
+ 915      455F4556 
+ 915      545F4C32 
+ 915      4341505F 
+ 915      43424643 
+ 916              	.LASF20:
+ 917 069f 4359424C 		.ascii	"CYBLE_EVT_HARDWARE_ERROR\000"
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 24
+
+
+ 917      455F4556 
+ 917      545F4841 
+ 917      52445741 
+ 917      52455F45 
+ 918              	.LASF65:
+ 919 06b8 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_READ\000"
+ 919      455F4556 
+ 919      545F4C32 
+ 919      4341505F 
+ 919      43424643 
+ 920              	.LASF59:
+ 921 06d7 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_RSP\000"
+ 921      455F4556 
+ 921      545F4C32 
+ 921      4341505F 
+ 921      434F4E4E 
+ 922              	.LASF23:
+ 923 06fd 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_PROGRESS_RESULT\000"
+ 923      455F4556 
+ 923      545F4741 
+ 923      50435F53 
+ 923      43414E5F 
+ 924              	.LASF80:
+ 925 0721 53575F54 		.ascii	"SW_Tx_UART_hex\000"
+ 925      785F5541 
+ 925      52545F68 
+ 925      657800
+ 926              	.LASF50:
+ 927 0730 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_CMD_REQ\000"
+ 927      455F4556 
+ 927      545F4741 
+ 927      5454535F 
+ 927      57524954 
+ 928              	.LASF40:
+ 929 074e 4359424C 		.ascii	"CYBLE_EVT_GATTC_XCHNG_MTU_RSP\000"
+ 929      455F4556 
+ 929      545F4741 
+ 929      5454435F 
+ 929      5843484E 
+ 930              	.LASF19:
+ 931 076c 4359424C 		.ascii	"CYBLE_EVT_TIMEOUT\000"
+ 931      455F4556 
+ 931      545F5449 
+ 931      4D454F55 
+ 931      5400
+ 932              	.LASF68:
+ 933 077e 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_WRITE_IND\000"
+ 933      455F4556 
+ 933      545F4C32 
+ 933      4341505F 
+ 933      43424643 
+ 934              	.LASF34:
+ 935 07a2 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_START_STOP\000"
+ 935      455F4556 
+ 935      545F4741 
+ 935      50435F53 
+ 935      43414E5F 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\ccXluCRm.s 			page 25
+
+
+ 936              	.LASF52:
+ 937 07c1 4359424C 		.ascii	"CYBLE_EVT_GATTS_EXEC_WRITE_REQ\000"
+ 937      455F4556 
+ 937      545F4741 
+ 937      5454535F 
+ 937      45584543 
+ 938              	.LASF31:
+ 939 07e0 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_DISCONNECTED\000"
+ 939      455F4556 
+ 939      545F4741 
+ 939      505F4445 
+ 939      56494345 
+ 940              	.LASF57:
+ 941 0802 4359424C 		.ascii	"CYBLE_EVT_GATTS_DATA_SIGNED_CMD_REQ\000"
+ 941      455F4556 
+ 941      545F4741 
+ 941      5454535F 
+ 941      44415441 
+ 942              	.LASF77:
+ 943 0826 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 943      4320342E 
+ 943      382E3420 
+ 943      32303134 
+ 943      30353236 
+ 944 0859 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m0 -mthumb -g -O"
+ 944      20726576 
+ 944      6973696F 
+ 944      6E203231 
+ 944      31333538 
+ 945 088c 30202D66 		.ascii	"0 -ffunction-sections\000"
+ 945      66756E63 
+ 945      74696F6E 
+ 945      2D736563 
+ 945      74696F6E 
+ 946              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br

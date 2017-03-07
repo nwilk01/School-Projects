@@ -1,0 +1,3143 @@
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"FrequencyCounter.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.comm	RGBledData,4,4
+  18              		.comm	Input_Signal_Counter1_Count,2,2
+  19              		.comm	Input_Signal_Counter2_Count,2,2
+  20              		.comm	Ref_Clock_Counter1_Count,2,2
+  21              		.comm	Ref_Clock_Counter2_Count,2,2
+  22              		.comm	Input_Signal_Count,4,4
+  23              		.comm	Ref_Clock_Count,4,4
+  24              		.comm	Freq_Integer,4,4
+  25              		.comm	Freq_Decimal,2,2
+  26              		.comm	Input_Sig_Ctr_Capture,1,1
+  27              		.comm	Ref_Clk_Ctr_Capture,1,1
+  28              		.comm	Input_Frequency,10,4
+  29              		.comm	InputCounter_ASCII,10,4
+  30              		.comm	RefCounter_ASCII,10,4
+  31              		.section	.text.Initialize_Freq_Meas_System,"ax",%progbits
+  32              		.align	2
+  33              		.global	Initialize_Freq_Meas_System
+  34              		.code	16
+  35              		.thumb_func
+  36              		.type	Initialize_Freq_Meas_System, %function
+  37              	Initialize_Freq_Meas_System:
+  38              	.LFB35:
+  39              		.file 1 ".\\FrequencyCounter.c"
+   1:.\FrequencyCounter.c **** /***************************************************************************//**
+   2:.\FrequencyCounter.c **** * @file    FrequencyCounter.c
+   3:.\FrequencyCounter.c **** * @version 1.0
+   4:.\FrequencyCounter.c **** * @author  Chethan (dche@cypress.com)
+   5:.\FrequencyCounter.c **** *
+   6:.\FrequencyCounter.c **** * @par Description
+   7:.\FrequencyCounter.c **** *   This file contains the source code to the APIs for computing the input signal 
+   8:.\FrequencyCounter.c **** *   frequency.
+   9:.\FrequencyCounter.c **** *
+  10:.\FrequencyCounter.c **** * @par Notes
+  11:.\FrequencyCounter.c **** *	None
+  12:.\FrequencyCounter.c **** *
+  13:.\FrequencyCounter.c **** * @par Hardware Dependency
+  14:.\FrequencyCounter.c **** *    1. CY8CKIT-042 BLE Pioneer Kit
+  15:.\FrequencyCounter.c **** *
+  16:.\FrequencyCounter.c **** * @par References
+  17:.\FrequencyCounter.c **** *    1. 001-32359: AN2283 "PSoC 1 Measuring Frequency"
+  18:.\FrequencyCounter.c **** *
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 2
+
+
+  19:.\FrequencyCounter.c **** * @par Code Tested With
+  20:.\FrequencyCounter.c **** *    1. PSoC Creator  3.1 SP2 (3.1.0.2177)
+  21:.\FrequencyCounter.c **** *    2. GCC 4.8.4
+  22:.\FrequencyCounter.c **** *
+  23:.\FrequencyCounter.c **** **//****************************************************************************
+  24:.\FrequencyCounter.c **** * Copyright (2015), Cypress Semiconductor Corporation.
+  25:.\FrequencyCounter.c **** ********************************************************************************
+  26:.\FrequencyCounter.c **** * All rights reserved. 
+  27:.\FrequencyCounter.c **** * This software, including source code, documentation and related 
+  28:.\FrequencyCounter.c **** * materials (“Software”), is owned by Cypress Semiconductor 
+  29:.\FrequencyCounter.c **** * Corporation (“Cypress”) and is protected by and subject to worldwide 
+  30:.\FrequencyCounter.c **** * patent protection (United States and foreign), United States copyright 
+  31:.\FrequencyCounter.c **** * laws and international treaty provisions. Therefore, you may use this 
+  32:.\FrequencyCounter.c **** * Software only as provided in the license agreement accompanying the 
+  33:.\FrequencyCounter.c **** * software package from which you obtained this Software (“EULA”). 
+  34:.\FrequencyCounter.c **** *
+  35:.\FrequencyCounter.c **** * If no EULA applies, Cypress hereby grants you a personal, non-exclusive, 
+  36:.\FrequencyCounter.c **** * non-transferable license to copy, modify and compile the Software source code
+  37:.\FrequencyCounter.c **** * solely for your use in connection with Cypress's integrated circuit products.
+  38:.\FrequencyCounter.c **** * Any reproduction, modification, translation, compilation, or representation
+  39:.\FrequencyCounter.c **** * of this Software except as specified above is prohibited without the express
+  40:.\FrequencyCounter.c **** * written permission of Cypress.
+  41:.\FrequencyCounter.c **** 
+  42:.\FrequencyCounter.c **** * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND,
+  43:.\FrequencyCounter.c **** * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED
+  44:.\FrequencyCounter.c **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  45:.\FrequencyCounter.c **** * Cypress reserves the right to make changes to the Software without notice. 
+  46:.\FrequencyCounter.c **** * Cypress does not assume any liability arising out of the application or use 
+  47:.\FrequencyCounter.c **** * of the Software or any product or circuit described in the Software. Cypress
+  48:.\FrequencyCounter.c **** * does not authorize its products for use in any products where a malfunction
+  49:.\FrequencyCounter.c **** * or failure of the Cypress product may reasonably be expected to result in 
+  50:.\FrequencyCounter.c **** * significant property damage, injury or death (“High Risk Product”). By 
+  51:.\FrequencyCounter.c **** * including Cypress’s product in a High Risk Product, the manufacturer of such  
+  52:.\FrequencyCounter.c **** * system or application assumes all risk of such use and in doing so agrees to  
+  53:.\FrequencyCounter.c **** * indemnify Cypress against all liability. 
+  54:.\FrequencyCounter.c **** *******************************************************************************/
+  55:.\FrequencyCounter.c **** 
+  56:.\FrequencyCounter.c **** /*******************************************************************************
+  57:.\FrequencyCounter.c **** *   Included Headers
+  58:.\FrequencyCounter.c **** *******************************************************************************/
+  59:.\FrequencyCounter.c **** #include "main.h"
+  60:.\FrequencyCounter.c **** 
+  61:.\FrequencyCounter.c **** /* Variable to store the captured count values of counter */
+  62:.\FrequencyCounter.c **** uint16 Input_Signal_Counter1_Count, Input_Signal_Counter2_Count;
+  63:.\FrequencyCounter.c **** uint16 Ref_Clock_Counter1_Count, Ref_Clock_Counter2_Count;
+  64:.\FrequencyCounter.c **** 
+  65:.\FrequencyCounter.c **** /* Variable to store the 32-bit count value */
+  66:.\FrequencyCounter.c **** uint32 Input_Signal_Count, Ref_Clock_Count;
+  67:.\FrequencyCounter.c **** 
+  68:.\FrequencyCounter.c **** /* Variable to store the integer part and decimal part of the computed frequency */
+  69:.\FrequencyCounter.c **** uint32 Freq_Integer;
+  70:.\FrequencyCounter.c **** uint16 Freq_Decimal;
+  71:.\FrequencyCounter.c **** 
+  72:.\FrequencyCounter.c **** /* Variable to indicate PWM_2s ISR is executed */
+  73:.\FrequencyCounter.c **** extern uint8 Calculate_Frequency;
+  74:.\FrequencyCounter.c **** 
+  75:.\FrequencyCounter.c **** /* Variable to indicate valid capture events dtection */
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 3
+
+
+  76:.\FrequencyCounter.c **** uint8 Input_Sig_Ctr_Capture, Ref_Clk_Ctr_Capture;
+  77:.\FrequencyCounter.c **** 
+  78:.\FrequencyCounter.c **** /* Array to store the computed frequency and count value in ASCII format */
+  79:.\FrequencyCounter.c **** uint8 Input_Frequency[FREQ_DATA_LEN];
+  80:.\FrequencyCounter.c **** uint8 InputCounter_ASCII[FREQ_DATA_LEN];
+  81:.\FrequencyCounter.c **** uint8 RefCounter_ASCII[FREQ_DATA_LEN];
+  82:.\FrequencyCounter.c **** 
+  83:.\FrequencyCounter.c **** /* Interrupt Service Routine for Input_Sig_Counter, Ref_Clock_Counter and PWM_2s */
+  84:.\FrequencyCounter.c **** CY_ISR_PROTO(PWM_2s_InterruptHandler);
+  85:.\FrequencyCounter.c **** CY_ISR_PROTO(Input_Sig_Ctr_InterruptHandler);
+  86:.\FrequencyCounter.c **** CY_ISR_PROTO(Ref_Clk_Ctr_InterruptHandler);
+  87:.\FrequencyCounter.c **** 
+  88:.\FrequencyCounter.c **** /*******************************************************************************
+  89:.\FrequencyCounter.c **** * Function Name: Initialize_Freq_Meas_System
+  90:.\FrequencyCounter.c **** ********************************************************************************
+  91:.\FrequencyCounter.c **** *
+  92:.\FrequencyCounter.c **** * Summary:
+  93:.\FrequencyCounter.c **** *  Function starts component related to frequency measurement 
+  94:.\FrequencyCounter.c **** *
+  95:.\FrequencyCounter.c **** * Parameters:
+  96:.\FrequencyCounter.c **** *  None
+  97:.\FrequencyCounter.c **** *
+  98:.\FrequencyCounter.c **** * Return:
+  99:.\FrequencyCounter.c **** *  None
+ 100:.\FrequencyCounter.c **** *
+ 101:.\FrequencyCounter.c **** *******************************************************************************/
+ 102:.\FrequencyCounter.c **** void Initialize_Freq_Meas_System(void)
+ 103:.\FrequencyCounter.c **** {
+  40              		.loc 1 103 0
+  41              		.cfi_startproc
+  42 0000 80B5     		push	{r7, lr}
+  43              		.cfi_def_cfa_offset 8
+  44              		.cfi_offset 7, -8
+  45              		.cfi_offset 14, -4
+  46 0002 00AF     		add	r7, sp, #0
+  47              		.cfi_def_cfa_register 7
+ 104:.\FrequencyCounter.c **** 	/* Start the PWM and counter ISRs */
+ 105:.\FrequencyCounter.c **** 	PWM_2s_ISR_StartEx(PWM_2s_InterruptHandler);
+  48              		.loc 1 105 0
+  49 0004 0D4B     		ldr	r3, .L2
+  50 0006 181C     		mov	r0, r3
+  51 0008 FFF7FEFF 		bl	PWM_2s_ISR_StartEx
+ 106:.\FrequencyCounter.c **** 	Input_Sig_Ctr_ISR_StartEx(Input_Sig_Ctr_InterruptHandler);
+  52              		.loc 1 106 0
+  53 000c 0C4B     		ldr	r3, .L2+4
+  54 000e 181C     		mov	r0, r3
+  55 0010 FFF7FEFF 		bl	Input_Sig_Ctr_ISR_StartEx
+ 107:.\FrequencyCounter.c **** 	Ref_Clk_Ctr_ISR_StartEx(Ref_Clk_Ctr_InterruptHandler);
+  56              		.loc 1 107 0
+  57 0014 0B4B     		ldr	r3, .L2+8
+  58 0016 181C     		mov	r0, r3
+  59 0018 FFF7FEFF 		bl	Ref_Clk_Ctr_ISR_StartEx
+ 108:.\FrequencyCounter.c **** 	
+ 109:.\FrequencyCounter.c **** 	/* Start PWM component to generate pulse width of 1s */
+ 110:.\FrequencyCounter.c **** 	PWM_2s_Start();
+  60              		.loc 1 110 0
+  61 001c FFF7FEFF 		bl	PWM_2s_Start
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 4
+
+
+ 111:.\FrequencyCounter.c **** 	
+ 112:.\FrequencyCounter.c **** 	/* Start the input signal counter1 and counter2 */
+ 113:.\FrequencyCounter.c **** 	Input_Signal_Counter1_Start();
+  62              		.loc 1 113 0
+  63 0020 FFF7FEFF 		bl	Input_Signal_Counter1_Start
+ 114:.\FrequencyCounter.c **** 	Input_Signal_Counter2_Start();
+  64              		.loc 1 114 0
+  65 0024 FFF7FEFF 		bl	Input_Signal_Counter2_Start
+ 115:.\FrequencyCounter.c **** 	
+ 116:.\FrequencyCounter.c **** 	/* Start the reference clock counter1 and counter2 */
+ 117:.\FrequencyCounter.c **** 	Ref_Clock_Counter1_Start();
+  66              		.loc 1 117 0
+  67 0028 FFF7FEFF 		bl	Ref_Clock_Counter1_Start
+ 118:.\FrequencyCounter.c **** 	Ref_Clock_Counter2_Start();
+  68              		.loc 1 118 0
+  69 002c FFF7FEFF 		bl	Ref_Clock_Counter2_Start
+ 119:.\FrequencyCounter.c **** 	
+ 120:.\FrequencyCounter.c **** 	#if (OPAMP_ENABLE)
+ 121:.\FrequencyCounter.c **** 		/* Start the unity gain buffer */
+ 122:.\FrequencyCounter.c **** 		Opamp_1_Start();
+  70              		.loc 1 122 0
+  71 0030 FFF7FEFF 		bl	Opamp_1_Start
+ 123:.\FrequencyCounter.c **** 
+ 124:.\FrequencyCounter.c **** 		/* Start the opamp to convert input arbitrary signal to square wave */
+ 125:.\FrequencyCounter.c **** 		Comparator_Start();
+  72              		.loc 1 125 0
+  73 0034 FFF7FEFF 		bl	Comparator_Start
+ 126:.\FrequencyCounter.c **** 	#endif
+ 127:.\FrequencyCounter.c **** }
+  74              		.loc 1 127 0
+  75 0038 BD46     		mov	sp, r7
+  76              		@ sp needed
+  77 003a 80BD     		pop	{r7, pc}
+  78              	.L3:
+  79              		.align	2
+  80              	.L2:
+  81 003c 00000000 		.word	PWM_2s_InterruptHandler
+  82 0040 00000000 		.word	Input_Sig_Ctr_InterruptHandler
+  83 0044 00000000 		.word	Ref_Clk_Ctr_InterruptHandler
+  84              		.cfi_endproc
+  85              	.LFE35:
+  86              		.size	Initialize_Freq_Meas_System, .-Initialize_Freq_Meas_System
+  87              		.global	__aeabi_ui2f
+  88              		.global	__aeabi_fdiv
+  89              		.global	__aeabi_fmul
+  90              		.global	__aeabi_f2iz
+  91              		.global	__aeabi_fcmplt
+  92              		.global	__aeabi_fsub
+  93              		.section	.text.Compute_Frequency,"ax",%progbits
+  94              		.align	2
+  95              		.global	Compute_Frequency
+  96              		.code	16
+  97              		.thumb_func
+  98              		.type	Compute_Frequency, %function
+  99              	Compute_Frequency:
+ 100              	.LFB36:
+ 128:.\FrequencyCounter.c **** 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 5
+
+
+ 129:.\FrequencyCounter.c **** /*******************************************************************************
+ 130:.\FrequencyCounter.c **** * Function Name: Compute_Frequency
+ 131:.\FrequencyCounter.c **** ********************************************************************************
+ 132:.\FrequencyCounter.c **** *
+ 133:.\FrequencyCounter.c **** * Summary:
+ 134:.\FrequencyCounter.c **** *  Function computes the input signal frequency using the latched count value 
+ 135:.\FrequencyCounter.c **** *
+ 136:.\FrequencyCounter.c **** * Parameters:
+ 137:.\FrequencyCounter.c **** *  None
+ 138:.\FrequencyCounter.c **** *
+ 139:.\FrequencyCounter.c **** * Return:
+ 140:.\FrequencyCounter.c **** *  None
+ 141:.\FrequencyCounter.c **** *
+ 142:.\FrequencyCounter.c **** *******************************************************************************/
+ 143:.\FrequencyCounter.c **** void Compute_Frequency(void)
+ 144:.\FrequencyCounter.c **** {
+ 101              		.loc 1 144 0
+ 102              		.cfi_startproc
+ 103 0000 90B5     		push	{r4, r7, lr}
+ 104              		.cfi_def_cfa_offset 12
+ 105              		.cfi_offset 4, -12
+ 106              		.cfi_offset 7, -8
+ 107              		.cfi_offset 14, -4
+ 108 0002 83B0     		sub	sp, sp, #12
+ 109              		.cfi_def_cfa_offset 24
+ 110 0004 00AF     		add	r7, sp, #0
+ 111              		.cfi_def_cfa_register 7
+ 145:.\FrequencyCounter.c **** 	/* Variable to store the ratio of Input counter count and Ref counter count */
+ 146:.\FrequencyCounter.c **** 	float32 CountRatio = 0;
+ 112              		.loc 1 146 0
+ 113 0006 0023     		mov	r3, #0
+ 114 0008 7B60     		str	r3, [r7, #4]
+ 147:.\FrequencyCounter.c **** 	
+ 148:.\FrequencyCounter.c **** 	/* Variable to store the input signal frequency */
+ 149:.\FrequencyCounter.c **** 	float32 Frequency_Temp = 0; 
+ 115              		.loc 1 149 0
+ 116 000a 0023     		mov	r3, #0
+ 117 000c 3B60     		str	r3, [r7]
+ 150:.\FrequencyCounter.c **** 	
+ 151:.\FrequencyCounter.c **** 	/* Compute the 32-bit count value */
+ 152:.\FrequencyCounter.c **** 	Input_Signal_Count = ((int32)(Input_Signal_Counter2_Count << 16)) + Input_Signal_Counter1_Count +1
+ 118              		.loc 1 152 0
+ 119 000e 394B     		ldr	r3, .L16
+ 120 0010 1B88     		ldrh	r3, [r3]
+ 121 0012 1A04     		lsl	r2, r3, #16
+ 122 0014 384B     		ldr	r3, .L16+4
+ 123 0016 1B88     		ldrh	r3, [r3]
+ 124 0018 D318     		add	r3, r2, r3
+ 125 001a 0133     		add	r3, r3, #1
+ 126 001c 1A1C     		mov	r2, r3
+ 127 001e 374B     		ldr	r3, .L16+8
+ 128 0020 1A60     		str	r2, [r3]
+ 153:.\FrequencyCounter.c **** 	Ref_Clock_Count = ((int32)(Ref_Clock_Counter2_Count << 16)) + Ref_Clock_Counter1_Count + 1;
+ 129              		.loc 1 153 0
+ 130 0022 374B     		ldr	r3, .L16+12
+ 131 0024 1B88     		ldrh	r3, [r3]
+ 132 0026 1A04     		lsl	r2, r3, #16
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 6
+
+
+ 133 0028 364B     		ldr	r3, .L16+16
+ 134 002a 1B88     		ldrh	r3, [r3]
+ 135 002c D318     		add	r3, r2, r3
+ 136 002e 0133     		add	r3, r3, #1
+ 137 0030 1A1C     		mov	r2, r3
+ 138 0032 354B     		ldr	r3, .L16+20
+ 139 0034 1A60     		str	r2, [r3]
+ 154:.\FrequencyCounter.c **** 	
+ 155:.\FrequencyCounter.c **** 	/* Check if divide by zero condition occurs */
+ 156:.\FrequencyCounter.c **** 	if(Ref_Clock_Count!=0)
+ 140              		.loc 1 156 0
+ 141 0036 344B     		ldr	r3, .L16+20
+ 142 0038 1B68     		ldr	r3, [r3]
+ 143 003a 002B     		cmp	r3, #0
+ 144 003c 12D0     		beq	.L5
+ 157:.\FrequencyCounter.c **** 	{
+ 158:.\FrequencyCounter.c **** 		/* Compute the ratio of input_sig_counter_count and the ref_clock_counter count */
+ 159:.\FrequencyCounter.c **** 		CountRatio = (float) ((float)Input_Signal_Count/ (float)Ref_Clock_Count);
+ 145              		.loc 1 159 0
+ 146 003e 2F4B     		ldr	r3, .L16+8
+ 147 0040 1B68     		ldr	r3, [r3]
+ 148 0042 181C     		mov	r0, r3
+ 149 0044 FFF7FEFF 		bl	__aeabi_ui2f
+ 150 0048 041C     		add	r4, r0, #0
+ 151 004a 2F4B     		ldr	r3, .L16+20
+ 152 004c 1B68     		ldr	r3, [r3]
+ 153 004e 181C     		mov	r0, r3
+ 154 0050 FFF7FEFF 		bl	__aeabi_ui2f
+ 155 0054 031C     		add	r3, r0, #0
+ 156 0056 201C     		add	r0, r4, #0
+ 157 0058 191C     		add	r1, r3, #0
+ 158 005a FFF7FEFF 		bl	__aeabi_fdiv
+ 159 005e 031C     		add	r3, r0, #0
+ 160 0060 7B60     		str	r3, [r7, #4]
+ 161 0062 01E0     		b	.L6
+ 162              	.L5:
+ 160:.\FrequencyCounter.c **** 	}
+ 161:.\FrequencyCounter.c **** 	else
+ 162:.\FrequencyCounter.c **** 		CountRatio=0;
+ 163              		.loc 1 162 0
+ 164 0064 0023     		mov	r3, #0
+ 165 0066 7B60     		str	r3, [r7, #4]
+ 166              	.L6:
+ 163:.\FrequencyCounter.c **** 	
+ 164:.\FrequencyCounter.c **** 	/* Calculate the input signal frequency */
+ 165:.\FrequencyCounter.c **** 	Frequency_Temp = (CountRatio * CLOCK_FREQENCY);
+ 167              		.loc 1 165 0
+ 168 0068 7868     		ldr	r0, [r7, #4]
+ 169 006a 2849     		ldr	r1, .L16+24
+ 170 006c FFF7FEFF 		bl	__aeabi_fmul
+ 171 0070 031C     		add	r3, r0, #0
+ 172 0072 3B60     		str	r3, [r7]
+ 166:.\FrequencyCounter.c **** 	
+ 167:.\FrequencyCounter.c **** 	/* Get the integer value of the calculated frequency */
+ 168:.\FrequencyCounter.c **** 	Freq_Integer = (int32)Frequency_Temp;
+ 173              		.loc 1 168 0
+ 174 0074 3868     		ldr	r0, [r7]
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 7
+
+
+ 175 0076 FFF7FEFF 		bl	__aeabi_f2iz
+ 176 007a 031C     		mov	r3, r0
+ 177 007c 1A1C     		mov	r2, r3
+ 178 007e 244B     		ldr	r3, .L16+28
+ 179 0080 1A60     		str	r2, [r3]
+ 169:.\FrequencyCounter.c **** 	
+ 170:.\FrequencyCounter.c **** 	/* Reset the input_frequency array before storing the frequency value */
+ 171:.\FrequencyCounter.c **** 	Reset_Array(Input_Frequency, DATA_END);
+ 180              		.loc 1 171 0
+ 181 0082 244B     		ldr	r3, .L16+32
+ 182 0084 181C     		mov	r0, r3
+ 183 0086 0A21     		mov	r1, #10
+ 184 0088 FFF7FEFF 		bl	Reset_Array
+ 172:.\FrequencyCounter.c **** 	
+ 173:.\FrequencyCounter.c **** 	/* If input frequency is less than 1KHz, format the data to display in units of Hz */
+ 174:.\FrequencyCounter.c **** 	if(Frequency_Temp < ONE_KHZ)
+ 185              		.loc 1 174 0
+ 186 008c 3868     		ldr	r0, [r7]
+ 187 008e 2249     		ldr	r1, .L16+36
+ 188 0090 FFF7FEFF 		bl	__aeabi_fcmplt
+ 189 0094 031C     		mov	r3, r0
+ 190 0096 002B     		cmp	r3, #0
+ 191 0098 1BD0     		beq	.L14
+ 175:.\FrequencyCounter.c **** 	{
+ 176:.\FrequencyCounter.c **** 		/* Extract only the decimal part of the computed frequency value */
+ 177:.\FrequencyCounter.c **** 		Frequency_Temp -= Freq_Integer;
+ 192              		.loc 1 177 0
+ 193 009a 1D4B     		ldr	r3, .L16+28
+ 194 009c 1B68     		ldr	r3, [r3]
+ 195 009e 181C     		mov	r0, r3
+ 196 00a0 FFF7FEFF 		bl	__aeabi_ui2f
+ 197 00a4 031C     		add	r3, r0, #0
+ 198 00a6 3868     		ldr	r0, [r7]
+ 199 00a8 191C     		add	r1, r3, #0
+ 200 00aa FFF7FEFF 		bl	__aeabi_fsub
+ 201 00ae 031C     		add	r3, r0, #0
+ 202 00b0 3B60     		str	r3, [r7]
+ 178:.\FrequencyCounter.c **** 		
+ 179:.\FrequencyCounter.c **** 		/* Convert the decimal value into integer value for ASCII conversion */
+ 180:.\FrequencyCounter.c **** 		Freq_Decimal = (int32)(Frequency_Temp * THOUSAND);
+ 203              		.loc 1 180 0
+ 204 00b2 3868     		ldr	r0, [r7]
+ 205 00b4 1849     		ldr	r1, .L16+36
+ 206 00b6 FFF7FEFF 		bl	__aeabi_fmul
+ 207 00ba 031C     		add	r3, r0, #0
+ 208 00bc 181C     		add	r0, r3, #0
+ 209 00be FFF7FEFF 		bl	__aeabi_f2iz
+ 210 00c2 031C     		mov	r3, r0
+ 211 00c4 9AB2     		uxth	r2, r3
+ 212 00c6 154B     		ldr	r3, .L16+40
+ 213 00c8 1A80     		strh	r2, [r3]
+ 181:.\FrequencyCounter.c **** 		
+ 182:.\FrequencyCounter.c **** 		/* Format the computed frequency value to display in units of Hz */
+ 183:.\FrequencyCounter.c **** 		FormatFrequencyData(FREQ_HZ);
+ 214              		.loc 1 183 0
+ 215 00ca 0320     		mov	r0, #3
+ 216 00cc FFF7FEFF 		bl	FormatFrequencyData
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 8
+
+
+ 217 00d0 0DE0     		b	.L4
+ 218              	.L14:
+ 184:.\FrequencyCounter.c **** 	}
+ 185:.\FrequencyCounter.c **** 	/* If input frequency is less than 1MHz, format the data to display in units of KHz */
+ 186:.\FrequencyCounter.c **** 	else if(Frequency_Temp < ONE_MHZ)
+ 219              		.loc 1 186 0
+ 220 00d2 3868     		ldr	r0, [r7]
+ 221 00d4 1249     		ldr	r1, .L16+44
+ 222 00d6 FFF7FEFF 		bl	__aeabi_fcmplt
+ 223 00da 031C     		mov	r3, r0
+ 224 00dc 002B     		cmp	r3, #0
+ 225 00de 03D0     		beq	.L15
+ 187:.\FrequencyCounter.c **** 	{
+ 188:.\FrequencyCounter.c **** 		FormatFrequencyData(FREQ_KHZ);
+ 226              		.loc 1 188 0
+ 227 00e0 0220     		mov	r0, #2
+ 228 00e2 FFF7FEFF 		bl	FormatFrequencyData
+ 229 00e6 02E0     		b	.L4
+ 230              	.L15:
+ 189:.\FrequencyCounter.c **** 	}
+ 190:.\FrequencyCounter.c **** 	/* If input frequency is greater than or equal to 1MHz, format the data to 
+ 191:.\FrequencyCounter.c **** 	*  display in units of MHz */
+ 192:.\FrequencyCounter.c **** 	else
+ 193:.\FrequencyCounter.c **** 	{
+ 194:.\FrequencyCounter.c **** 		FormatFrequencyData(FREQ_MHZ);
+ 231              		.loc 1 194 0
+ 232 00e8 0120     		mov	r0, #1
+ 233 00ea FFF7FEFF 		bl	FormatFrequencyData
+ 234              	.L4:
+ 195:.\FrequencyCounter.c **** 	}
+ 196:.\FrequencyCounter.c **** }
+ 235              		.loc 1 196 0
+ 236 00ee BD46     		mov	sp, r7
+ 237 00f0 03B0     		add	sp, sp, #12
+ 238              		@ sp needed
+ 239 00f2 90BD     		pop	{r4, r7, pc}
+ 240              	.L17:
+ 241              		.align	2
+ 242              	.L16:
+ 243 00f4 00000000 		.word	Input_Signal_Counter2_Count
+ 244 00f8 00000000 		.word	Input_Signal_Counter1_Count
+ 245 00fc 00000000 		.word	Input_Signal_Count
+ 246 0100 00000000 		.word	Ref_Clock_Counter2_Count
+ 247 0104 00000000 		.word	Ref_Clock_Counter1_Count
+ 248 0108 00000000 		.word	Ref_Clock_Count
+ 249 010c 001BB74A 		.word	1253513984
+ 250 0110 00000000 		.word	Freq_Integer
+ 251 0114 00000000 		.word	Input_Frequency
+ 252 0118 00007A44 		.word	1148846080
+ 253 011c 00000000 		.word	Freq_Decimal
+ 254 0120 00247449 		.word	1232348160
+ 255              		.cfi_endproc
+ 256              	.LFE36:
+ 257              		.size	Compute_Frequency, .-Compute_Frequency
+ 258              		.global	__aeabi_uidivmod
+ 259              		.global	__aeabi_uidiv
+ 260              		.section	.text.FormatFrequencyData,"ax",%progbits
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 9
+
+
+ 261              		.align	2
+ 262              		.global	FormatFrequencyData
+ 263              		.code	16
+ 264              		.thumb_func
+ 265              		.type	FormatFrequencyData, %function
+ 266              	FormatFrequencyData:
+ 267              	.LFB37:
+ 197:.\FrequencyCounter.c **** 
+ 198:.\FrequencyCounter.c **** /*******************************************************************************
+ 199:.\FrequencyCounter.c **** * Function Name: FormatFrequencyData
+ 200:.\FrequencyCounter.c **** ********************************************************************************
+ 201:.\FrequencyCounter.c **** *
+ 202:.\FrequencyCounter.c **** * Summary:
+ 203:.\FrequencyCounter.c **** *  Function converts the computed frequency in hexadecimal to ASCII format 
+ 204:.\FrequencyCounter.c **** *  and stores in an array along with the unit of frequency 
+ 205:.\FrequencyCounter.c **** *
+ 206:.\FrequencyCounter.c **** * Parameters:
+ 207:.\FrequencyCounter.c **** *  FormatType: Value indicates the range of input frequency for formatting the 
+ 208:.\FrequencyCounter.c **** *			   input signal frequency
+ 209:.\FrequencyCounter.c **** *
+ 210:.\FrequencyCounter.c **** * Return:
+ 211:.\FrequencyCounter.c **** *  None
+ 212:.\FrequencyCounter.c **** *
+ 213:.\FrequencyCounter.c **** *******************************************************************************/
+ 214:.\FrequencyCounter.c **** void FormatFrequencyData(uint8 FormatType)
+ 215:.\FrequencyCounter.c **** {
+ 268              		.loc 1 215 0
+ 269              		.cfi_startproc
+ 270 0000 90B5     		push	{r4, r7, lr}
+ 271              		.cfi_def_cfa_offset 12
+ 272              		.cfi_offset 4, -12
+ 273              		.cfi_offset 7, -8
+ 274              		.cfi_offset 14, -4
+ 275 0002 85B0     		sub	sp, sp, #20
+ 276              		.cfi_def_cfa_offset 32
+ 277 0004 00AF     		add	r7, sp, #0
+ 278              		.cfi_def_cfa_register 7
+ 279 0006 021C     		mov	r2, r0
+ 280 0008 FB1D     		add	r3, r7, #7
+ 281 000a 1A70     		strb	r2, [r3]
+ 216:.\FrequencyCounter.c **** 	/* Variable to count the number of loops */
+ 217:.\FrequencyCounter.c **** 	uint8 loopNo = 0;
+ 282              		.loc 1 217 0
+ 283 000c 3B1C     		mov	r3, r7
+ 284 000e 0F33     		add	r3, r3, #15
+ 285 0010 0022     		mov	r2, #0
+ 286 0012 1A70     		strb	r2, [r3]
+ 218:.\FrequencyCounter.c **** 	
+ 219:.\FrequencyCounter.c **** 	/* If input frequency in in Hz, format the data to display in units of Hz */
+ 220:.\FrequencyCounter.c **** 	if((FormatType == FREQ_HZ) ||(FormatType == ZERO_HZ ))
+ 287              		.loc 1 220 0
+ 288 0014 FB1D     		add	r3, r7, #7
+ 289 0016 1B78     		ldrb	r3, [r3]
+ 290 0018 032B     		cmp	r3, #3
+ 291 001a 04D0     		beq	.L19
+ 292              		.loc 1 220 0 is_stmt 0 discriminator 1
+ 293 001c FB1D     		add	r3, r7, #7
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 10
+
+
+ 294 001e 1B78     		ldrb	r3, [r3]
+ 295 0020 042B     		cmp	r3, #4
+ 296 0022 00D0     		beq	.LCB222
+ 297 0024 86E0     		b	.L20	@long jump
+ 298              	.LCB222:
+ 299              	.L19:
+ 221:.\FrequencyCounter.c **** 	{
+ 222:.\FrequencyCounter.c **** 		/* If frequency is less than 1KHZ, store " Hz" in the first 3 bytes of 
+ 223:.\FrequencyCounter.c **** 		*  Input_Frequency array */
+ 224:.\FrequencyCounter.c **** 		/* Store 'z" in the first byte of the array */
+ 225:.\FrequencyCounter.c **** 		Input_Frequency[0] = ASCII_z;
+ 300              		.loc 1 225 0 is_stmt 1
+ 301 0026 9A4B     		ldr	r3, .L37
+ 302 0028 7A22     		mov	r2, #122
+ 303 002a 1A70     		strb	r2, [r3]
+ 226:.\FrequencyCounter.c **** 		
+ 227:.\FrequencyCounter.c **** 		/* Store "H" in the second byte of the arrray */
+ 228:.\FrequencyCounter.c **** 		Input_Frequency[1] = ASCII_H;
+ 304              		.loc 1 228 0
+ 305 002c 984B     		ldr	r3, .L37
+ 306 002e 4822     		mov	r2, #72
+ 307 0030 5A70     		strb	r2, [r3, #1]
+ 229:.\FrequencyCounter.c **** 		
+ 230:.\FrequencyCounter.c **** 		/* Store space character in the third byte */
+ 231:.\FrequencyCounter.c **** 		Input_Frequency[2] = ASCII_SPACE;
+ 308              		.loc 1 231 0
+ 309 0032 974B     		ldr	r3, .L37
+ 310 0034 2022     		mov	r2, #32
+ 311 0036 9A70     		strb	r2, [r3, #2]
+ 232:.\FrequencyCounter.c **** 		
+ 233:.\FrequencyCounter.c **** 		if(FormatType == ZERO_HZ )
+ 312              		.loc 1 233 0
+ 313 0038 FB1D     		add	r3, r7, #7
+ 314 003a 1B78     		ldrb	r3, [r3]
+ 315 003c 042B     		cmp	r3, #4
+ 316 003e 05D1     		bne	.L21
+ 234:.\FrequencyCounter.c **** 		{
+ 235:.\FrequencyCounter.c **** 			Freq_Decimal = 0;
+ 317              		.loc 1 235 0
+ 318 0040 944B     		ldr	r3, .L37+4
+ 319 0042 0022     		mov	r2, #0
+ 320 0044 1A80     		strh	r2, [r3]
+ 236:.\FrequencyCounter.c **** 			Freq_Integer = 0;
+ 321              		.loc 1 236 0
+ 322 0046 944B     		ldr	r3, .L37+8
+ 323 0048 0022     		mov	r2, #0
+ 324 004a 1A60     		str	r2, [r3]
+ 325              	.L21:
+ 237:.\FrequencyCounter.c **** 		}
+ 238:.\FrequencyCounter.c **** 		
+ 239:.\FrequencyCounter.c **** 		/* Store the decimal digits from fourth byte in the array in ASCII format */
+ 240:.\FrequencyCounter.c **** 		for(loopNo = DATA_START; loopNo < DECIMAL_END; loopNo++)
+ 326              		.loc 1 240 0
+ 327 004c 3B1C     		mov	r3, r7
+ 328 004e 0F33     		add	r3, r3, #15
+ 329 0050 0322     		mov	r2, #3
+ 330 0052 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 11
+
+
+ 331 0054 2AE0     		b	.L22
+ 332              	.L23:
+ 241:.\FrequencyCounter.c **** 		{
+ 242:.\FrequencyCounter.c **** 			/* Get the value of one's place of the integer */
+ 243:.\FrequencyCounter.c **** 			Input_Frequency[loopNo] = Freq_Decimal % 10;
+ 333              		.loc 1 243 0 discriminator 2
+ 334 0056 3B1C     		mov	r3, r7
+ 335 0058 0F33     		add	r3, r3, #15
+ 336 005a 1C78     		ldrb	r4, [r3]
+ 337 005c 8D4B     		ldr	r3, .L37+4
+ 338 005e 1B88     		ldrh	r3, [r3]
+ 339 0060 181C     		mov	r0, r3
+ 340 0062 0A21     		mov	r1, #10
+ 341 0064 FFF7FEFF 		bl	__aeabi_uidivmod
+ 342 0068 0B1C     		mov	r3, r1
+ 343 006a 9BB2     		uxth	r3, r3
+ 344 006c DAB2     		uxtb	r2, r3
+ 345 006e 884B     		ldr	r3, .L37
+ 346 0070 1A55     		strb	r2, [r3, r4]
+ 244:.\FrequencyCounter.c **** 
+ 245:.\FrequencyCounter.c **** 			/* Convert the integer to ASCII */
+ 246:.\FrequencyCounter.c **** 			Input_Frequency[loopNo] += INTEGER_TO_ASCII;
+ 347              		.loc 1 246 0 discriminator 2
+ 348 0072 3B1C     		mov	r3, r7
+ 349 0074 0F33     		add	r3, r3, #15
+ 350 0076 1B78     		ldrb	r3, [r3]
+ 351 0078 3A1C     		mov	r2, r7
+ 352 007a 0F32     		add	r2, r2, #15
+ 353 007c 1278     		ldrb	r2, [r2]
+ 354 007e 8449     		ldr	r1, .L37
+ 355 0080 8A5C     		ldrb	r2, [r1, r2]
+ 356 0082 3032     		add	r2, r2, #48
+ 357 0084 D1B2     		uxtb	r1, r2
+ 358 0086 824A     		ldr	r2, .L37
+ 359 0088 D154     		strb	r1, [r2, r3]
+ 247:.\FrequencyCounter.c **** 			
+ 248:.\FrequencyCounter.c **** 			/* Shift the Ten's place to one's place */
+ 249:.\FrequencyCounter.c **** 			Freq_Decimal /= 10;
+ 360              		.loc 1 249 0 discriminator 2
+ 361 008a 824B     		ldr	r3, .L37+4
+ 362 008c 1B88     		ldrh	r3, [r3]
+ 363 008e 181C     		mov	r0, r3
+ 364 0090 0A21     		mov	r1, #10
+ 365 0092 FFF7FEFF 		bl	__aeabi_uidiv
+ 366 0096 031C     		mov	r3, r0
+ 367 0098 9AB2     		uxth	r2, r3
+ 368 009a 7E4B     		ldr	r3, .L37+4
+ 369 009c 1A80     		strh	r2, [r3]
+ 240:.\FrequencyCounter.c **** 		for(loopNo = DATA_START; loopNo < DECIMAL_END; loopNo++)
+ 370              		.loc 1 240 0 discriminator 2
+ 371 009e 3B1C     		mov	r3, r7
+ 372 00a0 0F33     		add	r3, r3, #15
+ 373 00a2 1A78     		ldrb	r2, [r3]
+ 374 00a4 3B1C     		mov	r3, r7
+ 375 00a6 0F33     		add	r3, r3, #15
+ 376 00a8 0132     		add	r2, r2, #1
+ 377 00aa 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 12
+
+
+ 378              	.L22:
+ 240:.\FrequencyCounter.c **** 		for(loopNo = DATA_START; loopNo < DECIMAL_END; loopNo++)
+ 379              		.loc 1 240 0 is_stmt 0 discriminator 1
+ 380 00ac 3B1C     		mov	r3, r7
+ 381 00ae 0F33     		add	r3, r3, #15
+ 382 00b0 1B78     		ldrb	r3, [r3]
+ 383 00b2 052B     		cmp	r3, #5
+ 384 00b4 CFD9     		bls	.L23
+ 250:.\FrequencyCounter.c **** 		}
+ 251:.\FrequencyCounter.c **** 		/* Store the decimal point in the array */
+ 252:.\FrequencyCounter.c **** 		Input_Frequency[loopNo++] = ASCII_DECIMAL_POINT;
+ 385              		.loc 1 252 0 is_stmt 1
+ 386 00b6 3B1C     		mov	r3, r7
+ 387 00b8 0F33     		add	r3, r3, #15
+ 388 00ba 1B78     		ldrb	r3, [r3]
+ 389 00bc 3A1C     		mov	r2, r7
+ 390 00be 0F32     		add	r2, r2, #15
+ 391 00c0 591C     		add	r1, r3, #1
+ 392 00c2 1170     		strb	r1, [r2]
+ 393 00c4 724A     		ldr	r2, .L37
+ 394 00c6 2E21     		mov	r1, #46
+ 395 00c8 D154     		strb	r1, [r2, r3]
+ 253:.\FrequencyCounter.c **** 		
+ 254:.\FrequencyCounter.c **** 		/* Enter the integer digits in the array in ASCII format */
+ 255:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 396              		.loc 1 255 0
+ 397 00ca 29E0     		b	.L24
+ 398              	.L26:
+ 256:.\FrequencyCounter.c **** 		{
+ 257:.\FrequencyCounter.c **** 			/* Get the value of one's place of the integer */
+ 258:.\FrequencyCounter.c **** 			Input_Frequency[loopNo] = Freq_Integer % 10;
+ 399              		.loc 1 258 0
+ 400 00cc 3B1C     		mov	r3, r7
+ 401 00ce 0F33     		add	r3, r3, #15
+ 402 00d0 1C78     		ldrb	r4, [r3]
+ 403 00d2 714B     		ldr	r3, .L37+8
+ 404 00d4 1B68     		ldr	r3, [r3]
+ 405 00d6 181C     		mov	r0, r3
+ 406 00d8 0A21     		mov	r1, #10
+ 407 00da FFF7FEFF 		bl	__aeabi_uidivmod
+ 408 00de 0B1C     		mov	r3, r1
+ 409 00e0 DAB2     		uxtb	r2, r3
+ 410 00e2 6B4B     		ldr	r3, .L37
+ 411 00e4 1A55     		strb	r2, [r3, r4]
+ 259:.\FrequencyCounter.c **** 			
+ 260:.\FrequencyCounter.c **** 			/* Convert the integer to ASCII */
+ 261:.\FrequencyCounter.c **** 			Input_Frequency[loopNo] += INTEGER_TO_ASCII;
+ 412              		.loc 1 261 0
+ 413 00e6 3B1C     		mov	r3, r7
+ 414 00e8 0F33     		add	r3, r3, #15
+ 415 00ea 1B78     		ldrb	r3, [r3]
+ 416 00ec 3A1C     		mov	r2, r7
+ 417 00ee 0F32     		add	r2, r2, #15
+ 418 00f0 1278     		ldrb	r2, [r2]
+ 419 00f2 6749     		ldr	r1, .L37
+ 420 00f4 8A5C     		ldrb	r2, [r1, r2]
+ 421 00f6 3032     		add	r2, r2, #48
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 13
+
+
+ 422 00f8 D1B2     		uxtb	r1, r2
+ 423 00fa 654A     		ldr	r2, .L37
+ 424 00fc D154     		strb	r1, [r2, r3]
+ 262:.\FrequencyCounter.c **** 			
+ 263:.\FrequencyCounter.c **** 			/* Shift the Ten's place to one's place */			
+ 264:.\FrequencyCounter.c **** 			Freq_Integer /= 10;
+ 425              		.loc 1 264 0
+ 426 00fe 664B     		ldr	r3, .L37+8
+ 427 0100 1B68     		ldr	r3, [r3]
+ 428 0102 181C     		mov	r0, r3
+ 429 0104 0A21     		mov	r1, #10
+ 430 0106 FFF7FEFF 		bl	__aeabi_uidiv
+ 431 010a 031C     		mov	r3, r0
+ 432 010c 1A1C     		mov	r2, r3
+ 433 010e 624B     		ldr	r3, .L37+8
+ 434 0110 1A60     		str	r2, [r3]
+ 265:.\FrequencyCounter.c **** 			
+ 266:.\FrequencyCounter.c **** 			loopNo++;
+ 435              		.loc 1 266 0
+ 436 0112 3B1C     		mov	r3, r7
+ 437 0114 0F33     		add	r3, r3, #15
+ 438 0116 1A78     		ldrb	r2, [r3]
+ 439 0118 3B1C     		mov	r3, r7
+ 440 011a 0F33     		add	r3, r3, #15
+ 441 011c 0132     		add	r2, r2, #1
+ 442 011e 1A70     		strb	r2, [r3]
+ 443              	.L24:
+ 255:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 444              		.loc 1 255 0 discriminator 1
+ 445 0120 5D4B     		ldr	r3, .L37+8
+ 446 0122 1B68     		ldr	r3, [r3]
+ 447 0124 002B     		cmp	r3, #0
+ 448 0126 04D0     		beq	.L25
+ 255:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 449              		.loc 1 255 0 is_stmt 0 discriminator 2
+ 450 0128 3B1C     		mov	r3, r7
+ 451 012a 0F33     		add	r3, r3, #15
+ 452 012c 1B78     		ldrb	r3, [r3]
+ 453 012e 092B     		cmp	r3, #9
+ 454 0130 CCD9     		bls	.L26
+ 455              	.L25:
+ 220:.\FrequencyCounter.c **** 	if((FormatType == FREQ_HZ) ||(FormatType == ZERO_HZ ))
+ 456              		.loc 1 220 0 is_stmt 1
+ 457 0132 A9E0     		b	.L18
+ 458              	.L20:
+ 267:.\FrequencyCounter.c **** 		}
+ 268:.\FrequencyCounter.c **** 	}
+ 269:.\FrequencyCounter.c **** 	else if(FormatType == FREQ_KHZ)
+ 459              		.loc 1 269 0
+ 460 0134 FB1D     		add	r3, r7, #7
+ 461 0136 1B78     		ldrb	r3, [r3]
+ 462 0138 022B     		cmp	r3, #2
+ 463 013a 4DD1     		bne	.L28
+ 270:.\FrequencyCounter.c **** 	{
+ 271:.\FrequencyCounter.c **** 		/* If frequency is less than 1MHZ, store "KHz" in the first 3 bytes of Frequency_Format array */
+ 272:.\FrequencyCounter.c **** 		/* Store 'z" in the first byte of the array */
+ 273:.\FrequencyCounter.c **** 		Input_Frequency[0] = ASCII_z;
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 14
+
+
+ 464              		.loc 1 273 0
+ 465 013c 544B     		ldr	r3, .L37
+ 466 013e 7A22     		mov	r2, #122
+ 467 0140 1A70     		strb	r2, [r3]
+ 274:.\FrequencyCounter.c **** 		
+ 275:.\FrequencyCounter.c **** 		/* Store "H" in the second byte of the array */		
+ 276:.\FrequencyCounter.c **** 		Input_Frequency[1] = ASCII_H;
+ 468              		.loc 1 276 0
+ 469 0142 534B     		ldr	r3, .L37
+ 470 0144 4822     		mov	r2, #72
+ 471 0146 5A70     		strb	r2, [r3, #1]
+ 277:.\FrequencyCounter.c **** 
+ 278:.\FrequencyCounter.c **** 		/* Store "K" in the third byte of the array */	
+ 279:.\FrequencyCounter.c **** 		Input_Frequency[2] = ASCII_K;
+ 472              		.loc 1 279 0
+ 473 0148 514B     		ldr	r3, .L37
+ 474 014a 4B22     		mov	r2, #75
+ 475 014c 9A70     		strb	r2, [r3, #2]
+ 280:.\FrequencyCounter.c **** 		
+ 281:.\FrequencyCounter.c **** 		/* Enter the frequency in ASCII format from fourth byte */
+ 282:.\FrequencyCounter.c **** 		loopNo = DATA_START;
+ 476              		.loc 1 282 0
+ 477 014e 3B1C     		mov	r3, r7
+ 478 0150 0F33     		add	r3, r3, #15
+ 479 0152 0322     		mov	r2, #3
+ 480 0154 1A70     		strb	r2, [r3]
+ 283:.\FrequencyCounter.c **** 		
+ 284:.\FrequencyCounter.c **** 		/* Convert the frequency value from hexadecimal to decimal */
+ 285:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 481              		.loc 1 285 0
+ 482 0156 35E0     		b	.L29
+ 483              	.L32:
+ 286:.\FrequencyCounter.c **** 		{
+ 287:.\FrequencyCounter.c **** 			if(loopNo != DECIMAL_END)
+ 484              		.loc 1 287 0
+ 485 0158 3B1C     		mov	r3, r7
+ 486 015a 0F33     		add	r3, r3, #15
+ 487 015c 1B78     		ldrb	r3, [r3]
+ 488 015e 062B     		cmp	r3, #6
+ 489 0160 23D0     		beq	.L30
+ 288:.\FrequencyCounter.c **** 			{
+ 289:.\FrequencyCounter.c **** 				/* Get the value of one's place of the integer */
+ 290:.\FrequencyCounter.c **** 				Input_Frequency[loopNo] = Freq_Integer % 10;
+ 490              		.loc 1 290 0
+ 491 0162 3B1C     		mov	r3, r7
+ 492 0164 0F33     		add	r3, r3, #15
+ 493 0166 1C78     		ldrb	r4, [r3]
+ 494 0168 4B4B     		ldr	r3, .L37+8
+ 495 016a 1B68     		ldr	r3, [r3]
+ 496 016c 181C     		mov	r0, r3
+ 497 016e 0A21     		mov	r1, #10
+ 498 0170 FFF7FEFF 		bl	__aeabi_uidivmod
+ 499 0174 0B1C     		mov	r3, r1
+ 500 0176 DAB2     		uxtb	r2, r3
+ 501 0178 454B     		ldr	r3, .L37
+ 502 017a 1A55     		strb	r2, [r3, r4]
+ 291:.\FrequencyCounter.c **** 				
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 15
+
+
+ 292:.\FrequencyCounter.c **** 				/* Convert the integer to ASCII */
+ 293:.\FrequencyCounter.c **** 				Input_Frequency[loopNo] += INTEGER_TO_ASCII;
+ 503              		.loc 1 293 0
+ 504 017c 3B1C     		mov	r3, r7
+ 505 017e 0F33     		add	r3, r3, #15
+ 506 0180 1B78     		ldrb	r3, [r3]
+ 507 0182 3A1C     		mov	r2, r7
+ 508 0184 0F32     		add	r2, r2, #15
+ 509 0186 1278     		ldrb	r2, [r2]
+ 510 0188 4149     		ldr	r1, .L37
+ 511 018a 8A5C     		ldrb	r2, [r1, r2]
+ 512 018c 3032     		add	r2, r2, #48
+ 513 018e D1B2     		uxtb	r1, r2
+ 514 0190 3F4A     		ldr	r2, .L37
+ 515 0192 D154     		strb	r1, [r2, r3]
+ 294:.\FrequencyCounter.c **** 
+ 295:.\FrequencyCounter.c **** 				/* Shift the Ten's place to one's place */					
+ 296:.\FrequencyCounter.c **** 				Freq_Integer /= 10;
+ 516              		.loc 1 296 0
+ 517 0194 404B     		ldr	r3, .L37+8
+ 518 0196 1B68     		ldr	r3, [r3]
+ 519 0198 181C     		mov	r0, r3
+ 520 019a 0A21     		mov	r1, #10
+ 521 019c FFF7FEFF 		bl	__aeabi_uidiv
+ 522 01a0 031C     		mov	r3, r0
+ 523 01a2 1A1C     		mov	r2, r3
+ 524 01a4 3C4B     		ldr	r3, .L37+8
+ 525 01a6 1A60     		str	r2, [r3]
+ 526 01a8 05E0     		b	.L31
+ 527              	.L30:
+ 297:.\FrequencyCounter.c **** 			}
+ 298:.\FrequencyCounter.c **** 			/* After decimal digits are entered, store the decimal point in 
+ 299:.\FrequencyCounter.c **** 			*  the 7th byte of Input_Frequency[] array*/
+ 300:.\FrequencyCounter.c **** 			else
+ 301:.\FrequencyCounter.c **** 				Input_Frequency[loopNo] = ASCII_DECIMAL_POINT;
+ 528              		.loc 1 301 0
+ 529 01aa 3B1C     		mov	r3, r7
+ 530 01ac 0F33     		add	r3, r3, #15
+ 531 01ae 1B78     		ldrb	r3, [r3]
+ 532 01b0 374A     		ldr	r2, .L37
+ 533 01b2 2E21     		mov	r1, #46
+ 534 01b4 D154     		strb	r1, [r2, r3]
+ 535              	.L31:
+ 302:.\FrequencyCounter.c **** 				
+ 303:.\FrequencyCounter.c **** 			loopNo++;
+ 536              		.loc 1 303 0
+ 537 01b6 3B1C     		mov	r3, r7
+ 538 01b8 0F33     		add	r3, r3, #15
+ 539 01ba 1A78     		ldrb	r2, [r3]
+ 540 01bc 3B1C     		mov	r3, r7
+ 541 01be 0F33     		add	r3, r3, #15
+ 542 01c0 0132     		add	r2, r2, #1
+ 543 01c2 1A70     		strb	r2, [r3]
+ 544              	.L29:
+ 285:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 545              		.loc 1 285 0 discriminator 1
+ 546 01c4 344B     		ldr	r3, .L37+8
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 16
+
+
+ 547 01c6 1B68     		ldr	r3, [r3]
+ 548 01c8 002B     		cmp	r3, #0
+ 549 01ca 5DD0     		beq	.L18
+ 285:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 550              		.loc 1 285 0 is_stmt 0 discriminator 2
+ 551 01cc 3B1C     		mov	r3, r7
+ 552 01ce 0F33     		add	r3, r3, #15
+ 553 01d0 1B78     		ldrb	r3, [r3]
+ 554 01d2 092B     		cmp	r3, #9
+ 555 01d4 C0D9     		bls	.L32
+ 556 01d6 57E0     		b	.L18
+ 557              	.L28:
+ 304:.\FrequencyCounter.c **** 		}
+ 305:.\FrequencyCounter.c **** 	}
+ 306:.\FrequencyCounter.c **** 	else
+ 307:.\FrequencyCounter.c **** 	{
+ 308:.\FrequencyCounter.c **** 		/* If frequency is above or equal to 1 MHZ, store "MHz" in the first 3 bytes of Frequency_Format 
+ 309:.\FrequencyCounter.c **** 		
+ 310:.\FrequencyCounter.c **** 		/* Store 'z" in the first byte of the array */
+ 311:.\FrequencyCounter.c **** 		Input_Frequency[0] = ASCII_z;
+ 558              		.loc 1 311 0 is_stmt 1
+ 559 01d8 2D4B     		ldr	r3, .L37
+ 560 01da 7A22     		mov	r2, #122
+ 561 01dc 1A70     		strb	r2, [r3]
+ 312:.\FrequencyCounter.c **** 		
+ 313:.\FrequencyCounter.c **** 		/* Store "H" in the second byte of the array */	
+ 314:.\FrequencyCounter.c **** 		Input_Frequency[1] = ASCII_H;
+ 562              		.loc 1 314 0
+ 563 01de 2C4B     		ldr	r3, .L37
+ 564 01e0 4822     		mov	r2, #72
+ 565 01e2 5A70     		strb	r2, [r3, #1]
+ 315:.\FrequencyCounter.c **** 
+ 316:.\FrequencyCounter.c **** 		/* Store "M" in the third byte of the array */		
+ 317:.\FrequencyCounter.c **** 		Input_Frequency[2] = ASCII_M;
+ 566              		.loc 1 317 0
+ 567 01e4 2A4B     		ldr	r3, .L37
+ 568 01e6 4D22     		mov	r2, #77
+ 569 01e8 9A70     		strb	r2, [r3, #2]
+ 318:.\FrequencyCounter.c **** 
+ 319:.\FrequencyCounter.c **** 		/* For frequencies greater than or equal to 1 MHZ, decimal digits will represent the "KHz" freque
+ 320:.\FrequencyCounter.c **** 		Freq_Integer = Freq_Integer/1000;
+ 570              		.loc 1 320 0
+ 571 01ea 2B4B     		ldr	r3, .L37+8
+ 572 01ec 1B68     		ldr	r3, [r3]
+ 573 01ee 181C     		mov	r0, r3
+ 574 01f0 FA23     		mov	r3, #250
+ 575 01f2 9900     		lsl	r1, r3, #2
+ 576 01f4 FFF7FEFF 		bl	__aeabi_uidiv
+ 577 01f8 031C     		mov	r3, r0
+ 578 01fa 1A1C     		mov	r2, r3
+ 579 01fc 264B     		ldr	r3, .L37+8
+ 580 01fe 1A60     		str	r2, [r3]
+ 321:.\FrequencyCounter.c **** 		
+ 322:.\FrequencyCounter.c **** 		/* Enter the frequency in ASCII format from fourth byte */
+ 323:.\FrequencyCounter.c **** 		loopNo = DATA_START;
+ 581              		.loc 1 323 0
+ 582 0200 3B1C     		mov	r3, r7
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 17
+
+
+ 583 0202 0F33     		add	r3, r3, #15
+ 584 0204 0322     		mov	r2, #3
+ 585 0206 1A70     		strb	r2, [r3]
+ 324:.\FrequencyCounter.c **** 		
+ 325:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 586              		.loc 1 325 0
+ 587 0208 35E0     		b	.L33
+ 588              	.L36:
+ 326:.\FrequencyCounter.c **** 		{
+ 327:.\FrequencyCounter.c **** 			if(loopNo != DECIMAL_END)
+ 589              		.loc 1 327 0
+ 590 020a 3B1C     		mov	r3, r7
+ 591 020c 0F33     		add	r3, r3, #15
+ 592 020e 1B78     		ldrb	r3, [r3]
+ 593 0210 062B     		cmp	r3, #6
+ 594 0212 23D0     		beq	.L34
+ 328:.\FrequencyCounter.c **** 			{
+ 329:.\FrequencyCounter.c **** 				/* Get the value of one's place of the integer */
+ 330:.\FrequencyCounter.c **** 				Input_Frequency[loopNo] = Freq_Integer % 10;
+ 595              		.loc 1 330 0
+ 596 0214 3B1C     		mov	r3, r7
+ 597 0216 0F33     		add	r3, r3, #15
+ 598 0218 1C78     		ldrb	r4, [r3]
+ 599 021a 1F4B     		ldr	r3, .L37+8
+ 600 021c 1B68     		ldr	r3, [r3]
+ 601 021e 181C     		mov	r0, r3
+ 602 0220 0A21     		mov	r1, #10
+ 603 0222 FFF7FEFF 		bl	__aeabi_uidivmod
+ 604 0226 0B1C     		mov	r3, r1
+ 605 0228 DAB2     		uxtb	r2, r3
+ 606 022a 194B     		ldr	r3, .L37
+ 607 022c 1A55     		strb	r2, [r3, r4]
+ 331:.\FrequencyCounter.c **** 				
+ 332:.\FrequencyCounter.c **** 				/* Convert the integer to ASCII */
+ 333:.\FrequencyCounter.c **** 				Input_Frequency[loopNo] += INTEGER_TO_ASCII;
+ 608              		.loc 1 333 0
+ 609 022e 3B1C     		mov	r3, r7
+ 610 0230 0F33     		add	r3, r3, #15
+ 611 0232 1B78     		ldrb	r3, [r3]
+ 612 0234 3A1C     		mov	r2, r7
+ 613 0236 0F32     		add	r2, r2, #15
+ 614 0238 1278     		ldrb	r2, [r2]
+ 615 023a 1549     		ldr	r1, .L37
+ 616 023c 8A5C     		ldrb	r2, [r1, r2]
+ 617 023e 3032     		add	r2, r2, #48
+ 618 0240 D1B2     		uxtb	r1, r2
+ 619 0242 134A     		ldr	r2, .L37
+ 620 0244 D154     		strb	r1, [r2, r3]
+ 334:.\FrequencyCounter.c **** 
+ 335:.\FrequencyCounter.c **** 				/* Shift the Ten's place to one's place */					
+ 336:.\FrequencyCounter.c **** 				Freq_Integer /= 10;
+ 621              		.loc 1 336 0
+ 622 0246 144B     		ldr	r3, .L37+8
+ 623 0248 1B68     		ldr	r3, [r3]
+ 624 024a 181C     		mov	r0, r3
+ 625 024c 0A21     		mov	r1, #10
+ 626 024e FFF7FEFF 		bl	__aeabi_uidiv
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 18
+
+
+ 627 0252 031C     		mov	r3, r0
+ 628 0254 1A1C     		mov	r2, r3
+ 629 0256 104B     		ldr	r3, .L37+8
+ 630 0258 1A60     		str	r2, [r3]
+ 631 025a 05E0     		b	.L35
+ 632              	.L34:
+ 337:.\FrequencyCounter.c **** 			}
+ 338:.\FrequencyCounter.c **** 			/* If decimal digits are entered, store the decimal point in 7th byte in the array*/
+ 339:.\FrequencyCounter.c **** 			else
+ 340:.\FrequencyCounter.c **** 				Input_Frequency[loopNo] = ASCII_DECIMAL_POINT;
+ 633              		.loc 1 340 0
+ 634 025c 3B1C     		mov	r3, r7
+ 635 025e 0F33     		add	r3, r3, #15
+ 636 0260 1B78     		ldrb	r3, [r3]
+ 637 0262 0B4A     		ldr	r2, .L37
+ 638 0264 2E21     		mov	r1, #46
+ 639 0266 D154     		strb	r1, [r2, r3]
+ 640              	.L35:
+ 341:.\FrequencyCounter.c **** 				
+ 342:.\FrequencyCounter.c **** 			loopNo++;
+ 641              		.loc 1 342 0
+ 642 0268 3B1C     		mov	r3, r7
+ 643 026a 0F33     		add	r3, r3, #15
+ 644 026c 1A78     		ldrb	r2, [r3]
+ 645 026e 3B1C     		mov	r3, r7
+ 646 0270 0F33     		add	r3, r3, #15
+ 647 0272 0132     		add	r2, r2, #1
+ 648 0274 1A70     		strb	r2, [r3]
+ 649              	.L33:
+ 325:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 650              		.loc 1 325 0 discriminator 1
+ 651 0276 084B     		ldr	r3, .L37+8
+ 652 0278 1B68     		ldr	r3, [r3]
+ 653 027a 002B     		cmp	r3, #0
+ 654 027c 04D0     		beq	.L18
+ 325:.\FrequencyCounter.c **** 		while((Freq_Integer > 0) && (loopNo < DATA_END))
+ 655              		.loc 1 325 0 is_stmt 0 discriminator 2
+ 656 027e 3B1C     		mov	r3, r7
+ 657 0280 0F33     		add	r3, r3, #15
+ 658 0282 1B78     		ldrb	r3, [r3]
+ 659 0284 092B     		cmp	r3, #9
+ 660 0286 C0D9     		bls	.L36
+ 661              	.L18:
+ 343:.\FrequencyCounter.c **** 		}
+ 344:.\FrequencyCounter.c **** 	}
+ 345:.\FrequencyCounter.c **** }
+ 662              		.loc 1 345 0 is_stmt 1
+ 663 0288 BD46     		mov	sp, r7
+ 664 028a 05B0     		add	sp, sp, #20
+ 665              		@ sp needed
+ 666 028c 90BD     		pop	{r4, r7, pc}
+ 667              	.L38:
+ 668 028e C046     		.align	2
+ 669              	.L37:
+ 670 0290 00000000 		.word	Input_Frequency
+ 671 0294 00000000 		.word	Freq_Decimal
+ 672 0298 00000000 		.word	Freq_Integer
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 19
+
+
+ 673              		.cfi_endproc
+ 674              	.LFE37:
+ 675              		.size	FormatFrequencyData, .-FormatFrequencyData
+ 676              		.section	.text.Convert_HextoDec,"ax",%progbits
+ 677              		.align	2
+ 678              		.global	Convert_HextoDec
+ 679              		.code	16
+ 680              		.thumb_func
+ 681              		.type	Convert_HextoDec, %function
+ 682              	Convert_HextoDec:
+ 683              	.LFB38:
+ 346:.\FrequencyCounter.c **** 
+ 347:.\FrequencyCounter.c **** /*******************************************************************************
+ 348:.\FrequencyCounter.c **** * Function Name: Convert_HextoDec
+ 349:.\FrequencyCounter.c **** ********************************************************************************
+ 350:.\FrequencyCounter.c **** *
+ 351:.\FrequencyCounter.c **** * Summary:
+ 352:.\FrequencyCounter.c **** *  Function converts 32bit hexadecimal value to integer and stores in an array in 
+ 353:.\FrequencyCounter.c **** *  ASCII format
+ 354:.\FrequencyCounter.c **** *
+ 355:.\FrequencyCounter.c **** * Parameters:
+ 356:.\FrequencyCounter.c **** *  SourceValue: The input value which should be represented in integer format
+ 357:.\FrequencyCounter.c **** *  DestinationAddress: Pointer to the array in which the ASCII values of the integer 
+ 358:.\FrequencyCounter.c **** *  value should be stored.
+ 359:.\FrequencyCounter.c **** *
+ 360:.\FrequencyCounter.c **** * Return:
+ 361:.\FrequencyCounter.c **** *  None
+ 362:.\FrequencyCounter.c **** *
+ 363:.\FrequencyCounter.c **** *******************************************************************************/
+ 364:.\FrequencyCounter.c **** void Convert_HextoDec(uint32 SourceValue, uint8* DestinationAddress)
+ 365:.\FrequencyCounter.c **** {
+ 684              		.loc 1 365 0
+ 685              		.cfi_startproc
+ 686 0000 80B5     		push	{r7, lr}
+ 687              		.cfi_def_cfa_offset 8
+ 688              		.cfi_offset 7, -8
+ 689              		.cfi_offset 14, -4
+ 690 0002 82B0     		sub	sp, sp, #8
+ 691              		.cfi_def_cfa_offset 16
+ 692 0004 00AF     		add	r7, sp, #0
+ 693              		.cfi_def_cfa_register 7
+ 694 0006 7860     		str	r0, [r7, #4]
+ 695 0008 3960     		str	r1, [r7]
+ 366:.\FrequencyCounter.c **** 	while(SourceValue > 0)
+ 696              		.loc 1 366 0
+ 697 000a 18E0     		b	.L40
+ 698              	.L41:
+ 367:.\FrequencyCounter.c **** 	{
+ 368:.\FrequencyCounter.c **** 			/* Get the value of one's place of the integer */
+ 369:.\FrequencyCounter.c **** 			*DestinationAddress = SourceValue % 10;
+ 699              		.loc 1 369 0
+ 700 000c 7B68     		ldr	r3, [r7, #4]
+ 701 000e 181C     		mov	r0, r3
+ 702 0010 0A21     		mov	r1, #10
+ 703 0012 FFF7FEFF 		bl	__aeabi_uidivmod
+ 704 0016 0B1C     		mov	r3, r1
+ 705 0018 DAB2     		uxtb	r2, r3
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 20
+
+
+ 706 001a 3B68     		ldr	r3, [r7]
+ 707 001c 1A70     		strb	r2, [r3]
+ 370:.\FrequencyCounter.c **** 			
+ 371:.\FrequencyCounter.c **** 			/* Convert the integer to ASCII */
+ 372:.\FrequencyCounter.c **** 			*DestinationAddress += INTEGER_TO_ASCII;
+ 708              		.loc 1 372 0
+ 709 001e 3B68     		ldr	r3, [r7]
+ 710 0020 1B78     		ldrb	r3, [r3]
+ 711 0022 3033     		add	r3, r3, #48
+ 712 0024 DAB2     		uxtb	r2, r3
+ 713 0026 3B68     		ldr	r3, [r7]
+ 714 0028 1A70     		strb	r2, [r3]
+ 373:.\FrequencyCounter.c **** 
+ 374:.\FrequencyCounter.c **** 			/* Shift the Ten's place to one's place */					
+ 375:.\FrequencyCounter.c **** 			SourceValue /= 10;
+ 715              		.loc 1 375 0
+ 716 002a 7B68     		ldr	r3, [r7, #4]
+ 717 002c 181C     		mov	r0, r3
+ 718 002e 0A21     		mov	r1, #10
+ 719 0030 FFF7FEFF 		bl	__aeabi_uidiv
+ 720 0034 031C     		mov	r3, r0
+ 721 0036 7B60     		str	r3, [r7, #4]
+ 376:.\FrequencyCounter.c **** 		
+ 377:.\FrequencyCounter.c **** 			DestinationAddress++;
+ 722              		.loc 1 377 0
+ 723 0038 3B68     		ldr	r3, [r7]
+ 724 003a 0133     		add	r3, r3, #1
+ 725 003c 3B60     		str	r3, [r7]
+ 726              	.L40:
+ 366:.\FrequencyCounter.c **** 	while(SourceValue > 0)
+ 727              		.loc 1 366 0 discriminator 1
+ 728 003e 7B68     		ldr	r3, [r7, #4]
+ 729 0040 002B     		cmp	r3, #0
+ 730 0042 E3D1     		bne	.L41
+ 378:.\FrequencyCounter.c **** 	}
+ 379:.\FrequencyCounter.c **** }
+ 731              		.loc 1 379 0
+ 732 0044 BD46     		mov	sp, r7
+ 733 0046 02B0     		add	sp, sp, #8
+ 734              		@ sp needed
+ 735 0048 80BD     		pop	{r7, pc}
+ 736              		.cfi_endproc
+ 737              	.LFE38:
+ 738              		.size	Convert_HextoDec, .-Convert_HextoDec
+ 739 004a C046     		.section	.text.Reset_Array,"ax",%progbits
+ 740              		.align	2
+ 741              		.global	Reset_Array
+ 742              		.code	16
+ 743              		.thumb_func
+ 744              		.type	Reset_Array, %function
+ 745              	Reset_Array:
+ 746              	.LFB39:
+ 380:.\FrequencyCounter.c **** 
+ 381:.\FrequencyCounter.c **** /*******************************************************************************
+ 382:.\FrequencyCounter.c **** * Function Name: Reset_Array
+ 383:.\FrequencyCounter.c **** ********************************************************************************
+ 384:.\FrequencyCounter.c **** *
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 21
+
+
+ 385:.\FrequencyCounter.c **** * Summary:
+ 386:.\FrequencyCounter.c **** *  Function resets all the bytes in the array to 0x20 (hex value for space) 
+ 387:.\FrequencyCounter.c **** *
+ 388:.\FrequencyCounter.c **** * Parameters:
+ 389:.\FrequencyCounter.c **** *  DestinationAddress: Pointer to the array whose value needs to be reset to 0x20
+ 390:.\FrequencyCounter.c **** *  noOfBytes: Number of bytes that needs to be reset in the array.
+ 391:.\FrequencyCounter.c **** *
+ 392:.\FrequencyCounter.c **** * Return:
+ 393:.\FrequencyCounter.c **** *  None
+ 394:.\FrequencyCounter.c **** *
+ 395:.\FrequencyCounter.c **** *******************************************************************************/
+ 396:.\FrequencyCounter.c **** void Reset_Array(uint8 *DestinationAddress, uint8 noOfBytes)
+ 397:.\FrequencyCounter.c **** {
+ 747              		.loc 1 397 0
+ 748              		.cfi_startproc
+ 749 0000 80B5     		push	{r7, lr}
+ 750              		.cfi_def_cfa_offset 8
+ 751              		.cfi_offset 7, -8
+ 752              		.cfi_offset 14, -4
+ 753 0002 84B0     		sub	sp, sp, #16
+ 754              		.cfi_def_cfa_offset 24
+ 755 0004 00AF     		add	r7, sp, #0
+ 756              		.cfi_def_cfa_register 7
+ 757 0006 7860     		str	r0, [r7, #4]
+ 758 0008 0A1C     		mov	r2, r1
+ 759 000a FB1C     		add	r3, r7, #3
+ 760 000c 1A70     		strb	r2, [r3]
+ 398:.\FrequencyCounter.c **** 	uint8 loopNo = 0;
+ 761              		.loc 1 398 0
+ 762 000e 3B1C     		mov	r3, r7
+ 763 0010 0F33     		add	r3, r3, #15
+ 764 0012 0022     		mov	r2, #0
+ 765 0014 1A70     		strb	r2, [r3]
+ 399:.\FrequencyCounter.c ****  	
+ 400:.\FrequencyCounter.c **** 	/* Reset all the bytes in the array to hexadecimal value of 0x20 */
+ 401:.\FrequencyCounter.c **** 	for(loopNo = 0; loopNo < noOfBytes; loopNo++)
+ 766              		.loc 1 401 0
+ 767 0016 3B1C     		mov	r3, r7
+ 768 0018 0F33     		add	r3, r3, #15
+ 769 001a 0022     		mov	r2, #0
+ 770 001c 1A70     		strb	r2, [r3]
+ 771 001e 0CE0     		b	.L43
+ 772              	.L44:
+ 402:.\FrequencyCounter.c **** 	{
+ 403:.\FrequencyCounter.c **** 		*DestinationAddress = ASCII_SPACE;
+ 773              		.loc 1 403 0 discriminator 2
+ 774 0020 7B68     		ldr	r3, [r7, #4]
+ 775 0022 2022     		mov	r2, #32
+ 776 0024 1A70     		strb	r2, [r3]
+ 404:.\FrequencyCounter.c **** 		DestinationAddress++;
+ 777              		.loc 1 404 0 discriminator 2
+ 778 0026 7B68     		ldr	r3, [r7, #4]
+ 779 0028 0133     		add	r3, r3, #1
+ 780 002a 7B60     		str	r3, [r7, #4]
+ 401:.\FrequencyCounter.c **** 	for(loopNo = 0; loopNo < noOfBytes; loopNo++)
+ 781              		.loc 1 401 0 discriminator 2
+ 782 002c 3B1C     		mov	r3, r7
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 22
+
+
+ 783 002e 0F33     		add	r3, r3, #15
+ 784 0030 1A78     		ldrb	r2, [r3]
+ 785 0032 3B1C     		mov	r3, r7
+ 786 0034 0F33     		add	r3, r3, #15
+ 787 0036 0132     		add	r2, r2, #1
+ 788 0038 1A70     		strb	r2, [r3]
+ 789              	.L43:
+ 401:.\FrequencyCounter.c **** 	for(loopNo = 0; loopNo < noOfBytes; loopNo++)
+ 790              		.loc 1 401 0 is_stmt 0 discriminator 1
+ 791 003a 3A1C     		mov	r2, r7
+ 792 003c 0F32     		add	r2, r2, #15
+ 793 003e FB1C     		add	r3, r7, #3
+ 794 0040 1278     		ldrb	r2, [r2]
+ 795 0042 1B78     		ldrb	r3, [r3]
+ 796 0044 9A42     		cmp	r2, r3
+ 797 0046 EBD3     		bcc	.L44
+ 405:.\FrequencyCounter.c **** 	}
+ 406:.\FrequencyCounter.c **** }
+ 798              		.loc 1 406 0 is_stmt 1
+ 799 0048 BD46     		mov	sp, r7
+ 800 004a 04B0     		add	sp, sp, #16
+ 801              		@ sp needed
+ 802 004c 80BD     		pop	{r7, pc}
+ 803              		.cfi_endproc
+ 804              	.LFE39:
+ 805              		.size	Reset_Array, .-Reset_Array
+ 806 004e C046     		.section	.text.PWM_2s_InterruptHandler,"ax",%progbits
+ 807              		.align	2
+ 808              		.global	PWM_2s_InterruptHandler
+ 809              		.code	16
+ 810              		.thumb_func
+ 811              		.type	PWM_2s_InterruptHandler, %function
+ 812              	PWM_2s_InterruptHandler:
+ 813              	.LFB40:
+ 407:.\FrequencyCounter.c **** 
+ 408:.\FrequencyCounter.c **** /*******************************************************************************
+ 409:.\FrequencyCounter.c **** * Function Name: PWM_2s_InterruptHandler
+ 410:.\FrequencyCounter.c **** ********************************************************************************
+ 411:.\FrequencyCounter.c **** *
+ 412:.\FrequencyCounter.c **** * Summary:
+ 413:.\FrequencyCounter.c **** *   The custom Interrupt Service Routine for PWM_2s ISR.
+ 414:.\FrequencyCounter.c **** *
+ 415:.\FrequencyCounter.c **** * Parameters:  
+ 416:.\FrequencyCounter.c **** *   None
+ 417:.\FrequencyCounter.c **** *
+ 418:.\FrequencyCounter.c **** * Return:
+ 419:.\FrequencyCounter.c **** *   None
+ 420:.\FrequencyCounter.c **** *
+ 421:.\FrequencyCounter.c **** *******************************************************************************/
+ 422:.\FrequencyCounter.c **** CY_ISR(PWM_2s_InterruptHandler)
+ 423:.\FrequencyCounter.c **** {
+ 814              		.loc 1 423 0
+ 815              		.cfi_startproc
+ 816 0000 80B5     		push	{r7, lr}
+ 817              		.cfi_def_cfa_offset 8
+ 818              		.cfi_offset 7, -8
+ 819              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 23
+
+
+ 820 0002 00AF     		add	r7, sp, #0
+ 821              		.cfi_def_cfa_register 7
+ 424:.\FrequencyCounter.c **** 	static uint8 FirstTime = 0;
+ 425:.\FrequencyCounter.c **** 	
+ 426:.\FrequencyCounter.c ****     /* Clear ISR for next interrupt */
+ 427:.\FrequencyCounter.c **** 	PWM_2s_ReadStatusRegister();
+ 822              		.loc 1 427 0
+ 823 0004 FFF7FEFF 		bl	PWM_2s_ReadStatusRegister
+ 428:.\FrequencyCounter.c **** 	
+ 429:.\FrequencyCounter.c **** 	/* If this is the first ISR after device reset, do not set the Calculate_Frequency variable */
+ 430:.\FrequencyCounter.c **** 	if(!FirstTime)
+ 824              		.loc 1 430 0
+ 825 0008 064B     		ldr	r3, .L48
+ 826 000a 1B78     		ldrb	r3, [r3]
+ 827 000c 002B     		cmp	r3, #0
+ 828 000e 03D1     		bne	.L46
+ 431:.\FrequencyCounter.c **** 	{
+ 432:.\FrequencyCounter.c **** 		FirstTime = 1;
+ 829              		.loc 1 432 0
+ 830 0010 044B     		ldr	r3, .L48
+ 831 0012 0122     		mov	r2, #1
+ 832 0014 1A70     		strb	r2, [r3]
+ 833 0016 02E0     		b	.L45
+ 834              	.L46:
+ 433:.\FrequencyCounter.c **** 	}
+ 434:.\FrequencyCounter.c **** 	else
+ 435:.\FrequencyCounter.c **** 	{
+ 436:.\FrequencyCounter.c **** 		/* Set the 2s interval flag to indicate CPU to compute the frequency */
+ 437:.\FrequencyCounter.c **** 		Calculate_Frequency = 1;
+ 835              		.loc 1 437 0
+ 836 0018 034B     		ldr	r3, .L48+4
+ 837 001a 0122     		mov	r2, #1
+ 838 001c 1A70     		strb	r2, [r3]
+ 839              	.L45:
+ 438:.\FrequencyCounter.c **** 	}
+ 439:.\FrequencyCounter.c **** }
+ 840              		.loc 1 439 0
+ 841 001e BD46     		mov	sp, r7
+ 842              		@ sp needed
+ 843 0020 80BD     		pop	{r7, pc}
+ 844              	.L49:
+ 845 0022 C046     		.align	2
+ 846              	.L48:
+ 847 0024 00000000 		.word	FirstTime.7215
+ 848 0028 00000000 		.word	Calculate_Frequency
+ 849              		.cfi_endproc
+ 850              	.LFE40:
+ 851              		.size	PWM_2s_InterruptHandler, .-PWM_2s_InterruptHandler
+ 852              		.section	.text.Input_Sig_Ctr_InterruptHandler,"ax",%progbits
+ 853              		.align	2
+ 854              		.global	Input_Sig_Ctr_InterruptHandler
+ 855              		.code	16
+ 856              		.thumb_func
+ 857              		.type	Input_Sig_Ctr_InterruptHandler, %function
+ 858              	Input_Sig_Ctr_InterruptHandler:
+ 859              	.LFB41:
+ 440:.\FrequencyCounter.c **** 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 24
+
+
+ 441:.\FrequencyCounter.c **** /*******************************************************************************
+ 442:.\FrequencyCounter.c **** * Function Name: Input_Sig_Ctr_InterruptHandler
+ 443:.\FrequencyCounter.c **** ********************************************************************************
+ 444:.\FrequencyCounter.c **** *
+ 445:.\FrequencyCounter.c **** * Summary:
+ 446:.\FrequencyCounter.c **** *   The custom Interrupt Service Routine for Input_Sig_Ctr ISR.
+ 447:.\FrequencyCounter.c **** *
+ 448:.\FrequencyCounter.c **** * Parameters:  
+ 449:.\FrequencyCounter.c **** *   None
+ 450:.\FrequencyCounter.c **** *
+ 451:.\FrequencyCounter.c **** * Return:
+ 452:.\FrequencyCounter.c **** *   None
+ 453:.\FrequencyCounter.c **** *
+ 454:.\FrequencyCounter.c **** *******************************************************************************/
+ 455:.\FrequencyCounter.c **** CY_ISR(Input_Sig_Ctr_InterruptHandler)
+ 456:.\FrequencyCounter.c **** {
+ 860              		.loc 1 456 0
+ 861              		.cfi_startproc
+ 862 0000 80B5     		push	{r7, lr}
+ 863              		.cfi_def_cfa_offset 8
+ 864              		.cfi_offset 7, -8
+ 865              		.cfi_offset 14, -4
+ 866 0002 00AF     		add	r7, sp, #0
+ 867              		.cfi_def_cfa_register 7
+ 457:.\FrequencyCounter.c ****     /* Clear ISR for next interrupt */
+ 458:.\FrequencyCounter.c **** 	Input_Signal_Counter1_ClearInterrupt(Input_Signal_Counter1_INTR_MASK_CC_MATCH);
+ 868              		.loc 1 458 0
+ 869 0004 0220     		mov	r0, #2
+ 870 0006 FFF7FEFF 		bl	Input_Signal_Counter1_ClearInterrupt
+ 459:.\FrequencyCounter.c **** 	
+ 460:.\FrequencyCounter.c **** 	/* Store the captured count value */
+ 461:.\FrequencyCounter.c **** 	Input_Signal_Counter1_Count = Input_Signal_Counter1_ReadCapture();
+ 871              		.loc 1 461 0
+ 872 000a FFF7FEFF 		bl	Input_Signal_Counter1_ReadCapture
+ 873 000e 031C     		mov	r3, r0
+ 874 0010 9AB2     		uxth	r2, r3
+ 875 0012 064B     		ldr	r3, .L51
+ 876 0014 1A80     		strh	r2, [r3]
+ 462:.\FrequencyCounter.c **** 	Input_Signal_Counter2_Count = Input_Signal_Counter2_ReadCapture();
+ 877              		.loc 1 462 0
+ 878 0016 FFF7FEFF 		bl	Input_Signal_Counter2_ReadCapture
+ 879 001a 031C     		mov	r3, r0
+ 880 001c 9AB2     		uxth	r2, r3
+ 881 001e 044B     		ldr	r3, .L51+4
+ 882 0020 1A80     		strh	r2, [r3]
+ 463:.\FrequencyCounter.c **** 	
+ 464:.\FrequencyCounter.c **** 	/* Indicate that a valid capture event is detected */
+ 465:.\FrequencyCounter.c **** 	Input_Sig_Ctr_Capture = 1;
+ 883              		.loc 1 465 0
+ 884 0022 044B     		ldr	r3, .L51+8
+ 885 0024 0122     		mov	r2, #1
+ 886 0026 1A70     		strb	r2, [r3]
+ 466:.\FrequencyCounter.c **** }
+ 887              		.loc 1 466 0
+ 888 0028 BD46     		mov	sp, r7
+ 889              		@ sp needed
+ 890 002a 80BD     		pop	{r7, pc}
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 25
+
+
+ 891              	.L52:
+ 892              		.align	2
+ 893              	.L51:
+ 894 002c 00000000 		.word	Input_Signal_Counter1_Count
+ 895 0030 00000000 		.word	Input_Signal_Counter2_Count
+ 896 0034 00000000 		.word	Input_Sig_Ctr_Capture
+ 897              		.cfi_endproc
+ 898              	.LFE41:
+ 899              		.size	Input_Sig_Ctr_InterruptHandler, .-Input_Sig_Ctr_InterruptHandler
+ 900              		.section	.text.Ref_Clk_Ctr_InterruptHandler,"ax",%progbits
+ 901              		.align	2
+ 902              		.global	Ref_Clk_Ctr_InterruptHandler
+ 903              		.code	16
+ 904              		.thumb_func
+ 905              		.type	Ref_Clk_Ctr_InterruptHandler, %function
+ 906              	Ref_Clk_Ctr_InterruptHandler:
+ 907              	.LFB42:
+ 467:.\FrequencyCounter.c **** 
+ 468:.\FrequencyCounter.c **** /*******************************************************************************
+ 469:.\FrequencyCounter.c **** * Function Name: Ref_Clk_Ctr_InterruptHandler
+ 470:.\FrequencyCounter.c **** ********************************************************************************
+ 471:.\FrequencyCounter.c **** *
+ 472:.\FrequencyCounter.c **** * Summary:
+ 473:.\FrequencyCounter.c **** *   The custom Interrupt Service Routine for Ref_Clk_Ctr ISR.
+ 474:.\FrequencyCounter.c **** *
+ 475:.\FrequencyCounter.c **** * Parameters:  
+ 476:.\FrequencyCounter.c **** *   None
+ 477:.\FrequencyCounter.c **** *
+ 478:.\FrequencyCounter.c **** * Return:
+ 479:.\FrequencyCounter.c **** *   None
+ 480:.\FrequencyCounter.c **** *
+ 481:.\FrequencyCounter.c **** *******************************************************************************/
+ 482:.\FrequencyCounter.c **** CY_ISR(Ref_Clk_Ctr_InterruptHandler)
+ 483:.\FrequencyCounter.c **** {
+ 908              		.loc 1 483 0
+ 909              		.cfi_startproc
+ 910 0000 80B5     		push	{r7, lr}
+ 911              		.cfi_def_cfa_offset 8
+ 912              		.cfi_offset 7, -8
+ 913              		.cfi_offset 14, -4
+ 914 0002 00AF     		add	r7, sp, #0
+ 915              		.cfi_def_cfa_register 7
+ 484:.\FrequencyCounter.c ****     /* Clear ISR for next interrupt */
+ 485:.\FrequencyCounter.c **** 	Ref_Clock_Counter1_ClearInterrupt(Ref_Clock_Counter1_INTR_MASK_CC_MATCH);
+ 916              		.loc 1 485 0
+ 917 0004 0220     		mov	r0, #2
+ 918 0006 FFF7FEFF 		bl	Ref_Clock_Counter1_ClearInterrupt
+ 486:.\FrequencyCounter.c **** 
+ 487:.\FrequencyCounter.c **** 	/* Store the captured count value */
+ 488:.\FrequencyCounter.c **** 	Ref_Clock_Counter1_Count = Ref_Clock_Counter1_ReadCapture();
+ 919              		.loc 1 488 0
+ 920 000a FFF7FEFF 		bl	Ref_Clock_Counter1_ReadCapture
+ 921 000e 031C     		mov	r3, r0
+ 922 0010 9AB2     		uxth	r2, r3
+ 923 0012 064B     		ldr	r3, .L54
+ 924 0014 1A80     		strh	r2, [r3]
+ 489:.\FrequencyCounter.c **** 	Ref_Clock_Counter2_Count = Ref_Clock_Counter2_ReadCapture();
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 26
+
+
+ 925              		.loc 1 489 0
+ 926 0016 FFF7FEFF 		bl	Ref_Clock_Counter2_ReadCapture
+ 927 001a 031C     		mov	r3, r0
+ 928 001c 9AB2     		uxth	r2, r3
+ 929 001e 044B     		ldr	r3, .L54+4
+ 930 0020 1A80     		strh	r2, [r3]
+ 490:.\FrequencyCounter.c **** 
+ 491:.\FrequencyCounter.c **** 	/* Indicate that a valid capture event is detected */
+ 492:.\FrequencyCounter.c **** 	Ref_Clk_Ctr_Capture = 1;
+ 931              		.loc 1 492 0
+ 932 0022 044B     		ldr	r3, .L54+8
+ 933 0024 0122     		mov	r2, #1
+ 934 0026 1A70     		strb	r2, [r3]
+ 493:.\FrequencyCounter.c **** }...
+ 935              		.loc 1 493 0
+ 936 0028 BD46     		mov	sp, r7
+ 937              		@ sp needed
+ 938 002a 80BD     		pop	{r7, pc}
+ 939              	.L55:
+ 940              		.align	2
+ 941              	.L54:
+ 942 002c 00000000 		.word	Ref_Clock_Counter1_Count
+ 943 0030 00000000 		.word	Ref_Clock_Counter2_Count
+ 944 0034 00000000 		.word	Ref_Clk_Ctr_Capture
+ 945              		.cfi_endproc
+ 946              	.LFE42:
+ 947              		.size	Ref_Clk_Ctr_InterruptHandler, .-Ref_Clk_Ctr_InterruptHandler
+ 948              		.bss
+ 949              	FirstTime.7215:
+ 950 0000 00       		.space	1
+ 951              		.text
+ 952              	.Letext0:
+ 953              		.file 2 ".\\Generated_Source\\PSoC4/cytypes.h"
+ 954              		.file 3 ".\\BLEApplications.h"
+ 955              		.file 4 ".\\Generated_Source\\PSoC4/BLE_Stack.h"
+ 956              		.section	.debug_info,"",%progbits
+ 957              	.Ldebug_info0:
+ 958 0000 85040000 		.4byte	0x485
+ 959 0004 0400     		.2byte	0x4
+ 960 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 961 000a 04       		.byte	0x4
+ 962 000b 01       		.uleb128 0x1
+ 963 000c DD090000 		.4byte	.LASF103
+ 964 0010 01       		.byte	0x1
+ 965 0011 B5070000 		.4byte	.LASF104
+ 966 0015 00000000 		.4byte	.LASF105
+ 967 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 968 001d 00000000 		.4byte	0
+ 969 0021 00000000 		.4byte	.Ldebug_line0
+ 970 0025 02       		.uleb128 0x2
+ 971 0026 01       		.byte	0x1
+ 972 0027 06       		.byte	0x6
+ 973 0028 7E050000 		.4byte	.LASF0
+ 974 002c 02       		.uleb128 0x2
+ 975 002d 01       		.byte	0x1
+ 976 002e 08       		.byte	0x8
+ 977 002f 33050000 		.4byte	.LASF1
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 27
+
+
+ 978 0033 02       		.uleb128 0x2
+ 979 0034 02       		.byte	0x2
+ 980 0035 05       		.byte	0x5
+ 981 0036 0B010000 		.4byte	.LASF2
+ 982 003a 02       		.uleb128 0x2
+ 983 003b 02       		.byte	0x2
+ 984 003c 07       		.byte	0x7
+ 985 003d 88060000 		.4byte	.LASF3
+ 986 0041 02       		.uleb128 0x2
+ 987 0042 04       		.byte	0x4
+ 988 0043 05       		.byte	0x5
+ 989 0044 DB030000 		.4byte	.LASF4
+ 990 0048 02       		.uleb128 0x2
+ 991 0049 04       		.byte	0x4
+ 992 004a 07       		.byte	0x7
+ 993 004b 0F060000 		.4byte	.LASF5
+ 994 004f 02       		.uleb128 0x2
+ 995 0050 08       		.byte	0x8
+ 996 0051 05       		.byte	0x5
+ 997 0052 A5030000 		.4byte	.LASF6
+ 998 0056 02       		.uleb128 0x2
+ 999 0057 08       		.byte	0x8
+ 1000 0058 07       		.byte	0x7
+ 1001 0059 B3030000 		.4byte	.LASF7
+ 1002 005d 03       		.uleb128 0x3
+ 1003 005e 04       		.byte	0x4
+ 1004 005f 05       		.byte	0x5
+ 1005 0060 696E7400 		.ascii	"int\000"
+ 1006 0064 02       		.uleb128 0x2
+ 1007 0065 04       		.byte	0x4
+ 1008 0066 07       		.byte	0x7
+ 1009 0067 E7050000 		.4byte	.LASF8
+ 1010 006b 04       		.uleb128 0x4
+ 1011 006c 07050000 		.4byte	.LASF9
+ 1012 0070 02       		.byte	0x2
+ 1013 0071 A1       		.byte	0xa1
+ 1014 0072 2C000000 		.4byte	0x2c
+ 1015 0076 04       		.uleb128 0x4
+ 1016 0077 0B070000 		.4byte	.LASF10
+ 1017 007b 02       		.byte	0x2
+ 1018 007c A2       		.byte	0xa2
+ 1019 007d 3A000000 		.4byte	0x3a
+ 1020 0081 04       		.uleb128 0x4
+ 1021 0082 4F070000 		.4byte	.LASF11
+ 1022 0086 02       		.byte	0x2
+ 1023 0087 A3       		.byte	0xa3
+ 1024 0088 48000000 		.4byte	0x48
+ 1025 008c 04       		.uleb128 0x4
+ 1026 008d A8070000 		.4byte	.LASF12
+ 1027 0091 02       		.byte	0x2
+ 1028 0092 A6       		.byte	0xa6
+ 1029 0093 41000000 		.4byte	0x41
+ 1030 0097 04       		.uleb128 0x4
+ 1031 0098 E1000000 		.4byte	.LASF13
+ 1032 009c 02       		.byte	0x2
+ 1033 009d A7       		.byte	0xa7
+ 1034 009e A2000000 		.4byte	0xa2
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 28
+
+
+ 1035 00a2 02       		.uleb128 0x2
+ 1036 00a3 04       		.byte	0x4
+ 1037 00a4 04       		.byte	0x4
+ 1038 00a5 6C030000 		.4byte	.LASF14
+ 1039 00a9 02       		.uleb128 0x2
+ 1040 00aa 08       		.byte	0x8
+ 1041 00ab 04       		.byte	0x4
+ 1042 00ac AE070000 		.4byte	.LASF15
+ 1043 00b0 02       		.uleb128 0x2
+ 1044 00b1 01       		.byte	0x1
+ 1045 00b2 08       		.byte	0x8
+ 1046 00b3 D4060000 		.4byte	.LASF16
+ 1047 00b7 02       		.uleb128 0x2
+ 1048 00b8 04       		.byte	0x4
+ 1049 00b9 07       		.byte	0x7
+ 1050 00ba 48010000 		.4byte	.LASF17
+ 1051 00be 05       		.uleb128 0x5
+ 1052 00bf 04       		.byte	0x4
+ 1053 00c0 6B000000 		.4byte	0x6b
+ 1054 00c4 06       		.uleb128 0x6
+ 1055 00c5 01       		.byte	0x1
+ 1056 00c6 04       		.byte	0x4
+ 1057 00c7 58       		.byte	0x58
+ 1058 00c8 34020000 		.4byte	0x234
+ 1059 00cc 07       		.uleb128 0x7
+ 1060 00cd EE020000 		.4byte	.LASF18
+ 1061 00d1 00       		.sleb128 0
+ 1062 00d2 07       		.uleb128 0x7
+ 1063 00d3 26020000 		.4byte	.LASF19
+ 1064 00d7 01       		.sleb128 1
+ 1065 00d8 07       		.uleb128 0x7
+ 1066 00d9 EF080000 		.4byte	.LASF20
+ 1067 00dd 02       		.sleb128 2
+ 1068 00de 07       		.uleb128 0x7
+ 1069 00df 0A080000 		.4byte	.LASF21
+ 1070 00e3 03       		.sleb128 3
+ 1071 00e4 07       		.uleb128 0x7
+ 1072 00e5 51010000 		.4byte	.LASF22
+ 1073 00e9 04       		.sleb128 4
+ 1074 00ea 07       		.uleb128 0x7
+ 1075 00eb 6D040000 		.4byte	.LASF23
+ 1076 00ef 05       		.sleb128 5
+ 1077 00f0 07       		.uleb128 0x7
+ 1078 00f1 68080000 		.4byte	.LASF24
+ 1079 00f5 20       		.sleb128 32
+ 1080 00f6 07       		.uleb128 0x7
+ 1081 00f7 21060000 		.4byte	.LASF25
+ 1082 00fb 21       		.sleb128 33
+ 1083 00fc 07       		.uleb128 0x7
+ 1084 00fd 6E000000 		.4byte	.LASF26
+ 1085 0101 22       		.sleb128 34
+ 1086 0102 07       		.uleb128 0x7
+ 1087 0103 9C040000 		.4byte	.LASF27
+ 1088 0107 23       		.sleb128 35
+ 1089 0108 07       		.uleb128 0x7
+ 1090 0109 CB050000 		.4byte	.LASF28
+ 1091 010d 24       		.sleb128 36
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 29
+
+
+ 1092 010e 07       		.uleb128 0x7
+ 1093 010f 15010000 		.4byte	.LASF29
+ 1094 0113 25       		.sleb128 37
+ 1095 0114 07       		.uleb128 0x7
+ 1096 0115 24040000 		.4byte	.LASF30
+ 1097 0119 26       		.sleb128 38
+ 1098 011a 07       		.uleb128 0x7
+ 1099 011b 05040000 		.4byte	.LASF31
+ 1100 011f 27       		.sleb128 39
+ 1101 0120 07       		.uleb128 0x7
+ 1102 0121 83090000 		.4byte	.LASF32
+ 1103 0125 28       		.sleb128 40
+ 1104 0126 07       		.uleb128 0x7
+ 1105 0127 9E010000 		.4byte	.LASF33
+ 1106 012b 29       		.sleb128 41
+ 1107 012c 07       		.uleb128 0x7
+ 1108 012d 92000000 		.4byte	.LASF34
+ 1109 0131 2A       		.sleb128 42
+ 1110 0132 07       		.uleb128 0x7
+ 1111 0133 25090000 		.4byte	.LASF35
+ 1112 0137 2B       		.sleb128 43
+ 1113 0138 07       		.uleb128 0x7
+ 1114 0139 8A020000 		.4byte	.LASF36
+ 1115 013d 2C       		.sleb128 44
+ 1116 013e 07       		.uleb128 0x7
+ 1117 013f C7000000 		.4byte	.LASF37
+ 1118 0143 C000     		.sleb128 64
+ 1119 0145 07       		.uleb128 0x7
+ 1120 0146 F4050000 		.4byte	.LASF38
+ 1121 014a C100     		.sleb128 65
+ 1122 014c 07       		.uleb128 0x7
+ 1123 014d 57020000 		.4byte	.LASF39
+ 1124 0151 C200     		.sleb128 66
+ 1125 0153 07       		.uleb128 0x7
+ 1126 0154 39020000 		.4byte	.LASF40
+ 1127 0158 C300     		.sleb128 67
+ 1128 015a 07       		.uleb128 0x7
+ 1129 015b D1080000 		.4byte	.LASF41
+ 1130 015f C400     		.sleb128 68
+ 1131 0161 07       		.uleb128 0x7
+ 1132 0162 8C080000 		.4byte	.LASF42
+ 1133 0166 C500     		.sleb128 69
+ 1134 0168 07       		.uleb128 0x7
+ 1135 0169 E7010000 		.4byte	.LASF43
+ 1136 016d C600     		.sleb128 70
+ 1137 016f 07       		.uleb128 0x7
+ 1138 0170 60050000 		.4byte	.LASF44
+ 1139 0174 C700     		.sleb128 71
+ 1140 0176 07       		.uleb128 0x7
+ 1141 0177 A4050000 		.4byte	.LASF45
+ 1142 017b C800     		.sleb128 72
+ 1143 017d 07       		.uleb128 0x7
+ 1144 017e 72030000 		.4byte	.LASF46
+ 1145 0182 C900     		.sleb128 73
+ 1146 0184 07       		.uleb128 0x7
+ 1147 0185 12070000 		.4byte	.LASF47
+ 1148 0189 CA00     		.sleb128 74
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 30
+
+
+ 1149 018b 07       		.uleb128 0x7
+ 1150 018c AE020000 		.4byte	.LASF48
+ 1151 0190 CB00     		.sleb128 75
+ 1152 0192 07       		.uleb128 0x7
+ 1153 0193 8A050000 		.4byte	.LASF49
+ 1154 0197 CC00     		.sleb128 76
+ 1155 0199 07       		.uleb128 0x7
+ 1156 019a 8B030000 		.4byte	.LASF50
+ 1157 019e CD00     		.sleb128 77
+ 1158 01a0 07       		.uleb128 0x7
+ 1159 01a1 B3080000 		.4byte	.LASF51
+ 1160 01a5 CE00     		.sleb128 78
+ 1161 01a7 07       		.uleb128 0x7
+ 1162 01a8 41050000 		.4byte	.LASF52
+ 1163 01ac CF00     		.sleb128 79
+ 1164 01ae 07       		.uleb128 0x7
+ 1165 01af 50090000 		.4byte	.LASF53
+ 1166 01b3 D000     		.sleb128 80
+ 1167 01b5 07       		.uleb128 0x7
+ 1168 01b6 30070000 		.4byte	.LASF54
+ 1169 01ba D100     		.sleb128 81
+ 1170 01bc 07       		.uleb128 0x7
+ 1171 01bd 4C040000 		.4byte	.LASF55
+ 1172 01c1 D200     		.sleb128 82
+ 1173 01c3 07       		.uleb128 0x7
+ 1174 01c4 E4030000 		.4byte	.LASF56
+ 1175 01c8 D300     		.sleb128 83
+ 1176 01ca 07       		.uleb128 0x7
+ 1177 01cb CD020000 		.4byte	.LASF57
+ 1178 01cf D400     		.sleb128 84
+ 1179 01d1 07       		.uleb128 0x7
+ 1180 01d2 B9090000 		.4byte	.LASF58
+ 1181 01d6 D500     		.sleb128 85
+ 1182 01d8 07       		.uleb128 0x7
+ 1183 01d9 0D050000 		.4byte	.LASF59
+ 1184 01dd F000     		.sleb128 112
+ 1185 01df 07       		.uleb128 0x7
+ 1186 01e0 42080000 		.4byte	.LASF60
+ 1187 01e4 F100     		.sleb128 113
+ 1188 01e6 07       		.uleb128 0x7
+ 1189 01e7 D9060000 		.4byte	.LASF61
+ 1190 01eb F200     		.sleb128 114
+ 1191 01ed 07       		.uleb128 0x7
+ 1192 01ee 05030000 		.4byte	.LASF62
+ 1193 01f2 F300     		.sleb128 115
+ 1194 01f4 07       		.uleb128 0x7
+ 1195 01f5 DB040000 		.4byte	.LASF63
+ 1196 01f9 F400     		.sleb128 116
+ 1197 01fb 07       		.uleb128 0x7
+ 1198 01fc 38060000 		.4byte	.LASF64
+ 1199 0200 F500     		.sleb128 117
+ 1200 0202 07       		.uleb128 0x7
+ 1201 0203 23030000 		.4byte	.LASF65
+ 1202 0207 F600     		.sleb128 118
+ 1203 0209 07       		.uleb128 0x7
+ 1204 020a 23080000 		.4byte	.LASF66
+ 1205 020e F700     		.sleb128 119
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 31
+
+
+ 1206 0210 07       		.uleb128 0x7
+ 1207 0211 85070000 		.4byte	.LASF67
+ 1208 0215 F800     		.sleb128 120
+ 1209 0217 07       		.uleb128 0x7
+ 1210 0218 CA070000 		.4byte	.LASF68
+ 1211 021c F900     		.sleb128 121
+ 1212 021e 07       		.uleb128 0x7
+ 1213 021f 01090000 		.4byte	.LASF69
+ 1214 0223 FA00     		.sleb128 122
+ 1215 0225 07       		.uleb128 0x7
+ 1216 0226 08020000 		.4byte	.LASF70
+ 1217 022a FA01     		.sleb128 250
+ 1218 022c 07       		.uleb128 0x7
+ 1219 022d F9040000 		.4byte	.LASF71
+ 1220 0231 FF01     		.sleb128 255
+ 1221 0233 00       		.byte	0
+ 1222 0234 08       		.uleb128 0x8
+ 1223 0235 6B000000 		.4byte	0x6b
+ 1224 0239 44020000 		.4byte	0x244
+ 1225 023d 09       		.uleb128 0x9
+ 1226 023e B7000000 		.4byte	0xb7
+ 1227 0242 09       		.byte	0x9
+ 1228 0243 00       		.byte	0
+ 1229 0244 0A       		.uleb128 0xa
+ 1230 0245 82010000 		.4byte	.LASF85
+ 1231 0249 01       		.byte	0x1
+ 1232 024a 66       		.byte	0x66
+ 1233 024b 00000000 		.4byte	.LFB35
+ 1234 024f 48000000 		.4byte	.LFE35-.LFB35
+ 1235 0253 01       		.uleb128 0x1
+ 1236 0254 9C       		.byte	0x9c
+ 1237 0255 0B       		.uleb128 0xb
+ 1238 0256 56070000 		.4byte	.LASF74
+ 1239 025a 01       		.byte	0x1
+ 1240 025b 8F       		.byte	0x8f
+ 1241 025c 00000000 		.4byte	.LFB36
+ 1242 0260 24010000 		.4byte	.LFE36-.LFB36
+ 1243 0264 01       		.uleb128 0x1
+ 1244 0265 9C       		.byte	0x9c
+ 1245 0266 87020000 		.4byte	0x287
+ 1246 026a 0C       		.uleb128 0xc
+ 1247 026b C8010000 		.4byte	.LASF72
+ 1248 026f 01       		.byte	0x1
+ 1249 0270 92       		.byte	0x92
+ 1250 0271 97000000 		.4byte	0x97
+ 1251 0275 02       		.uleb128 0x2
+ 1252 0276 91       		.byte	0x91
+ 1253 0277 6C       		.sleb128 -20
+ 1254 0278 0C       		.uleb128 0xc
+ 1255 0279 C5060000 		.4byte	.LASF73
+ 1256 027d 01       		.byte	0x1
+ 1257 027e 95       		.byte	0x95
+ 1258 027f 97000000 		.4byte	0x97
+ 1259 0283 02       		.uleb128 0x2
+ 1260 0284 91       		.byte	0x91
+ 1261 0285 68       		.sleb128 -24
+ 1262 0286 00       		.byte	0
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 32
+
+
+ 1263 0287 0B       		.uleb128 0xb
+ 1264 0288 6F090000 		.4byte	.LASF75
+ 1265 028c 01       		.byte	0x1
+ 1266 028d D6       		.byte	0xd6
+ 1267 028e 00000000 		.4byte	.LFB37
+ 1268 0292 9C020000 		.4byte	.LFE37-.LFB37
+ 1269 0296 01       		.uleb128 0x1
+ 1270 0297 9C       		.byte	0x9c
+ 1271 0298 B9020000 		.4byte	0x2b9
+ 1272 029c 0D       		.uleb128 0xd
+ 1273 029d 7F020000 		.4byte	.LASF78
+ 1274 02a1 01       		.byte	0x1
+ 1275 02a2 D6       		.byte	0xd6
+ 1276 02a3 6B000000 		.4byte	0x6b
+ 1277 02a7 02       		.uleb128 0x2
+ 1278 02a8 91       		.byte	0x91
+ 1279 02a9 67       		.sleb128 -25
+ 1280 02aa 0C       		.uleb128 0xc
+ 1281 02ab FA000000 		.4byte	.LASF76
+ 1282 02af 01       		.byte	0x1
+ 1283 02b0 D9       		.byte	0xd9
+ 1284 02b1 6B000000 		.4byte	0x6b
+ 1285 02b5 02       		.uleb128 0x2
+ 1286 02b6 91       		.byte	0x91
+ 1287 02b7 6F       		.sleb128 -17
+ 1288 02b8 00       		.byte	0
+ 1289 02b9 0E       		.uleb128 0xe
+ 1290 02ba E9000000 		.4byte	.LASF77
+ 1291 02be 01       		.byte	0x1
+ 1292 02bf 6C01     		.2byte	0x16c
+ 1293 02c1 00000000 		.4byte	.LFB38
+ 1294 02c5 4A000000 		.4byte	.LFE38-.LFB38
+ 1295 02c9 01       		.uleb128 0x1
+ 1296 02ca 9C       		.byte	0x9c
+ 1297 02cb EE020000 		.4byte	0x2ee
+ 1298 02cf 0F       		.uleb128 0xf
+ 1299 02d0 BB000000 		.4byte	.LASF79
+ 1300 02d4 01       		.byte	0x1
+ 1301 02d5 6C01     		.2byte	0x16c
+ 1302 02d7 81000000 		.4byte	0x81
+ 1303 02db 02       		.uleb128 0x2
+ 1304 02dc 91       		.byte	0x91
+ 1305 02dd 74       		.sleb128 -12
+ 1306 02de 0F       		.uleb128 0xf
+ 1307 02df 59060000 		.4byte	.LASF80
+ 1308 02e3 01       		.byte	0x1
+ 1309 02e4 6C01     		.2byte	0x16c
+ 1310 02e6 BE000000 		.4byte	0xbe
+ 1311 02ea 02       		.uleb128 0x2
+ 1312 02eb 91       		.byte	0x91
+ 1313 02ec 70       		.sleb128 -16
+ 1314 02ed 00       		.byte	0
+ 1315 02ee 10       		.uleb128 0x10
+ 1316 02ef 44090000 		.4byte	.LASF81
+ 1317 02f3 01       		.byte	0x1
+ 1318 02f4 8C01     		.2byte	0x18c
+ 1319 02f6 00000000 		.4byte	.LFB39
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 33
+
+
+ 1320 02fa 4E000000 		.4byte	.LFE39-.LFB39
+ 1321 02fe 01       		.uleb128 0x1
+ 1322 02ff 9C       		.byte	0x9c
+ 1323 0300 32030000 		.4byte	0x332
+ 1324 0304 0F       		.uleb128 0xf
+ 1325 0305 59060000 		.4byte	.LASF80
+ 1326 0309 01       		.byte	0x1
+ 1327 030a 8C01     		.2byte	0x18c
+ 1328 030c BE000000 		.4byte	0xbe
+ 1329 0310 02       		.uleb128 0x2
+ 1330 0311 91       		.byte	0x91
+ 1331 0312 6C       		.sleb128 -20
+ 1332 0313 0F       		.uleb128 0xf
+ 1333 0314 75020000 		.4byte	.LASF82
+ 1334 0318 01       		.byte	0x1
+ 1335 0319 8C01     		.2byte	0x18c
+ 1336 031b 6B000000 		.4byte	0x6b
+ 1337 031f 02       		.uleb128 0x2
+ 1338 0320 91       		.byte	0x91
+ 1339 0321 6B       		.sleb128 -21
+ 1340 0322 11       		.uleb128 0x11
+ 1341 0323 FA000000 		.4byte	.LASF76
+ 1342 0327 01       		.byte	0x1
+ 1343 0328 8E01     		.2byte	0x18e
+ 1344 032a 6B000000 		.4byte	0x6b
+ 1345 032e 02       		.uleb128 0x2
+ 1346 032f 91       		.byte	0x91
+ 1347 0330 77       		.sleb128 -9
+ 1348 0331 00       		.byte	0
+ 1349 0332 0E       		.uleb128 0xe
+ 1350 0333 44030000 		.4byte	.LASF83
+ 1351 0337 01       		.byte	0x1
+ 1352 0338 A601     		.2byte	0x1a6
+ 1353 033a 00000000 		.4byte	.LFB40
+ 1354 033e 2C000000 		.4byte	.LFE40-.LFB40
+ 1355 0342 01       		.uleb128 0x1
+ 1356 0343 9C       		.byte	0x9c
+ 1357 0344 5B030000 		.4byte	0x35b
+ 1358 0348 11       		.uleb128 0x11
+ 1359 0349 01010000 		.4byte	.LASF84
+ 1360 034d 01       		.byte	0x1
+ 1361 034e A801     		.2byte	0x1a8
+ 1362 0350 6B000000 		.4byte	0x6b
+ 1363 0354 05       		.uleb128 0x5
+ 1364 0355 03       		.byte	0x3
+ 1365 0356 00000000 		.4byte	FirstTime.7215
+ 1366 035a 00       		.byte	0
+ 1367 035b 12       		.uleb128 0x12
+ 1368 035c A6060000 		.4byte	.LASF86
+ 1369 0360 01       		.byte	0x1
+ 1370 0361 C701     		.2byte	0x1c7
+ 1371 0363 00000000 		.4byte	.LFB41
+ 1372 0367 38000000 		.4byte	.LFE41-.LFB41
+ 1373 036b 01       		.uleb128 0x1
+ 1374 036c 9C       		.byte	0x9c
+ 1375 036d 12       		.uleb128 0x12
+ 1376 036e 68070000 		.4byte	.LASF87
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 34
+
+
+ 1377 0372 01       		.byte	0x1
+ 1378 0373 E201     		.2byte	0x1e2
+ 1379 0375 00000000 		.4byte	.LFB42
+ 1380 0379 38000000 		.4byte	.LFE42-.LFB42
+ 1381 037d 01       		.uleb128 0x1
+ 1382 037e 9C       		.byte	0x9c
+ 1383 037f 08       		.uleb128 0x8
+ 1384 0380 6B000000 		.4byte	0x6b
+ 1385 0384 8F030000 		.4byte	0x38f
+ 1386 0388 09       		.uleb128 0x9
+ 1387 0389 B7000000 		.4byte	0xb7
+ 1388 038d 03       		.byte	0x3
+ 1389 038e 00       		.byte	0
+ 1390 038f 13       		.uleb128 0x13
+ 1391 0390 9B060000 		.4byte	.LASF88
+ 1392 0394 03       		.byte	0x3
+ 1393 0395 7B       		.byte	0x7b
+ 1394 0396 7F030000 		.4byte	0x37f
+ 1395 039a 05       		.uleb128 0x5
+ 1396 039b 03       		.byte	0x3
+ 1397 039c 00000000 		.4byte	RGBledData
+ 1398 03a0 13       		.uleb128 0x13
+ 1399 03a1 6C060000 		.4byte	.LASF89
+ 1400 03a5 01       		.byte	0x1
+ 1401 03a6 3E       		.byte	0x3e
+ 1402 03a7 76000000 		.4byte	0x76
+ 1403 03ab 05       		.uleb128 0x5
+ 1404 03ac 03       		.byte	0x3
+ 1405 03ad 00000000 		.4byte	Input_Signal_Counter1_Count
+ 1406 03b1 13       		.uleb128 0x13
+ 1407 03b2 66010000 		.4byte	.LASF90
+ 1408 03b6 01       		.byte	0x1
+ 1409 03b7 3E       		.byte	0x3e
+ 1410 03b8 76000000 		.4byte	0x76
+ 1411 03bc 05       		.uleb128 0x5
+ 1412 03bd 03       		.byte	0x3
+ 1413 03be 00000000 		.4byte	Input_Signal_Counter2_Count
+ 1414 03c2 13       		.uleb128 0x13
+ 1415 03c3 C2040000 		.4byte	.LASF91
+ 1416 03c7 01       		.byte	0x1
+ 1417 03c8 3F       		.byte	0x3f
+ 1418 03c9 76000000 		.4byte	0x76
+ 1419 03cd 05       		.uleb128 0x5
+ 1420 03ce 03       		.byte	0x3
+ 1421 03cf 00000000 		.4byte	Ref_Clock_Counter1_Count
+ 1422 03d3 13       		.uleb128 0x13
+ 1423 03d4 2F010000 		.4byte	.LASF92
+ 1424 03d8 01       		.byte	0x1
+ 1425 03d9 3F       		.byte	0x3f
+ 1426 03da 76000000 		.4byte	0x76
+ 1427 03de 05       		.uleb128 0x5
+ 1428 03df 03       		.byte	0x3
+ 1429 03e0 00000000 		.4byte	Ref_Clock_Counter2_Count
+ 1430 03e4 13       		.uleb128 0x13
+ 1431 03e5 89040000 		.4byte	.LASF93
+ 1432 03e9 01       		.byte	0x1
+ 1433 03ea 42       		.byte	0x42
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 35
+
+
+ 1434 03eb 81000000 		.4byte	0x81
+ 1435 03ef 05       		.uleb128 0x5
+ 1436 03f0 03       		.byte	0x3
+ 1437 03f1 00000000 		.4byte	Input_Signal_Count
+ 1438 03f5 13       		.uleb128 0x13
+ 1439 03f6 5C030000 		.4byte	.LASF94
+ 1440 03fa 01       		.byte	0x1
+ 1441 03fb 42       		.byte	0x42
+ 1442 03fc 81000000 		.4byte	0x81
+ 1443 0400 05       		.uleb128 0x5
+ 1444 0401 03       		.byte	0x3
+ 1445 0402 00000000 		.4byte	Ref_Clock_Count
+ 1446 0406 13       		.uleb128 0x13
+ 1447 0407 BB010000 		.4byte	.LASF95
+ 1448 040b 01       		.byte	0x1
+ 1449 040c 45       		.byte	0x45
+ 1450 040d 81000000 		.4byte	0x81
+ 1451 0411 05       		.uleb128 0x5
+ 1452 0412 03       		.byte	0x3
+ 1453 0413 00000000 		.4byte	Freq_Integer
+ 1454 0417 13       		.uleb128 0x13
+ 1455 0418 ED070000 		.4byte	.LASF96
+ 1456 041c 01       		.byte	0x1
+ 1457 041d 46       		.byte	0x46
+ 1458 041e 76000000 		.4byte	0x76
+ 1459 0422 05       		.uleb128 0x5
+ 1460 0423 03       		.byte	0x3
+ 1461 0424 00000000 		.4byte	Freq_Decimal
+ 1462 0428 14       		.uleb128 0x14
+ 1463 0429 A5090000 		.4byte	.LASF97
+ 1464 042d 01       		.byte	0x1
+ 1465 042e 49       		.byte	0x49
+ 1466 042f 6B000000 		.4byte	0x6b
+ 1467 0433 13       		.uleb128 0x13
+ 1468 0434 F5060000 		.4byte	.LASF98
+ 1469 0438 01       		.byte	0x1
+ 1470 0439 4C       		.byte	0x4c
+ 1471 043a 6B000000 		.4byte	0x6b
+ 1472 043e 05       		.uleb128 0x5
+ 1473 043f 03       		.byte	0x3
+ 1474 0440 00000000 		.4byte	Input_Sig_Ctr_Capture
+ 1475 0444 13       		.uleb128 0x13
+ 1476 0445 D3010000 		.4byte	.LASF99
+ 1477 0449 01       		.byte	0x1
+ 1478 044a 4C       		.byte	0x4c
+ 1479 044b 6B000000 		.4byte	0x6b
+ 1480 044f 05       		.uleb128 0x5
+ 1481 0450 03       		.byte	0x3
+ 1482 0451 00000000 		.4byte	Ref_Clk_Ctr_Capture
+ 1483 0455 13       		.uleb128 0x13
+ 1484 0456 FA070000 		.4byte	.LASF100
+ 1485 045a 01       		.byte	0x1
+ 1486 045b 4F       		.byte	0x4f
+ 1487 045c 34020000 		.4byte	0x234
+ 1488 0460 05       		.uleb128 0x5
+ 1489 0461 03       		.byte	0x3
+ 1490 0462 00000000 		.4byte	Input_Frequency
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 36
+
+
+ 1491 0466 13       		.uleb128 0x13
+ 1492 0467 590A0000 		.4byte	.LASF101
+ 1493 046b 01       		.byte	0x1
+ 1494 046c 50       		.byte	0x50
+ 1495 046d 34020000 		.4byte	0x234
+ 1496 0471 05       		.uleb128 0x5
+ 1497 0472 03       		.byte	0x3
+ 1498 0473 00000000 		.4byte	InputCounter_ASCII
+ 1499 0477 13       		.uleb128 0x13
+ 1500 0478 CA030000 		.4byte	.LASF102
+ 1501 047c 01       		.byte	0x1
+ 1502 047d 51       		.byte	0x51
+ 1503 047e 34020000 		.4byte	0x234
+ 1504 0482 05       		.uleb128 0x5
+ 1505 0483 03       		.byte	0x3
+ 1506 0484 00000000 		.4byte	RefCounter_ASCII
+ 1507 0488 00       		.byte	0
+ 1508              		.section	.debug_abbrev,"",%progbits
+ 1509              	.Ldebug_abbrev0:
+ 1510 0000 01       		.uleb128 0x1
+ 1511 0001 11       		.uleb128 0x11
+ 1512 0002 01       		.byte	0x1
+ 1513 0003 25       		.uleb128 0x25
+ 1514 0004 0E       		.uleb128 0xe
+ 1515 0005 13       		.uleb128 0x13
+ 1516 0006 0B       		.uleb128 0xb
+ 1517 0007 03       		.uleb128 0x3
+ 1518 0008 0E       		.uleb128 0xe
+ 1519 0009 1B       		.uleb128 0x1b
+ 1520 000a 0E       		.uleb128 0xe
+ 1521 000b 55       		.uleb128 0x55
+ 1522 000c 17       		.uleb128 0x17
+ 1523 000d 11       		.uleb128 0x11
+ 1524 000e 01       		.uleb128 0x1
+ 1525 000f 10       		.uleb128 0x10
+ 1526 0010 17       		.uleb128 0x17
+ 1527 0011 00       		.byte	0
+ 1528 0012 00       		.byte	0
+ 1529 0013 02       		.uleb128 0x2
+ 1530 0014 24       		.uleb128 0x24
+ 1531 0015 00       		.byte	0
+ 1532 0016 0B       		.uleb128 0xb
+ 1533 0017 0B       		.uleb128 0xb
+ 1534 0018 3E       		.uleb128 0x3e
+ 1535 0019 0B       		.uleb128 0xb
+ 1536 001a 03       		.uleb128 0x3
+ 1537 001b 0E       		.uleb128 0xe
+ 1538 001c 00       		.byte	0
+ 1539 001d 00       		.byte	0
+ 1540 001e 03       		.uleb128 0x3
+ 1541 001f 24       		.uleb128 0x24
+ 1542 0020 00       		.byte	0
+ 1543 0021 0B       		.uleb128 0xb
+ 1544 0022 0B       		.uleb128 0xb
+ 1545 0023 3E       		.uleb128 0x3e
+ 1546 0024 0B       		.uleb128 0xb
+ 1547 0025 03       		.uleb128 0x3
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 37
+
+
+ 1548 0026 08       		.uleb128 0x8
+ 1549 0027 00       		.byte	0
+ 1550 0028 00       		.byte	0
+ 1551 0029 04       		.uleb128 0x4
+ 1552 002a 16       		.uleb128 0x16
+ 1553 002b 00       		.byte	0
+ 1554 002c 03       		.uleb128 0x3
+ 1555 002d 0E       		.uleb128 0xe
+ 1556 002e 3A       		.uleb128 0x3a
+ 1557 002f 0B       		.uleb128 0xb
+ 1558 0030 3B       		.uleb128 0x3b
+ 1559 0031 0B       		.uleb128 0xb
+ 1560 0032 49       		.uleb128 0x49
+ 1561 0033 13       		.uleb128 0x13
+ 1562 0034 00       		.byte	0
+ 1563 0035 00       		.byte	0
+ 1564 0036 05       		.uleb128 0x5
+ 1565 0037 0F       		.uleb128 0xf
+ 1566 0038 00       		.byte	0
+ 1567 0039 0B       		.uleb128 0xb
+ 1568 003a 0B       		.uleb128 0xb
+ 1569 003b 49       		.uleb128 0x49
+ 1570 003c 13       		.uleb128 0x13
+ 1571 003d 00       		.byte	0
+ 1572 003e 00       		.byte	0
+ 1573 003f 06       		.uleb128 0x6
+ 1574 0040 04       		.uleb128 0x4
+ 1575 0041 01       		.byte	0x1
+ 1576 0042 0B       		.uleb128 0xb
+ 1577 0043 0B       		.uleb128 0xb
+ 1578 0044 3A       		.uleb128 0x3a
+ 1579 0045 0B       		.uleb128 0xb
+ 1580 0046 3B       		.uleb128 0x3b
+ 1581 0047 0B       		.uleb128 0xb
+ 1582 0048 01       		.uleb128 0x1
+ 1583 0049 13       		.uleb128 0x13
+ 1584 004a 00       		.byte	0
+ 1585 004b 00       		.byte	0
+ 1586 004c 07       		.uleb128 0x7
+ 1587 004d 28       		.uleb128 0x28
+ 1588 004e 00       		.byte	0
+ 1589 004f 03       		.uleb128 0x3
+ 1590 0050 0E       		.uleb128 0xe
+ 1591 0051 1C       		.uleb128 0x1c
+ 1592 0052 0D       		.uleb128 0xd
+ 1593 0053 00       		.byte	0
+ 1594 0054 00       		.byte	0
+ 1595 0055 08       		.uleb128 0x8
+ 1596 0056 01       		.uleb128 0x1
+ 1597 0057 01       		.byte	0x1
+ 1598 0058 49       		.uleb128 0x49
+ 1599 0059 13       		.uleb128 0x13
+ 1600 005a 01       		.uleb128 0x1
+ 1601 005b 13       		.uleb128 0x13
+ 1602 005c 00       		.byte	0
+ 1603 005d 00       		.byte	0
+ 1604 005e 09       		.uleb128 0x9
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 38
+
+
+ 1605 005f 21       		.uleb128 0x21
+ 1606 0060 00       		.byte	0
+ 1607 0061 49       		.uleb128 0x49
+ 1608 0062 13       		.uleb128 0x13
+ 1609 0063 2F       		.uleb128 0x2f
+ 1610 0064 0B       		.uleb128 0xb
+ 1611 0065 00       		.byte	0
+ 1612 0066 00       		.byte	0
+ 1613 0067 0A       		.uleb128 0xa
+ 1614 0068 2E       		.uleb128 0x2e
+ 1615 0069 00       		.byte	0
+ 1616 006a 3F       		.uleb128 0x3f
+ 1617 006b 19       		.uleb128 0x19
+ 1618 006c 03       		.uleb128 0x3
+ 1619 006d 0E       		.uleb128 0xe
+ 1620 006e 3A       		.uleb128 0x3a
+ 1621 006f 0B       		.uleb128 0xb
+ 1622 0070 3B       		.uleb128 0x3b
+ 1623 0071 0B       		.uleb128 0xb
+ 1624 0072 27       		.uleb128 0x27
+ 1625 0073 19       		.uleb128 0x19
+ 1626 0074 11       		.uleb128 0x11
+ 1627 0075 01       		.uleb128 0x1
+ 1628 0076 12       		.uleb128 0x12
+ 1629 0077 06       		.uleb128 0x6
+ 1630 0078 40       		.uleb128 0x40
+ 1631 0079 18       		.uleb128 0x18
+ 1632 007a 9642     		.uleb128 0x2116
+ 1633 007c 19       		.uleb128 0x19
+ 1634 007d 00       		.byte	0
+ 1635 007e 00       		.byte	0
+ 1636 007f 0B       		.uleb128 0xb
+ 1637 0080 2E       		.uleb128 0x2e
+ 1638 0081 01       		.byte	0x1
+ 1639 0082 3F       		.uleb128 0x3f
+ 1640 0083 19       		.uleb128 0x19
+ 1641 0084 03       		.uleb128 0x3
+ 1642 0085 0E       		.uleb128 0xe
+ 1643 0086 3A       		.uleb128 0x3a
+ 1644 0087 0B       		.uleb128 0xb
+ 1645 0088 3B       		.uleb128 0x3b
+ 1646 0089 0B       		.uleb128 0xb
+ 1647 008a 27       		.uleb128 0x27
+ 1648 008b 19       		.uleb128 0x19
+ 1649 008c 11       		.uleb128 0x11
+ 1650 008d 01       		.uleb128 0x1
+ 1651 008e 12       		.uleb128 0x12
+ 1652 008f 06       		.uleb128 0x6
+ 1653 0090 40       		.uleb128 0x40
+ 1654 0091 18       		.uleb128 0x18
+ 1655 0092 9642     		.uleb128 0x2116
+ 1656 0094 19       		.uleb128 0x19
+ 1657 0095 01       		.uleb128 0x1
+ 1658 0096 13       		.uleb128 0x13
+ 1659 0097 00       		.byte	0
+ 1660 0098 00       		.byte	0
+ 1661 0099 0C       		.uleb128 0xc
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 39
+
+
+ 1662 009a 34       		.uleb128 0x34
+ 1663 009b 00       		.byte	0
+ 1664 009c 03       		.uleb128 0x3
+ 1665 009d 0E       		.uleb128 0xe
+ 1666 009e 3A       		.uleb128 0x3a
+ 1667 009f 0B       		.uleb128 0xb
+ 1668 00a0 3B       		.uleb128 0x3b
+ 1669 00a1 0B       		.uleb128 0xb
+ 1670 00a2 49       		.uleb128 0x49
+ 1671 00a3 13       		.uleb128 0x13
+ 1672 00a4 02       		.uleb128 0x2
+ 1673 00a5 18       		.uleb128 0x18
+ 1674 00a6 00       		.byte	0
+ 1675 00a7 00       		.byte	0
+ 1676 00a8 0D       		.uleb128 0xd
+ 1677 00a9 05       		.uleb128 0x5
+ 1678 00aa 00       		.byte	0
+ 1679 00ab 03       		.uleb128 0x3
+ 1680 00ac 0E       		.uleb128 0xe
+ 1681 00ad 3A       		.uleb128 0x3a
+ 1682 00ae 0B       		.uleb128 0xb
+ 1683 00af 3B       		.uleb128 0x3b
+ 1684 00b0 0B       		.uleb128 0xb
+ 1685 00b1 49       		.uleb128 0x49
+ 1686 00b2 13       		.uleb128 0x13
+ 1687 00b3 02       		.uleb128 0x2
+ 1688 00b4 18       		.uleb128 0x18
+ 1689 00b5 00       		.byte	0
+ 1690 00b6 00       		.byte	0
+ 1691 00b7 0E       		.uleb128 0xe
+ 1692 00b8 2E       		.uleb128 0x2e
+ 1693 00b9 01       		.byte	0x1
+ 1694 00ba 3F       		.uleb128 0x3f
+ 1695 00bb 19       		.uleb128 0x19
+ 1696 00bc 03       		.uleb128 0x3
+ 1697 00bd 0E       		.uleb128 0xe
+ 1698 00be 3A       		.uleb128 0x3a
+ 1699 00bf 0B       		.uleb128 0xb
+ 1700 00c0 3B       		.uleb128 0x3b
+ 1701 00c1 05       		.uleb128 0x5
+ 1702 00c2 27       		.uleb128 0x27
+ 1703 00c3 19       		.uleb128 0x19
+ 1704 00c4 11       		.uleb128 0x11
+ 1705 00c5 01       		.uleb128 0x1
+ 1706 00c6 12       		.uleb128 0x12
+ 1707 00c7 06       		.uleb128 0x6
+ 1708 00c8 40       		.uleb128 0x40
+ 1709 00c9 18       		.uleb128 0x18
+ 1710 00ca 9642     		.uleb128 0x2116
+ 1711 00cc 19       		.uleb128 0x19
+ 1712 00cd 01       		.uleb128 0x1
+ 1713 00ce 13       		.uleb128 0x13
+ 1714 00cf 00       		.byte	0
+ 1715 00d0 00       		.byte	0
+ 1716 00d1 0F       		.uleb128 0xf
+ 1717 00d2 05       		.uleb128 0x5
+ 1718 00d3 00       		.byte	0
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 40
+
+
+ 1719 00d4 03       		.uleb128 0x3
+ 1720 00d5 0E       		.uleb128 0xe
+ 1721 00d6 3A       		.uleb128 0x3a
+ 1722 00d7 0B       		.uleb128 0xb
+ 1723 00d8 3B       		.uleb128 0x3b
+ 1724 00d9 05       		.uleb128 0x5
+ 1725 00da 49       		.uleb128 0x49
+ 1726 00db 13       		.uleb128 0x13
+ 1727 00dc 02       		.uleb128 0x2
+ 1728 00dd 18       		.uleb128 0x18
+ 1729 00de 00       		.byte	0
+ 1730 00df 00       		.byte	0
+ 1731 00e0 10       		.uleb128 0x10
+ 1732 00e1 2E       		.uleb128 0x2e
+ 1733 00e2 01       		.byte	0x1
+ 1734 00e3 3F       		.uleb128 0x3f
+ 1735 00e4 19       		.uleb128 0x19
+ 1736 00e5 03       		.uleb128 0x3
+ 1737 00e6 0E       		.uleb128 0xe
+ 1738 00e7 3A       		.uleb128 0x3a
+ 1739 00e8 0B       		.uleb128 0xb
+ 1740 00e9 3B       		.uleb128 0x3b
+ 1741 00ea 05       		.uleb128 0x5
+ 1742 00eb 27       		.uleb128 0x27
+ 1743 00ec 19       		.uleb128 0x19
+ 1744 00ed 11       		.uleb128 0x11
+ 1745 00ee 01       		.uleb128 0x1
+ 1746 00ef 12       		.uleb128 0x12
+ 1747 00f0 06       		.uleb128 0x6
+ 1748 00f1 40       		.uleb128 0x40
+ 1749 00f2 18       		.uleb128 0x18
+ 1750 00f3 9742     		.uleb128 0x2117
+ 1751 00f5 19       		.uleb128 0x19
+ 1752 00f6 01       		.uleb128 0x1
+ 1753 00f7 13       		.uleb128 0x13
+ 1754 00f8 00       		.byte	0
+ 1755 00f9 00       		.byte	0
+ 1756 00fa 11       		.uleb128 0x11
+ 1757 00fb 34       		.uleb128 0x34
+ 1758 00fc 00       		.byte	0
+ 1759 00fd 03       		.uleb128 0x3
+ 1760 00fe 0E       		.uleb128 0xe
+ 1761 00ff 3A       		.uleb128 0x3a
+ 1762 0100 0B       		.uleb128 0xb
+ 1763 0101 3B       		.uleb128 0x3b
+ 1764 0102 05       		.uleb128 0x5
+ 1765 0103 49       		.uleb128 0x49
+ 1766 0104 13       		.uleb128 0x13
+ 1767 0105 02       		.uleb128 0x2
+ 1768 0106 18       		.uleb128 0x18
+ 1769 0107 00       		.byte	0
+ 1770 0108 00       		.byte	0
+ 1771 0109 12       		.uleb128 0x12
+ 1772 010a 2E       		.uleb128 0x2e
+ 1773 010b 00       		.byte	0
+ 1774 010c 3F       		.uleb128 0x3f
+ 1775 010d 19       		.uleb128 0x19
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 41
+
+
+ 1776 010e 03       		.uleb128 0x3
+ 1777 010f 0E       		.uleb128 0xe
+ 1778 0110 3A       		.uleb128 0x3a
+ 1779 0111 0B       		.uleb128 0xb
+ 1780 0112 3B       		.uleb128 0x3b
+ 1781 0113 05       		.uleb128 0x5
+ 1782 0114 27       		.uleb128 0x27
+ 1783 0115 19       		.uleb128 0x19
+ 1784 0116 11       		.uleb128 0x11
+ 1785 0117 01       		.uleb128 0x1
+ 1786 0118 12       		.uleb128 0x12
+ 1787 0119 06       		.uleb128 0x6
+ 1788 011a 40       		.uleb128 0x40
+ 1789 011b 18       		.uleb128 0x18
+ 1790 011c 9642     		.uleb128 0x2116
+ 1791 011e 19       		.uleb128 0x19
+ 1792 011f 00       		.byte	0
+ 1793 0120 00       		.byte	0
+ 1794 0121 13       		.uleb128 0x13
+ 1795 0122 34       		.uleb128 0x34
+ 1796 0123 00       		.byte	0
+ 1797 0124 03       		.uleb128 0x3
+ 1798 0125 0E       		.uleb128 0xe
+ 1799 0126 3A       		.uleb128 0x3a
+ 1800 0127 0B       		.uleb128 0xb
+ 1801 0128 3B       		.uleb128 0x3b
+ 1802 0129 0B       		.uleb128 0xb
+ 1803 012a 49       		.uleb128 0x49
+ 1804 012b 13       		.uleb128 0x13
+ 1805 012c 3F       		.uleb128 0x3f
+ 1806 012d 19       		.uleb128 0x19
+ 1807 012e 02       		.uleb128 0x2
+ 1808 012f 18       		.uleb128 0x18
+ 1809 0130 00       		.byte	0
+ 1810 0131 00       		.byte	0
+ 1811 0132 14       		.uleb128 0x14
+ 1812 0133 34       		.uleb128 0x34
+ 1813 0134 00       		.byte	0
+ 1814 0135 03       		.uleb128 0x3
+ 1815 0136 0E       		.uleb128 0xe
+ 1816 0137 3A       		.uleb128 0x3a
+ 1817 0138 0B       		.uleb128 0xb
+ 1818 0139 3B       		.uleb128 0x3b
+ 1819 013a 0B       		.uleb128 0xb
+ 1820 013b 49       		.uleb128 0x49
+ 1821 013c 13       		.uleb128 0x13
+ 1822 013d 3F       		.uleb128 0x3f
+ 1823 013e 19       		.uleb128 0x19
+ 1824 013f 3C       		.uleb128 0x3c
+ 1825 0140 19       		.uleb128 0x19
+ 1826 0141 00       		.byte	0
+ 1827 0142 00       		.byte	0
+ 1828 0143 00       		.byte	0
+ 1829              		.section	.debug_aranges,"",%progbits
+ 1830 0000 54000000 		.4byte	0x54
+ 1831 0004 0200     		.2byte	0x2
+ 1832 0006 00000000 		.4byte	.Ldebug_info0
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 42
+
+
+ 1833 000a 04       		.byte	0x4
+ 1834 000b 00       		.byte	0
+ 1835 000c 0000     		.2byte	0
+ 1836 000e 0000     		.2byte	0
+ 1837 0010 00000000 		.4byte	.LFB35
+ 1838 0014 48000000 		.4byte	.LFE35-.LFB35
+ 1839 0018 00000000 		.4byte	.LFB36
+ 1840 001c 24010000 		.4byte	.LFE36-.LFB36
+ 1841 0020 00000000 		.4byte	.LFB37
+ 1842 0024 9C020000 		.4byte	.LFE37-.LFB37
+ 1843 0028 00000000 		.4byte	.LFB38
+ 1844 002c 4A000000 		.4byte	.LFE38-.LFB38
+ 1845 0030 00000000 		.4byte	.LFB39
+ 1846 0034 4E000000 		.4byte	.LFE39-.LFB39
+ 1847 0038 00000000 		.4byte	.LFB40
+ 1848 003c 2C000000 		.4byte	.LFE40-.LFB40
+ 1849 0040 00000000 		.4byte	.LFB41
+ 1850 0044 38000000 		.4byte	.LFE41-.LFB41
+ 1851 0048 00000000 		.4byte	.LFB42
+ 1852 004c 38000000 		.4byte	.LFE42-.LFB42
+ 1853 0050 00000000 		.4byte	0
+ 1854 0054 00000000 		.4byte	0
+ 1855              		.section	.debug_ranges,"",%progbits
+ 1856              	.Ldebug_ranges0:
+ 1857 0000 00000000 		.4byte	.LFB35
+ 1858 0004 48000000 		.4byte	.LFE35
+ 1859 0008 00000000 		.4byte	.LFB36
+ 1860 000c 24010000 		.4byte	.LFE36
+ 1861 0010 00000000 		.4byte	.LFB37
+ 1862 0014 9C020000 		.4byte	.LFE37
+ 1863 0018 00000000 		.4byte	.LFB38
+ 1864 001c 4A000000 		.4byte	.LFE38
+ 1865 0020 00000000 		.4byte	.LFB39
+ 1866 0024 4E000000 		.4byte	.LFE39
+ 1867 0028 00000000 		.4byte	.LFB40
+ 1868 002c 2C000000 		.4byte	.LFE40
+ 1869 0030 00000000 		.4byte	.LFB41
+ 1870 0034 38000000 		.4byte	.LFE41
+ 1871 0038 00000000 		.4byte	.LFB42
+ 1872 003c 38000000 		.4byte	.LFE42
+ 1873 0040 00000000 		.4byte	0
+ 1874 0044 00000000 		.4byte	0
+ 1875              		.section	.debug_line,"",%progbits
+ 1876              	.Ldebug_line0:
+ 1877 0000 D3010000 		.section	.debug_str,"MS",%progbits,1
+ 1877      02007700 
+ 1877      00000201 
+ 1877      FB0E0D00 
+ 1877      01010101 
+ 1878              	.LASF105:
+ 1879 0000 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\test\\Frequency_Measurem"
+ 1879      73657273 
+ 1879      5C41646D 
+ 1879      696E5C44 
+ 1879      65736B74 
+ 1880 002e 656E745F 		.ascii	"ent_Using_PSoC4_BLE\\Frequency_Measurement_Using_PS"
+ 1880      5573696E 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 43
+
+
+ 1880      675F5053 
+ 1880      6F43345F 
+ 1880      424C455C 
+ 1881 0060 6F43345F 		.ascii	"oC4_BLE.cydsn\000"
+ 1881      424C452E 
+ 1881      63796473 
+ 1881      6E00
+ 1882              	.LASF26:
+ 1883 006e 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_ENTRY_REQUEST\000"
+ 1883      455F4556 
+ 1883      545F4741 
+ 1883      505F5041 
+ 1883      53534B45 
+ 1884              	.LASF34:
+ 1885 0092 4359424C 		.ascii	"CYBLE_EVT_GAP_CONNECTION_UPDATE_COMPLETE\000"
+ 1885      455F4556 
+ 1885      545F4741 
+ 1885      505F434F 
+ 1885      4E4E4543 
+ 1886              	.LASF79:
+ 1887 00bb 536F7572 		.ascii	"SourceValue\000"
+ 1887      63655661 
+ 1887      6C756500 
+ 1888              	.LASF37:
+ 1889 00c7 4359424C 		.ascii	"CYBLE_EVT_GATTC_ERROR_RSP\000"
+ 1889      455F4556 
+ 1889      545F4741 
+ 1889      5454435F 
+ 1889      4552524F 
+ 1890              	.LASF13:
+ 1891 00e1 666C6F61 		.ascii	"float32\000"
+ 1891      74333200 
+ 1892              	.LASF77:
+ 1893 00e9 436F6E76 		.ascii	"Convert_HextoDec\000"
+ 1893      6572745F 
+ 1893      48657874 
+ 1893      6F446563 
+ 1893      00
+ 1894              	.LASF76:
+ 1895 00fa 6C6F6F70 		.ascii	"loopNo\000"
+ 1895      4E6F00
+ 1896              	.LASF84:
+ 1897 0101 46697273 		.ascii	"FirstTime\000"
+ 1897      7454696D 
+ 1897      6500
+ 1898              	.LASF2:
+ 1899 010b 73686F72 		.ascii	"short int\000"
+ 1899      7420696E 
+ 1899      7400
+ 1900              	.LASF29:
+ 1901 0115 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_FAILED\000"
+ 1901      455F4556 
+ 1901      545F4741 
+ 1901      505F4155 
+ 1901      54485F46 
+ 1902              	.LASF92:
+ 1903 012f 5265665F 		.ascii	"Ref_Clock_Counter2_Count\000"
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 44
+
+
+ 1903      436C6F63 
+ 1903      6B5F436F 
+ 1903      756E7465 
+ 1903      72325F43 
+ 1904              	.LASF17:
+ 1905 0148 73697A65 		.ascii	"sizetype\000"
+ 1905      74797065 
+ 1905      00
+ 1906              	.LASF22:
+ 1907 0151 4359424C 		.ascii	"CYBLE_EVT_HCI_STATUS\000"
+ 1907      455F4556 
+ 1907      545F4843 
+ 1907      495F5354 
+ 1907      41545553 
+ 1908              	.LASF90:
+ 1909 0166 496E7075 		.ascii	"Input_Signal_Counter2_Count\000"
+ 1909      745F5369 
+ 1909      676E616C 
+ 1909      5F436F75 
+ 1909      6E746572 
+ 1910              	.LASF85:
+ 1911 0182 496E6974 		.ascii	"Initialize_Freq_Meas_System\000"
+ 1911      69616C69 
+ 1911      7A655F46 
+ 1911      7265715F 
+ 1911      4D656173 
+ 1912              	.LASF33:
+ 1913 019e 4359424C 		.ascii	"CYBLE_EVT_GAP_ENCRYPT_CHANGE\000"
+ 1913      455F4556 
+ 1913      545F4741 
+ 1913      505F454E 
+ 1913      43525950 
+ 1914              	.LASF95:
+ 1915 01bb 46726571 		.ascii	"Freq_Integer\000"
+ 1915      5F496E74 
+ 1915      65676572 
+ 1915      00
+ 1916              	.LASF72:
+ 1917 01c8 436F756E 		.ascii	"CountRatio\000"
+ 1917      74526174 
+ 1917      696F00
+ 1918              	.LASF99:
+ 1919 01d3 5265665F 		.ascii	"Ref_Clk_Ctr_Capture\000"
+ 1919      436C6B5F 
+ 1919      4374725F 
+ 1919      43617074 
+ 1919      75726500 
+ 1920              	.LASF43:
+ 1921 01e7 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_TYPE_RSP\000"
+ 1921      455F4556 
+ 1921      545F4741 
+ 1921      5454435F 
+ 1921      52454144 
+ 1922              	.LASF70:
+ 1923 0208 4359424C 		.ascii	"CYBLE_EVT_PENDING_FLASH_WRITE\000"
+ 1923      455F4556 
+ 1923      545F5045 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 45
+
+
+ 1923      4E44494E 
+ 1923      475F464C 
+ 1924              	.LASF19:
+ 1925 0226 4359424C 		.ascii	"CYBLE_EVT_STACK_ON\000"
+ 1925      455F4556 
+ 1925      545F5354 
+ 1925      41434B5F 
+ 1925      4F4E00
+ 1926              	.LASF40:
+ 1927 0239 4359424C 		.ascii	"CYBLE_EVT_GATTS_XCNHG_MTU_REQ\000"
+ 1927      455F4556 
+ 1927      545F4741 
+ 1927      5454535F 
+ 1927      58434E48 
+ 1928              	.LASF39:
+ 1929 0257 4359424C 		.ascii	"CYBLE_EVT_GATT_DISCONNECT_IND\000"
+ 1929      455F4556 
+ 1929      545F4741 
+ 1929      54545F44 
+ 1929      4953434F 
+ 1930              	.LASF82:
+ 1931 0275 6E6F4F66 		.ascii	"noOfBytes\000"
+ 1931      42797465 
+ 1931      7300
+ 1932              	.LASF78:
+ 1933 027f 466F726D 		.ascii	"FormatType\000"
+ 1933      61745479 
+ 1933      706500
+ 1934              	.LASF36:
+ 1935 028a 4359424C 		.ascii	"CYBLE_EVT_GAP_KEYINFO_EXCHNGE_CMPLT\000"
+ 1935      455F4556 
+ 1935      545F4741 
+ 1935      505F4B45 
+ 1935      59494E46 
+ 1936              	.LASF48:
+ 1937 02ae 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_MULTI_RSP\000"
+ 1937      455F4556 
+ 1937      545F4741 
+ 1937      5454435F 
+ 1937      52454144 
+ 1938              	.LASF57:
+ 1939 02cd 4359424C 		.ascii	"CYBLE_EVT_GATTS_HANDLE_VALUE_CNF\000"
+ 1939      455F4556 
+ 1939      545F4741 
+ 1939      5454535F 
+ 1939      48414E44 
+ 1940              	.LASF18:
+ 1941 02ee 4359424C 		.ascii	"CYBLE_EVT_HOST_INVALID\000"
+ 1941      455F4556 
+ 1941      545F484F 
+ 1941      53545F49 
+ 1941      4E56414C 
+ 1942              	.LASF62:
+ 1943 0305 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_IND\000"
+ 1943      455F4556 
+ 1943      545F4C32 
+ 1943      4341505F 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 46
+
+
+ 1943      43424643 
+ 1944              	.LASF65:
+ 1945 0323 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_CNF\000"
+ 1945      455F4556 
+ 1945      545F4C32 
+ 1945      4341505F 
+ 1945      43424643 
+ 1946              	.LASF83:
+ 1947 0344 50574D5F 		.ascii	"PWM_2s_InterruptHandler\000"
+ 1947      32735F49 
+ 1947      6E746572 
+ 1947      72757074 
+ 1947      48616E64 
+ 1948              	.LASF94:
+ 1949 035c 5265665F 		.ascii	"Ref_Clock_Count\000"
+ 1949      436C6F63 
+ 1949      6B5F436F 
+ 1949      756E7400 
+ 1950              	.LASF14:
+ 1951 036c 666C6F61 		.ascii	"float\000"
+ 1951      7400
+ 1952              	.LASF46:
+ 1953 0372 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_RSP\000"
+ 1953      455F4556 
+ 1953      545F4741 
+ 1953      5454435F 
+ 1953      52454144 
+ 1954              	.LASF50:
+ 1955 038b 4359424C 		.ascii	"CYBLE_EVT_GATTC_WRITE_RSP\000"
+ 1955      455F4556 
+ 1955      545F4741 
+ 1955      5454435F 
+ 1955      57524954 
+ 1956              	.LASF6:
+ 1957 03a5 6C6F6E67 		.ascii	"long long int\000"
+ 1957      206C6F6E 
+ 1957      6720696E 
+ 1957      7400
+ 1958              	.LASF7:
+ 1959 03b3 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1959      206C6F6E 
+ 1959      6720756E 
+ 1959      7369676E 
+ 1959      65642069 
+ 1960              	.LASF102:
+ 1961 03ca 52656643 		.ascii	"RefCounter_ASCII\000"
+ 1961      6F756E74 
+ 1961      65725F41 
+ 1961      53434949 
+ 1961      00
+ 1962              	.LASF4:
+ 1963 03db 6C6F6E67 		.ascii	"long int\000"
+ 1963      20696E74 
+ 1963      00
+ 1964              	.LASF56:
+ 1965 03e4 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_IND\000"
+ 1965      455F4556 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 47
+
+
+ 1965      545F4741 
+ 1965      5454435F 
+ 1965      48414E44 
+ 1966              	.LASF31:
+ 1967 0405 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_CONNECTED\000"
+ 1967      455F4556 
+ 1967      545F4741 
+ 1967      505F4445 
+ 1967      56494345 
+ 1968              	.LASF30:
+ 1969 0424 4359424C 		.ascii	"CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP\000"
+ 1969      455F4556 
+ 1969      545F4741 
+ 1969      50505F41 
+ 1969      44564552 
+ 1970              	.LASF55:
+ 1971 044c 4359424C 		.ascii	"CYBLE_EVT_GATTC_HANDLE_VALUE_NTF\000"
+ 1971      455F4556 
+ 1971      545F4741 
+ 1971      5454435F 
+ 1971      48414E44 
+ 1972              	.LASF23:
+ 1973 046d 4359424C 		.ascii	"CYBLE_EVT_STACK_BUSY_STATUS\000"
+ 1973      455F4556 
+ 1973      545F5354 
+ 1973      41434B5F 
+ 1973      42555359 
+ 1974              	.LASF93:
+ 1975 0489 496E7075 		.ascii	"Input_Signal_Count\000"
+ 1975      745F5369 
+ 1975      676E616C 
+ 1975      5F436F75 
+ 1975      6E7400
+ 1976              	.LASF27:
+ 1977 049c 4359424C 		.ascii	"CYBLE_EVT_GAP_PASSKEY_DISPLAY_REQUEST\000"
+ 1977      455F4556 
+ 1977      545F4741 
+ 1977      505F5041 
+ 1977      53534B45 
+ 1978              	.LASF91:
+ 1979 04c2 5265665F 		.ascii	"Ref_Clock_Counter1_Count\000"
+ 1979      436C6F63 
+ 1979      6B5F436F 
+ 1979      756E7465 
+ 1979      72315F43 
+ 1980              	.LASF63:
+ 1981 04db 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_CONN_CNF\000"
+ 1981      455F4556 
+ 1981      545F4C32 
+ 1981      4341505F 
+ 1981      43424643 
+ 1982              	.LASF71:
+ 1983 04f9 4359424C 		.ascii	"CYBLE_EVT_MAX\000"
+ 1983      455F4556 
+ 1983      545F4D41 
+ 1983      5800
+ 1984              	.LASF9:
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 48
+
+
+ 1985 0507 75696E74 		.ascii	"uint8\000"
+ 1985      3800
+ 1986              	.LASF59:
+ 1987 050d 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_REQ\000"
+ 1987      455F4556 
+ 1987      545F4C32 
+ 1987      4341505F 
+ 1987      434F4E4E 
+ 1988              	.LASF1:
+ 1989 0533 756E7369 		.ascii	"unsigned char\000"
+ 1989      676E6564 
+ 1989      20636861 
+ 1989      7200
+ 1990              	.LASF52:
+ 1991 0541 4359424C 		.ascii	"CYBLE_EVT_GATTS_PREP_WRITE_REQ\000"
+ 1991      455F4556 
+ 1991      545F4741 
+ 1991      5454535F 
+ 1991      50524550 
+ 1992              	.LASF44:
+ 1993 0560 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_INFO_RSP\000"
+ 1993      455F4556 
+ 1993      545F4741 
+ 1993      5454435F 
+ 1993      46494E44 
+ 1994              	.LASF0:
+ 1995 057e 7369676E 		.ascii	"signed char\000"
+ 1995      65642063 
+ 1995      68617200 
+ 1996              	.LASF49:
+ 1997 058a 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_REQ\000"
+ 1997      455F4556 
+ 1997      545F4741 
+ 1997      5454535F 
+ 1997      57524954 
+ 1998              	.LASF45:
+ 1999 05a4 4359424C 		.ascii	"CYBLE_EVT_GATTC_FIND_BY_TYPE_VALUE_RSP\000"
+ 1999      455F4556 
+ 1999      545F4741 
+ 1999      5454435F 
+ 1999      46494E44 
+ 2000              	.LASF28:
+ 2001 05cb 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_COMPLETE\000"
+ 2001      455F4556 
+ 2001      545F4741 
+ 2001      505F4155 
+ 2001      54485F43 
+ 2002              	.LASF8:
+ 2003 05e7 756E7369 		.ascii	"unsigned int\000"
+ 2003      676E6564 
+ 2003      20696E74 
+ 2003      00
+ 2004              	.LASF38:
+ 2005 05f4 4359424C 		.ascii	"CYBLE_EVT_GATT_CONNECT_IND\000"
+ 2005      455F4556 
+ 2005      545F4741 
+ 2005      54545F43 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 49
+
+
+ 2005      4F4E4E45 
+ 2006              	.LASF5:
+ 2007 060f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2007      20756E73 
+ 2007      69676E65 
+ 2007      6420696E 
+ 2007      7400
+ 2008              	.LASF25:
+ 2009 0621 4359424C 		.ascii	"CYBLE_EVT_GAP_AUTH_REQ\000"
+ 2009      455F4556 
+ 2009      545F4741 
+ 2009      505F4155 
+ 2009      54485F52 
+ 2010              	.LASF64:
+ 2011 0638 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DISCONN_IND\000"
+ 2011      455F4556 
+ 2011      545F4C32 
+ 2011      4341505F 
+ 2011      43424643 
+ 2012              	.LASF80:
+ 2013 0659 44657374 		.ascii	"DestinationAddress\000"
+ 2013      696E6174 
+ 2013      696F6E41 
+ 2013      64647265 
+ 2013      737300
+ 2014              	.LASF89:
+ 2015 066c 496E7075 		.ascii	"Input_Signal_Counter1_Count\000"
+ 2015      745F5369 
+ 2015      676E616C 
+ 2015      5F436F75 
+ 2015      6E746572 
+ 2016              	.LASF3:
+ 2017 0688 73686F72 		.ascii	"short unsigned int\000"
+ 2017      7420756E 
+ 2017      7369676E 
+ 2017      65642069 
+ 2017      6E7400
+ 2018              	.LASF88:
+ 2019 069b 5247426C 		.ascii	"RGBledData\000"
+ 2019      65644461 
+ 2019      746100
+ 2020              	.LASF86:
+ 2021 06a6 496E7075 		.ascii	"Input_Sig_Ctr_InterruptHandler\000"
+ 2021      745F5369 
+ 2021      675F4374 
+ 2021      725F496E 
+ 2021      74657272 
+ 2022              	.LASF73:
+ 2023 06c5 46726571 		.ascii	"Frequency_Temp\000"
+ 2023      75656E63 
+ 2023      795F5465 
+ 2023      6D7000
+ 2024              	.LASF16:
+ 2025 06d4 63686172 		.ascii	"char\000"
+ 2025      00
+ 2026              	.LASF61:
+ 2027 06d9 4359424C 		.ascii	"CYBLE_EVT_L2CAP_COMMAND_REJ\000"
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 50
+
+
+ 2027      455F4556 
+ 2027      545F4C32 
+ 2027      4341505F 
+ 2027      434F4D4D 
+ 2028              	.LASF98:
+ 2029 06f5 496E7075 		.ascii	"Input_Sig_Ctr_Capture\000"
+ 2029      745F5369 
+ 2029      675F4374 
+ 2029      725F4361 
+ 2029      70747572 
+ 2030              	.LASF10:
+ 2031 070b 75696E74 		.ascii	"uint16\000"
+ 2031      313600
+ 2032              	.LASF47:
+ 2033 0712 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BLOB_RSP\000"
+ 2033      455F4556 
+ 2033      545F4741 
+ 2033      5454435F 
+ 2033      52454144 
+ 2034              	.LASF54:
+ 2035 0730 4359424C 		.ascii	"CYBLE_EVT_GATTC_EXEC_WRITE_RSP\000"
+ 2035      455F4556 
+ 2035      545F4741 
+ 2035      5454435F 
+ 2035      45584543 
+ 2036              	.LASF11:
+ 2037 074f 75696E74 		.ascii	"uint32\000"
+ 2037      333200
+ 2038              	.LASF74:
+ 2039 0756 436F6D70 		.ascii	"Compute_Frequency\000"
+ 2039      7574655F 
+ 2039      46726571 
+ 2039      75656E63 
+ 2039      7900
+ 2040              	.LASF87:
+ 2041 0768 5265665F 		.ascii	"Ref_Clk_Ctr_InterruptHandler\000"
+ 2041      436C6B5F 
+ 2041      4374725F 
+ 2041      496E7465 
+ 2041      72727570 
+ 2042              	.LASF67:
+ 2043 0785 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_RX_CREDIT_IND\000"
+ 2043      455F4556 
+ 2043      545F4C32 
+ 2043      4341505F 
+ 2043      43424643 
+ 2044              	.LASF12:
+ 2045 07a8 696E7433 		.ascii	"int32\000"
+ 2045      3200
+ 2046              	.LASF15:
+ 2047 07ae 646F7562 		.ascii	"double\000"
+ 2047      6C6500
+ 2048              	.LASF104:
+ 2049 07b5 2E5C4672 		.ascii	".\\FrequencyCounter.c\000"
+ 2049      65717565 
+ 2049      6E637943 
+ 2049      6F756E74 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 51
+
+
+ 2049      65722E63 
+ 2050              	.LASF68:
+ 2051 07ca 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_TX_CREDIT_IND\000"
+ 2051      455F4556 
+ 2051      545F4C32 
+ 2051      4341505F 
+ 2051      43424643 
+ 2052              	.LASF96:
+ 2053 07ed 46726571 		.ascii	"Freq_Decimal\000"
+ 2053      5F446563 
+ 2053      696D616C 
+ 2053      00
+ 2054              	.LASF100:
+ 2055 07fa 496E7075 		.ascii	"Input_Frequency\000"
+ 2055      745F4672 
+ 2055      65717565 
+ 2055      6E637900 
+ 2056              	.LASF21:
+ 2057 080a 4359424C 		.ascii	"CYBLE_EVT_HARDWARE_ERROR\000"
+ 2057      455F4556 
+ 2057      545F4841 
+ 2057      52445741 
+ 2057      52455F45 
+ 2058              	.LASF66:
+ 2059 0823 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_READ\000"
+ 2059      455F4556 
+ 2059      545F4C32 
+ 2059      4341505F 
+ 2059      43424643 
+ 2060              	.LASF60:
+ 2061 0842 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CONN_PARAM_UPDATE_RSP\000"
+ 2061      455F4556 
+ 2061      545F4C32 
+ 2061      4341505F 
+ 2061      434F4E4E 
+ 2062              	.LASF24:
+ 2063 0868 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_PROGRESS_RESULT\000"
+ 2063      455F4556 
+ 2063      545F4741 
+ 2063      50435F53 
+ 2063      43414E5F 
+ 2064              	.LASF42:
+ 2065 088c 4359424C 		.ascii	"CYBLE_EVT_GATTC_READ_BY_GROUP_TYPE_RSP\000"
+ 2065      455F4556 
+ 2065      545F4741 
+ 2065      5454435F 
+ 2065      52454144 
+ 2066              	.LASF51:
+ 2067 08b3 4359424C 		.ascii	"CYBLE_EVT_GATTS_WRITE_CMD_REQ\000"
+ 2067      455F4556 
+ 2067      545F4741 
+ 2067      5454535F 
+ 2067      57524954 
+ 2068              	.LASF41:
+ 2069 08d1 4359424C 		.ascii	"CYBLE_EVT_GATTC_XCHNG_MTU_RSP\000"
+ 2069      455F4556 
+ 2069      545F4741 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 52
+
+
+ 2069      5454435F 
+ 2069      5843484E 
+ 2070              	.LASF20:
+ 2071 08ef 4359424C 		.ascii	"CYBLE_EVT_TIMEOUT\000"
+ 2071      455F4556 
+ 2071      545F5449 
+ 2071      4D454F55 
+ 2071      5400
+ 2072              	.LASF69:
+ 2073 0901 4359424C 		.ascii	"CYBLE_EVT_L2CAP_CBFC_DATA_WRITE_IND\000"
+ 2073      455F4556 
+ 2073      545F4C32 
+ 2073      4341505F 
+ 2073      43424643 
+ 2074              	.LASF35:
+ 2075 0925 4359424C 		.ascii	"CYBLE_EVT_GAPC_SCAN_START_STOP\000"
+ 2075      455F4556 
+ 2075      545F4741 
+ 2075      50435F53 
+ 2075      43414E5F 
+ 2076              	.LASF81:
+ 2077 0944 52657365 		.ascii	"Reset_Array\000"
+ 2077      745F4172 
+ 2077      72617900 
+ 2078              	.LASF53:
+ 2079 0950 4359424C 		.ascii	"CYBLE_EVT_GATTS_EXEC_WRITE_REQ\000"
+ 2079      455F4556 
+ 2079      545F4741 
+ 2079      5454535F 
+ 2079      45584543 
+ 2080              	.LASF75:
+ 2081 096f 466F726D 		.ascii	"FormatFrequencyData\000"
+ 2081      61744672 
+ 2081      65717565 
+ 2081      6E637944 
+ 2081      61746100 
+ 2082              	.LASF32:
+ 2083 0983 4359424C 		.ascii	"CYBLE_EVT_GAP_DEVICE_DISCONNECTED\000"
+ 2083      455F4556 
+ 2083      545F4741 
+ 2083      505F4445 
+ 2083      56494345 
+ 2084              	.LASF97:
+ 2085 09a5 43616C63 		.ascii	"Calculate_Frequency\000"
+ 2085      756C6174 
+ 2085      655F4672 
+ 2085      65717565 
+ 2085      6E637900 
+ 2086              	.LASF58:
+ 2087 09b9 4359424C 		.ascii	"CYBLE_EVT_GATTS_DATA_SIGNED_CMD_REQ\000"
+ 2087      455F4556 
+ 2087      545F4741 
+ 2087      5454535F 
+ 2087      44415441 
+ 2088              	.LASF103:
+ 2089 09dd 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 2089      4320342E 
+ARM GAS  C:\Users\Admin\AppData\Local\Temp\cclWYWoA.s 			page 53
+
+
+ 2089      382E3420 
+ 2089      32303134 
+ 2089      30353236 
+ 2090 0a10 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m0 -mthumb -g -O"
+ 2090      20726576 
+ 2090      6973696F 
+ 2090      6E203231 
+ 2090      31333538 
+ 2091 0a43 30202D66 		.ascii	"0 -ffunction-sections\000"
+ 2091      66756E63 
+ 2091      74696F6E 
+ 2091      2D736563 
+ 2091      74696F6E 
+ 2092              	.LASF101:
+ 2093 0a59 496E7075 		.ascii	"InputCounter_ASCII\000"
+ 2093      74436F75 
+ 2093      6E746572 
+ 2093      5F415343 
+ 2093      494900
+ 2094              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br
