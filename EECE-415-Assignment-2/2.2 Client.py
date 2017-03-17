@@ -1,3 +1,6 @@
+#EECE 415 Assignment 2 Part 2 SMTP
+#Written by Nathan Wilk
+
 import ssl
 import base64
 from socket import *
@@ -24,7 +27,7 @@ print recv1
 if recv1[:3]!= '250':
     print '250 reply not received from server.'
 
-# Send STARTTL command first
+# Send STARTTL command and wrap socket in a SSL
 command = 'STARTTLS\r\n'
 clientSocket.send(command)
 recvstart = clientSocket.recv(1024)
@@ -44,7 +47,7 @@ clientSocketSSL.send(busername+'\r\n')
 recvusername = clientSocketSSL.recv(1024)
 print recvusername
 
-#sending password
+#sending password blanked out for security reason
 password = 'XXXXXX'
 bpassword = base64.b64encode(password)
 clientSocketSSL.send(bpassword+'\r\n')

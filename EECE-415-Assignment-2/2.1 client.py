@@ -4,7 +4,7 @@ import time
 from socket import *
 
 #setting the IP and PORT to send to and variable initiallization
-IP = "127.0.0.1" #149.61.209.81
+IP = "127.0.0.1" #149.61.209.81 Raspberry Pi IP
 PORT = 12000
 min = 10000;
 max =0;

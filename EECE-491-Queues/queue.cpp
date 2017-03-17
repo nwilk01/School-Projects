@@ -8,10 +8,6 @@ Queue::Queue()
 
 bool Queue::IsFull() const
 {
-	if (count >= 5)
-	{
-		return true;
-	}
 	return false;
 }
 // IsFull()
@@ -32,11 +28,27 @@ void Queue::Enqueue(int n)
 {
 	if (!IsFull())
 	{
-		Node *temp = new Node;
-		temp->data = n;
-		temp->nextPtr = rearPtr;
-		rearPtr = temp;
-		count++;
+		if (count ==0)
+		{
+			Node *temp = new Node;
+			temp->data = n;
+			temp->nextPtr = temp;
+			rearPtr = temp;
+			count++;
+		}
+		else
+		{
+			Node *last = rearPtr;
+			Node *temp = new Node;
+			for (int i = 0; i < count; i++)
+			{
+				last = last->nextPtr;
+			}
+			temp->data = n;
+			last->nextPtr = temp;
+			temp->nextPtr = rearPtr;
+			count++;
+		}
 	}
 	else
 	{
@@ -51,14 +63,16 @@ void Queue::Dequeue()
 	if (!IsEmpty())
 	{
 		Node *temp = rearPtr;
-		Node *tempdel = new Node;
-		for (int i = 1; i < count; i++)
+		Node *newhead = rearPtr->nextPtr;
+		for (int i = 0; i < count; i++)
 		{
 			temp = temp->nextPtr;
 		}
-		tempdel = temp->nextPtr;
-		temp->nextPtr = nullptr;
-		delete tempdel;
+		temp->nextPtr = newhead;
+		temp = rearPtr;
+		rearPtr = newhead;
+		delete temp;
+		count--;
 	}
 	else
 	{
@@ -70,12 +84,7 @@ void Queue::Dequeue()
 
 int Queue::Front() const
 {
-	Node *temp = rearPtr;
-	while(temp->nextPtr!=nullptr)
-	{
-		temp=temp->nextPtr
-	}
-	return temp->data;
+	return rearPtr->data;
 }
 // Returns integer from front of queue
 // If queue is empty, throws QueueEmpty exception
@@ -83,7 +92,12 @@ int Queue::Front() const
 
 int Queue::Rear() const
 {
-	return rearPtr->data;
+	Node *temp = rearPtr;
+	for (int i = 0; i < count)
+	{
+		temp = temp->nextPtr;
+	}
+	return temp->data;
 }
 // Returns integer from rear of queue
 // If queue is empty, throws QueueEmpty exception

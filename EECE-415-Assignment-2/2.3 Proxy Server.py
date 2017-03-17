@@ -1,6 +1,5 @@
-# ProxyServer.py
-# Author: Sean Watson
-# Date Oct 8, 2012
+# EECE 415 Assignment 2 part 3 proxy server
+# Nathan Wilk
 
 from socket import *
 import sys
@@ -22,7 +21,6 @@ tcpSerSock.listen(max_connections)
 while 1:
 
 	# Start receiving data from the client
-	#raw_input("Raw Dog")
 	print 'Ready to serve...'
 	
 	tcpCliSock, addr = tcpSerSock.accept()
@@ -100,3 +98,4 @@ while 1:
 	
 	# Close the client and the server sockets
 	tcpCliSock.close()
+tcpSerSock.close()
