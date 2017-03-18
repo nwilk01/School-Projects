@@ -38,15 +38,12 @@ void Queue::Enqueue(int n)
 		}
 		else
 		{
-			Node *last = rearPtr;
+			Node *first = rearPtr->nextPtr;
 			Node *temp = new Node;
-			for (int i = 0; i < count; i++)
-			{
-				last = last->nextPtr;
-			}
 			temp->data = n;
-			last->nextPtr = temp;
-			temp->nextPtr = rearPtr;
+			temp->nextPtr = first;
+			rearPtr->nextPtr = temp;
+			rearPtr =temp;
 			count++;
 		}
 	}
@@ -62,17 +59,21 @@ void Queue::Dequeue()
 {
 	if (!IsEmpty())
 	{
-		Node *temp = rearPtr;
-		Node *newhead = rearPtr->nextPtr;
-		for (int i = 0; i < count; i++)
+		if(count ==1)
 		{
-			temp = temp->nextPtr;
+			Node *temp = rearPtr;
+			rearPtr = nullptr;
+			delete temp;
+			count--;
 		}
-		temp->nextPtr = newhead;
-		temp = rearPtr;
-		rearPtr = newhead;
-		delete temp;
-		count--;
+		else
+		{
+			Node *temp = rearPtr-> nextPtr;
+			Node *newhead = temp->nextPtr;
+			rearPtr->nextPtr = newhead;
+			delete temp;
+			count--;
+		}
 	}
 	else
 	{
@@ -84,7 +85,14 @@ void Queue::Dequeue()
 
 int Queue::Front() const
 {
-	return rearPtr->data;
+	if(!IsEmpty())
+	{
+		return rearPtr->nextPtr->data;
+	}
+	else
+	{
+		throw QueueEmpty();
+	}
 }
 // Returns integer from front of queue
 // If queue is empty, throws QueueEmpty exception
@@ -92,12 +100,14 @@ int Queue::Front() const
 
 int Queue::Rear() const
 {
-	Node *temp = rearPtr;
-	for (int i = 0; i < count)
+	if(!IsEmpty())
 	{
-		temp = temp->nextPtr;
+		return rearPtr->data;
 	}
-	return temp->data;
+	else
+	{
+		throw QueueEmpty();
+	}
 }
 // Returns integer from rear of queue
 // If queue is empty, throws QueueEmpty exception
@@ -107,10 +117,10 @@ int Queue::Peek(int n) const
 {
 	if (Size() > n) 
 	{
-		Node *temp = rearPtr;
+		Node *temp = rearPtr->nextPtr;
 		for (int i = 0; i < n; i++)
 		{
-			temp = temp->next;
+			temp = temp->nextPtr;
 		}
 		return temp->data;
 	}
