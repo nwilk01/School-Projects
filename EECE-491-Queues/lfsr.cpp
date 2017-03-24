@@ -8,10 +8,8 @@ LFSR::LFSR(string seed, int tap1, int tap2)
 	t2 = tap2;
 	for(int i=0; i<seed.length();i++)
 	{
-		char key = seed[i];
+		int key = seed[i] - '0';
 		q.Enqueue(key);
-
-		cout << (int)key;
 	}
 	
 }
@@ -21,4 +19,7 @@ LFSR::LFSR(string seed, int tap1, int tap2)
 
 void LFSR::NextState()
 {
+	int temp = q.Peek(t1)^q.Peek(t2);
+	q.Dequeue();
+	q.Enqueue(temp);
 }

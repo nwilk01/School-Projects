@@ -26,8 +26,7 @@ class LFSR
 
     bool  XOR(int a, int b);
     // XOR(...)    
-    // Exclusive OR function                            
-    // a | b | a XOR b
+    // Exclusive OR function                            )
     // ----------------
     // 0 | 0 |    0
     // 0 | 1 |    1
