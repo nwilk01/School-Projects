@@ -171,9 +171,9 @@ bool Graph::IsMarked(string v)
 void Graph::GetToVertices(string V, queue<string>& q)
 {
 	VertexNode *target = VertexExists(V);
-	EdgeNode *traverse = target->edgePtr;
-	if (target != NULL)
+	if (target !=NULL)
 	{
+		EdgeNode *traverse = target->edgePtr;
 		while (traverse != nullptr)
 		{
 			q.push(traverse->destination->vname);
