@@ -9,12 +9,15 @@ Graph::Graph()
 
 void Graph::AddVertex(string v) 
 {
+
 	if (vertices == nullptr)
 	{
-		vertices->vname = v;
-		vertices->nextVertex = nullptr;
-		vertices->edgePtr = nullptr;
-		vertices->mark = false;
+		VertexNode *temp = new VertexNode;
+		temp->vname = v;
+		temp->nextVertex = nullptr;
+		temp->edgePtr = nullptr;
+		temp->mark = false;
+		vertices=temp;
 	}
 	else
 	{
@@ -39,12 +42,13 @@ void Graph::AddEdge(string s, string d, int w)
 	VertexNode *svertex = VertexExists(s);
 	VertexNode *dvertex = VertexExists(d);
 	EdgeNode *newEdge = new EdgeNode;
-	EdgeNode *traverse = svertice->edgePtr;
-	if (svertice->edgePtr == nullptr)
-	{
-		svertex->edgePtr->destination = d;
-		svertex->edgePtr->weight = w;
-		svertex->edgePtr->nextEdge = nullptr;
+	EdgeNode *traverse = svertex->edgePtr;
+	if (svertex->edgePtr == nullptr)
+	{	
+		newEdge->destination = dvertex;
+		newEdge->weight = w;
+		newEdge->nextEdge = nullptr;
+		svertex->edgePtr = newEdge;
 	}
 	else
 	{
@@ -59,6 +63,7 @@ void Graph::AddEdge(string s, string d, int w)
 	}
 	
 }
+
 // AddEdge()
 // Adds edge from source S  to destination D with specified weight W.
 // If there is not enough memory to add the edge, throw the GraphFull exception
@@ -66,15 +71,15 @@ void Graph::AddEdge(string s, string d, int w)
 VertexNode* Graph::VertexExists(string v) const
 {
 	VertexNode *temp = vertices;
-	while (temp->vname != v || temp == nullptr)
+	while(temp!= nullptr)
 	{
-		temp = temp->nextVertex;
+		if(temp->vname ==v)
+		{
+			return temp;
+		}
+		temp=temp->nextVertex;
 	}
-	if (temp == nullptr)
-	{
-		return NULL;
-	}
-	return temp;
+	return NULL;
 }
 // VertexExists()
 // Returns pointer to corresponding VertexNode if vertex V in graph 
@@ -85,16 +90,19 @@ EdgeNode* Graph::EdgeExists(string s, string d) const
 {
 	VertexNode *svertex = VertexExists(s);
 	VertexNode *dvertex = VertexExists(d);
-	EdgeNode *edge = vertex->edgePtr;
-	while (edge->destination != dvertex || edge != nullptr)
+	if(svertex != NULL && dvertex !=NULL)
 	{
-		edge = edge->nextEdge;
+		EdgeNode *edge = svertex->edgePtr;
+		while(edge!=nullptr)
+		{
+			if(edge->destination == dvertex)
+			{
+				return edge;
+			}
+			edge = edge->nextEdge;
+		}
 	}
-	if (edge == nullptr)
-	{
-		return NULL;
-	}
-	return edge;
+	return NULL;
 }
 // EdgeExists()
 // Returns pointer to edge node if edge from vertex s to vertex d exists in graph 
@@ -169,8 +177,12 @@ void Graph::GetToVertices(string V, queue<string>& q)
 		while (traverse != nullptr)
 		{
 			q.push(traverse->destination->vname);
-			traverse->nextEdge;
+			traverse = traverse->nextEdge;
 		}
+	}
+	else
+	{
+		throw GraphVertexNotFound();
 	}
 }
 // GetToVertices()
@@ -202,3 +214,20 @@ void Graph::BreadthFirstSearch(string startVertex, string endVertex, queue<strin
 // as a signal to the client code that no path exists between the start and
 // end vertices.
 
+Graph::~Graph()
+{
+	VertexNode *current = vertices;
+	VertexNode *deletion = new VertexNode;
+	vertices = nullptr;
+	while(current!=nullptr)
+	{
+		deletion = current;
+		current = current->nextVertex;
+		delete deletion;
+	}
+		
+
+}
+// ~Graph()
+// For each VertexNode in the vertices list, Destrucot deallocates all EdgeNodes before 
+// deallocating the VertexNode itself
