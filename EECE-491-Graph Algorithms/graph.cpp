@@ -233,13 +233,12 @@ void Graph::DepthFirstSearch(string startVertex, string endVertex, queue<string>
 			{
 				path.pop();
 			}
-			ClearMarks();
 		}
 		else
 		{
 			path.push(searchs.top());
-			ClearMarks();
 		}
+		ClearMarks();
 	}
 }
 // DepthFirstSearch()
@@ -253,7 +252,40 @@ void Graph::DepthFirstSearch(string startVertex, string endVertex, queue<string>
 
 void Graph::BreadthFirstSearch(string startVertex, string endVertex, queue<string>& visitedq)
 {
-
+	if (VertexExists(startVertex) != NULL && VertexExists(endVertex) != NULL)
+	{
+		MarkVertex(startVertex);
+		queue<string> adjq;
+		GetToVertices(startVertex, adjq);
+		visitedq.push(startVertex);
+		while (!adjq.empty() && adjq.front() != endVertex)
+		{
+			if (!IsMarked(adjq.front))
+			{
+				MarkVertex(adjq.front());
+				visitedq.push(adjq.front());
+				GetToVertices(adjq.front(), adqj);
+				adjq.pop();
+			}
+			else
+			{
+				adjq.pop();
+			}
+		}
+		if (adjq.empty())
+		{
+			int size = adjq.size();
+			for (int i = 0; i < size; i++)
+			{
+				adjq.pop();
+			}
+		}
+		else
+		{
+			visitedq.push(adjq.front());
+		}
+		ClearMarks();
+	}
 }
 // BreadthFirstSearch()
 // Uses the BFS algorithm to determine a path from the
@@ -273,8 +305,6 @@ Graph::~Graph()
 		current = current->nextVertex;
 		delete deletion;
 	}
-		
-
 }
 // ~Graph()
 // For each VertexNode in the vertices list, Destrucot deallocates all EdgeNodes before 
