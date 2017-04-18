@@ -192,30 +192,53 @@ void Graph::GetToVertices(string V, queue<string>& q)
 
 void Graph::DepthFirstSearch(string startVertex, string endVertex, queue<string>& path)
 {
-	VertexNode *start = VertexExists(startVertex);
-	MarkVertex(startVertex);
-	queue<string> adjq;
-	stack<string> searchs;
-	GetToVertices(startVertex, adjq);
-	for (int i = 0; i < adjq.size(); i++)
+	if(VertexExists(startVertex)!= NULL && VertexExists(endVertex)!=NULL)
 	{
-		searchs.push(adjq.front);
-		adjq.pop();
-		adjq.
-	}
-	while (!searchs.empty())
-	{
-		if(!IsMarked(searchs.top())
+		int size =0;
+		MarkVertex(startVertex);
+		queue<string> adjq;
+		stack<string> searchs;
+		GetToVertices(startVertex, adjq);
+		size = adjq.size();
+		path.push(startVertex);
+		for (int i = 0; i < size; i++)
 		{
-			MarkVertex(searchs.top());
-			path.push(searchs.top());
-			searchs.pop();
-			GetToVertices(searchs.top(), adjq);
-			for (int i = 0; i < adjq.size(); i++)
+			searchs.push(adjq.front());
+			adjq.pop();
+		}
+		while (!searchs.empty() && searchs.top() != endVertex )
+		{
+			if(!IsMarked(searchs.top()))
 			{
-				searchs.push(adjq.front());
-				adjq.pop();
+				MarkVertex(searchs.top());
+				path.push(searchs.top());
+				GetToVertices(searchs.top(), adjq);
+				size  = adjq.size();
+				searchs.pop();
+				for (int i = 0; i < size; i++)
+				{
+					searchs.push(adjq.front());
+					adjq.pop();
+				}
 			}
+			else
+			{
+				searchs.pop();
+			}
+		}
+		if(searchs.empty())
+		{
+			size  = path.size();
+			for(int i=0; i<size;i++)
+			{
+				path.pop();
+			}
+			ClearMarks();
+		}
+		else
+		{
+			path.push(searchs.top());
+			ClearMarks();
 		}
 	}
 }
