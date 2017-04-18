@@ -260,11 +260,11 @@ void Graph::BreadthFirstSearch(string startVertex, string endVertex, queue<strin
 		visitedq.push(startVertex);
 		while (!adjq.empty() && adjq.front() != endVertex)
 		{
-			if (!IsMarked(adjq.front))
+			if (!IsMarked(adjq.front()))
 			{
 				MarkVertex(adjq.front());
 				visitedq.push(adjq.front());
-				GetToVertices(adjq.front(), adqj);
+				GetToVertices(adjq.front(), adjq);
 				adjq.pop();
 			}
 			else
@@ -274,10 +274,10 @@ void Graph::BreadthFirstSearch(string startVertex, string endVertex, queue<strin
 		}
 		if (adjq.empty())
 		{
-			int size = adjq.size();
+			int size = visitedq.size();
 			for (int i = 0; i < size; i++)
 			{
-				adjq.pop();
+				visitedq.pop();
 			}
 		}
 		else
