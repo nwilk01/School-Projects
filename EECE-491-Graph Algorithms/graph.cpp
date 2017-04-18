@@ -192,7 +192,32 @@ void Graph::GetToVertices(string V, queue<string>& q)
 
 void Graph::DepthFirstSearch(string startVertex, string endVertex, queue<string>& path)
 {
-
+	VertexNode *start = VertexExists(startVertex);
+	MarkVertex(startVertex);
+	queue<string> adjq;
+	stack<string> searchs;
+	GetToVertices(startVertex, adjq);
+	for (int i = 0; i < adjq.size(); i++)
+	{
+		searchs.push(adjq.front);
+		adjq.pop();
+		adjq.
+	}
+	while (!searchs.empty())
+	{
+		if(!IsMarked(searchs.top())
+		{
+			MarkVertex(searchs.top());
+			path.push(searchs.top());
+			searchs.pop();
+			GetToVertices(searchs.top(), adjq);
+			for (int i = 0; i < adjq.size(); i++)
+			{
+				searchs.push(adjq.front());
+				adjq.pop();
+			}
+		}
+	}
 }
 // DepthFirstSearch()
 // Notes:
